@@ -12,25 +12,29 @@
         <h2 class="text-center">New Business</h2>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Idntfr">Product Identifier</label>
-            <input type="text" class="form-control" id="idntfr" name="idntfr" input asp-for="Idntfr">
-            <span asp-validation-for="Idntfr" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label for="startDt">Contract Start Date</label>
-            <input class="form-control" type="date" id="startDt" name="startDt" required="" value="">
-
+            <label asp-for="ProductId">Product Identifier</label>
+            <input type="text" class="form-control" id="productId" name="productId" input asp-for="ProductId">
+            <span asp-validation-for="ProductId" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label for="nextBillingDueDate">Next Billing Due Date</label>
-            <input class="form-control" type="date" id="nextBillingDueDate" name="nextBillingDueDate" required="" value="">
-
+            <label asp-for="StartDate">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label for="duration">Contract Duration(in Years)</label>
-            <input type="number" class="form-control" id="duration" name="duration" required="" value="0">
-
+            <label asp-for="NextBillingDueDate">Start Date</label>
+            <input type="date" class="form-control" id="nextBillingDueDate" name="nextBillingDueDate" input asp-for="NextBillingDueDate">
+            <span asp-validation-for="NextBillingDueDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Amount">Beneficiary Amount(in EUR)</label>
+            <input type="number" class="form-control" id="amount" name="amount" input asp-for="Amount">
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Duration">Contract Duration(in Years)</label>
+            <input type="number" class="form-control" id="duration" name="duration" input asp-for="Duration">
+            <span asp-validation-for="Duration" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label for="frequency">Frequency</label>
@@ -42,11 +46,7 @@
             </select>
 
         </div>
-        <div class="form-group">
-            <label for="amount">Beneficiary Amount(in EUR)</label>
-            <input type="number" class="form-control" id="amount" name="amount" required="" value="0.0">
 
-        </div>
         <div class="text-center">
             <button type="submit" name="action" value="return" class="btn btn-secondary">
                 <svg class="svg-inline--fa fa-chevron-circle-left fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="chevron-circle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path></svg><!-- <i class="fas fa-chevron-circle-left"></i> --> Return

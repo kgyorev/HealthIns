@@ -60,7 +60,7 @@ namespace HealthIns.Web
             });
 
             services.AddTransient<IProductService, ProductService>();
-
+            services.AddTransient<IContractService, ContractService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
