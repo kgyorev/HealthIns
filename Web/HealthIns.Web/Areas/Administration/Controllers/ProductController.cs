@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using HealthIns.Services;
 using HealthIns.Services.Models;
+using HealthIns.Web.Areas.Administration.Controllers;
 using HealthIns.Web.InputModels.Bussines;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthIns.Web.Areas.Bussines.Controllers
 {
-    [Area("Bussines")]
-    public class ProductController : Controller
+    public class ProductController : AdminController
     {
         private readonly IProductService productService;
 

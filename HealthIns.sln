@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthIns.Services.Mapping"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthIns.Services.Models", "Services\HealthIns.Services.Models\HealthIns.Services.Models.csproj", "{EA697557-2286-4076-B4BA-44118DC5502F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthIns.Web.ViewModels", "Web\HealthIns.Web.ViewModels\HealthIns.Web.ViewModels.csproj", "{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{EA697557-2286-4076-B4BA-44118DC5502F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA697557-2286-4076-B4BA-44118DC5502F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA697557-2286-4076-B4BA-44118DC5502F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{3DA23C6A-7089-40D2-B191-D1D81E70E6CA} = {9382F5EF-5C5A-4723-BD1D-66E516B8C00D}
 		{4A20CDC4-0711-4344-AD0E-EC3DEC144C47} = {9382F5EF-5C5A-4723-BD1D-66E516B8C00D}
 		{EA697557-2286-4076-B4BA-44118DC5502F} = {9382F5EF-5C5A-4723-BD1D-66E516B8C00D}
+		{A8CE1CDC-1A2E-4CB8-8178-B89DBDF891B8} = {5944E870-1B14-48A7-8EF5-F7EE11DB97CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0128A478-51FA-4CBA-87DE-F99C8A7AE906}

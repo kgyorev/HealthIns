@@ -10,7 +10,7 @@ namespace HealthIns.Web.InputModels
     {
 
         [Required(ErrorMessage = "Product Identifyer is required!")]
-        public string ProductId { get; set; }
+        public string ProductIdntfr { get; set; }
 
 
         [Required(ErrorMessage = "Frequency is required!")]

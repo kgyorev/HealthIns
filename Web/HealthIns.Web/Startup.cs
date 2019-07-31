@@ -20,6 +20,7 @@ using System.Globalization;
 using HealthIns.Web.InputModels.Bussines;
 using HealthIns.Services.Models;
 using System.Reflection;
+using HealthIns.Web.ViewModels.Contract;
 
 namespace HealthIns.Web
 {
@@ -71,7 +72,8 @@ namespace HealthIns.Web
 
             AutoMapperConfig.RegisterMappings(
             typeof(ProductCreateInputModel).GetTypeInfo().Assembly,
-          //  typeof(ProductHomeViewModel).GetTypeInfo().Assembly,
+            typeof(ContractViewModel).GetTypeInfo().Assembly,
+            //  typeof(ProductHomeViewModel).GetTypeInfo().Assembly,
             typeof(ProductServiceModel).GetTypeInfo().Assembly);
 
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -81,6 +83,7 @@ namespace HealthIns.Web
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<HealthInsDbContext>())
                 {
+                    //context.Database.Migrate();
                     context.Database.EnsureCreated();
 
                     if (!context.Roles.Any())
@@ -115,11 +118,11 @@ namespace HealthIns.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                routes.MapRoute(
-                   name: "areas",
-                   template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

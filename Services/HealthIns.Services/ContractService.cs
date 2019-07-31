@@ -24,7 +24,7 @@ namespace HealthIns.Services
 
             Contract contract = AutoMapper.Mapper.Map<Contract>(contractServiceModel);
 
-            Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductId);
+            Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
             contract.Product = product;
 
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
