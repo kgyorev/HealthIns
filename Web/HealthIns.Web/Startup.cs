@@ -62,6 +62,8 @@ namespace HealthIns.Web
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IContractService, ContractService>();
+            services.AddTransient<IPersonService, PersonService>();
+            services.AddTransient<IOrganizationService, OrganizationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
