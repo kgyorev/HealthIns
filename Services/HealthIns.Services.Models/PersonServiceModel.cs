@@ -11,6 +11,8 @@ namespace HealthIns.Services.Models
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Egn { get; set; }
+        public string Sex { get; set; }
+        public bool Smoker { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

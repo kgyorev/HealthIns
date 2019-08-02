@@ -1,0 +1,41 @@
+﻿@model List<HealthIns.Web.ViewModels.Person.PersonViewModel>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="table-responsive-sm">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">EGN</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <th>@Model[i].Id</th>
+                    <td>@Model[i].Egn</td>
+                    <td>
+                        <a href="/Person/Details/@Model[i].Id">
+                            <i class="fas fa-binoculars"
+                               title="Person details"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Person/Edit/@Model[i].Id">
+                            <i class="fas fa-edit"
+                               title="Edit person"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

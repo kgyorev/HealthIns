@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthIns.Services;
+using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
 using HealthIns.Web.InputModels.PersOrg;
 using HealthIns.Web.ViewModels.Person;
@@ -45,16 +46,16 @@ namespace HealthIns.Web.Controllers
             return this.Redirect("/");
         }
 
-      //  [HttpGet(Name = "Search")]
-      //  public async Task<IActionResult> Search()
-      //  {
-      //
-      //      List<ContractServiceModel> contractsFromDb = await this.personService.GetAllPersons().ToListAsync();
-      //
-      //      List<PersonViewModel> personsAll = contractsFromDb
-      //          .Select(contract => contract.To<PersonViewModel>()).ToList();
-      //
-      //      return this.View(personsAll);
-      //  }
+        [HttpGet(Name = "Search")]
+        public async Task<IActionResult> Search()
+        {
+      
+            List<PersonServiceModel> contractsFromDb = await this.personService.GetAllPersons().ToListAsync();
+      
+            List<PersonViewModel> personsAll = contractsFromDb
+                .Select(contract => contract.To<PersonViewModel>()).ToList();
+      
+            return this.View(personsAll);
+        }
     }
 }

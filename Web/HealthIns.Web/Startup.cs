@@ -85,7 +85,7 @@ namespace HealthIns.Web
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<HealthInsDbContext>())
                 {
-                    //context.Database.Migrate();
+                   // context.Database.Migrate();
                     context.Database.EnsureCreated();
 
                     if (!context.Roles.Any())

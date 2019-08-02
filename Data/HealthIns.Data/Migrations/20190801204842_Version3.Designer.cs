@@ -4,14 +4,16 @@ using HealthIns.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthIns.Data.Migrations
 {
     [DbContext(typeof(HealthInsDbContext))]
-    partial class HealthInsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190801204842_Version3")]
+    partial class Version3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,11 +147,11 @@ namespace HealthIns.Data.Migrations
 
                     b.Property<string>("FullName");
 
-                    b.Property<string>("Sex");
-
-                    b.Property<bool>("Smoker");
-
                     b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("sex");
+
+                    b.Property<bool>("smoker");
 
                     b.HasKey("Id");
 
