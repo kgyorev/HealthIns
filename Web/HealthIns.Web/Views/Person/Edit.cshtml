@@ -1,0 +1,74 @@
+﻿@model HealthIns.Web.ViewModels.Person.PersonViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <form class="my-4" method="post" enctype="multipart/form-data">
+        <h2 class="text-center">Edit Person</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" input asp-for="FullName">
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Egn">EGN</label>
+            <input type="text" class="form-control" id="egn" name="egn" input asp-for="Egn">
+            <span asp-validation-for="Egn" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="smoker" id="issmoker" asp-for="Smoker" value="true"><input type="hidden" name="_smoker" value="on">
+            <label class="custom-control-label" for="issmoker">is smoker?</label>
+        </div>
+        <fieldset class="form-group">
+            <legend>gender</legend>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" asp-for="Sex" id="male" name="sex" value="male" required>
+                <label class="custom-control-label" for="male">male</label>
+            </div>
+            <div class="custom-control custom-radio mb-3">
+                <input type="radio" class="custom-control-input" asp-for="Sex" id="female" name="sex" value="female" required>
+                <label class="custom-control-label" for="female">female</label>
+            </div>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </fieldset>
+        <div class="form-group">
+            <label asp-for="StartDate">Birth Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="button" data-toggle="modal" class="btn btn-primary" data-target="#save">
+                Save <i class="fas fa-chevron-circle-right"></i>
+            </button>
+        </div>
+        <div class="modal fade" id="save" tabindex="-1" role="dialog"
+             aria-labelledby="deleteUserLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteUserLabel">This action can't be undone</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to save this person?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button name="action" value="save" class="btn btn-primary" type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+

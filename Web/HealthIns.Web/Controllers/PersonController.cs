@@ -45,6 +45,33 @@ namespace HealthIns.Web.Controllers
 
             return this.Redirect("/");
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(long Id)
+        {
+            PersonServiceModel personFromDB = this.personService.GetById(Id);
+
+            PersonViewModel person = personFromDB.To<PersonViewModel>();
+
+            return this.View(person);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(PersonCreateInputModel personCreateInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+                //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
+            }
+
+
+            PersonServiceModel personServiceModel = AutoMapper.Mapper.Map<PersonServiceModel>(personCreateInputModel);
+
+            await this.personService.Create(personServiceModel);
+
+            return this.Redirect("/");
+        }
+
+
 
         [HttpGet(Name = "Search")]
         public async Task<IActionResult> Search()
@@ -53,7 +80,7 @@ namespace HealthIns.Web.Controllers
             List<PersonServiceModel> contractsFromDb = await this.personService.GetAllPersons().ToListAsync();
       
             List<PersonViewModel> personsAll = contractsFromDb
-                .Select(contract => contract.To<PersonViewModel>()).ToList();
+                .Select(person => person.To<PersonViewModel>()).ToList();
       
             return this.View(personsAll);
         }

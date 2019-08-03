@@ -42,7 +42,7 @@ namespace HealthIns.Services
 
         public PersonServiceModel GetById(long id)
         {
-            return this.context.Contracts
+            return this.context.Persons
                 .To<PersonServiceModel>()
                 .SingleOrDefault(person => person.Id == id);
         }
