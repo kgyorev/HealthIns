@@ -1,5 +1,7 @@
 ﻿
 using HealthIns.Data.Models;
+using HealthIns.Data.Models.Enums;
+using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,24 @@ namespace HealthIns.Services.Models
     {
         public long Id { get; set; }
         public string ProductIdntfr { get; set; }
+        public Person Person { get; set; }
         public string Frequency { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public int Duration { get; set; }
         public DateTime NextBillingDueDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime CreationDate { get; set; }
+        public Status Status { get; set; }
+        public double PremiumAmount { get; set; }
         public DateTime StartDate { get; set; }
+
+        public long PersonId { get; set; }
+
+
+   
+
+
+
 
     }
 }

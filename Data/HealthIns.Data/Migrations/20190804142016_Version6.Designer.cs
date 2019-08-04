@@ -4,14 +4,16 @@ using HealthIns.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthIns.Data.Migrations
 {
     [DbContext(typeof(HealthInsDbContext))]
-    partial class HealthInsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190804142016_Version6")]
+    partial class Version6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,7 @@ namespace HealthIns.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
-
-                    b.Property<DateTime>("CreationDate");
+                    b.Property<int>("Amount");
 
                     b.Property<int>("Duration");
 
@@ -39,13 +39,9 @@ namespace HealthIns.Data.Migrations
 
                     b.Property<long?>("PersonId");
 
-                    b.Property<double>("PremiumAmount");
-
                     b.Property<long?>("ProductId");
 
                     b.Property<DateTime>("StartDate");
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

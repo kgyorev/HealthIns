@@ -21,6 +21,7 @@ using HealthIns.Web.InputModels.Bussines;
 using HealthIns.Services.Models;
 using System.Reflection;
 using HealthIns.Web.ViewModels.Contract;
+using HealthIns.Web.InputModels;
 
 namespace HealthIns.Web
 {
@@ -75,6 +76,8 @@ namespace HealthIns.Web
             AutoMapperConfig.RegisterMappings(
             typeof(ProductCreateInputModel).GetTypeInfo().Assembly,
             typeof(ContractViewModel).GetTypeInfo().Assembly,
+          //  typeof(ContractServiceModel).GetTypeInfo().Assembly,
+          //  typeof(ContractCreateInputModel).GetTypeInfo().Assembly,
             //  typeof(ProductHomeViewModel).GetTypeInfo().Assembly,
             typeof(ProductServiceModel).GetTypeInfo().Assembly);
 

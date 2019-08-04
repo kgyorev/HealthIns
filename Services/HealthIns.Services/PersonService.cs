@@ -21,15 +21,9 @@ namespace HealthIns.Services
 
         public async Task<bool> Create(PersonServiceModel personServiceModel)
         {
-
             Person person = AutoMapper.Mapper.Map<Person>(personServiceModel);
-
-  
-            //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
-
             context.Persons.Add(person);
             int result = await context.SaveChangesAsync();
-
             return result > 0;
         }
 
@@ -45,6 +39,14 @@ namespace HealthIns.Services
             return this.context.Persons
                 .To<PersonServiceModel>()
                 .SingleOrDefault(person => person.Id == id);
+        }
+
+        public async Task<bool> Update(PersonServiceModel personServiceModel)
+        {
+            Person person = AutoMapper.Mapper.Map<Person>(personServiceModel);
+            context.Update(person);
+            int result = await context.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

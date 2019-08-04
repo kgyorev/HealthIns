@@ -50,7 +50,7 @@ namespace HealthIns.Web.Controllers
         {
             PersonServiceModel personFromDB = this.personService.GetById(Id);
 
-            PersonViewModel person = personFromDB.To<PersonViewModel>();
+            PersonCreateInputModel person = personFromDB.To<PersonCreateInputModel>();
 
             return this.View(person);
         }
@@ -66,7 +66,7 @@ namespace HealthIns.Web.Controllers
 
             PersonServiceModel personServiceModel = AutoMapper.Mapper.Map<PersonServiceModel>(personCreateInputModel);
 
-            await this.personService.Create(personServiceModel);
+            await this.personService.Update(personServiceModel);
 
             return this.Redirect("/");
         }

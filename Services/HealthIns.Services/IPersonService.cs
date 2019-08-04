@@ -14,5 +14,6 @@ namespace HealthIns.Services
         PersonServiceModel GetById(long id);
 
         Task<bool> Create(PersonServiceModel personServiceModel);
+        Task<bool> Update(PersonServiceModel personServiceModel);
     }
 }

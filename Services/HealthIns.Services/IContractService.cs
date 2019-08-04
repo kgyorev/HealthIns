@@ -14,5 +14,6 @@ namespace HealthIns.Services
         ContractServiceModel GetById(long id);
 
         Task<bool> Create(ContractServiceModel contractServiceModel);
+        Task<bool> Update(ContractServiceModel contractServiceModel);
     }
 }

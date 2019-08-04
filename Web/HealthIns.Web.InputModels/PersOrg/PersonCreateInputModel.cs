@@ -7,8 +7,11 @@ using System.Text;
 
 namespace HealthIns.Web.InputModels.PersOrg
 {
-    public class PersonCreateInputModel : IMapTo<PersonServiceModel>
+    public class PersonCreateInputModel : IMapFrom<PersonServiceModel>, IMapTo<PersonServiceModel>
     {
+
+        public long Id { get; set; }
+
         [Required(ErrorMessage = "Full Name is required!")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "EGN is required!")]
