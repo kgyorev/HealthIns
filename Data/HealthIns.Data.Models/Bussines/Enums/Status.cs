@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace HealthIns.Data.Models.Enums
+namespace HealthIns.Data.Models.Bussines
 {
    public enum Status
     {

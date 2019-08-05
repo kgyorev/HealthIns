@@ -22,6 +22,11 @@
             <span asp-validation-for="ProductIdntfr" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="DistributorId">Distributor Id</label>
+            <input type="text" class="form-control" id="distributorId" name="distributorId" input asp-for="DistributorId">
+            <span asp-validation-for="DistributorId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="StartDate">Start Date</label>
             <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate">
             <span asp-validation-for="StartDate" class="text-danger"></span>

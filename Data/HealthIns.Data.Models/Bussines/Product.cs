@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HealthIns.Data.Models
+namespace HealthIns.Data.Models.Bussines
 {
     public class Product : BaseModel<long>
     { 

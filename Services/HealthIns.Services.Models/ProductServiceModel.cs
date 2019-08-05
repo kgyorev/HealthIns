@@ -1,5 +1,5 @@
 ﻿
-using HealthIns.Data.Models;
+using HealthIns.Data.Models.Bussines;
 using HealthIns.Services.Mapping;
 using System;
 using System.Collections.Generic;

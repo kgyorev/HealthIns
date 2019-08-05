@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthIns.Services;
+using HealthIns.Services.Models;
+using HealthIns.Web.InputModels.PersOrg;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthIns.Web.Controllers
@@ -24,22 +26,21 @@ namespace HealthIns.Web.Controllers
         }
 
 
-      //  [HttpPost]
-      //  public async Task<IActionResult> Create(PersonCreateInputModel personCreateInputModel)
-      //  {
-      //      if (!this.ModelState.IsValid)
-      //      {
-      //          return this.View();
-      //          //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
-      //      }
-      //
-      //
-      //      PersonServiceModel personServiceModel = AutoMapper.Mapper.Map<PersonServiceModel>(personCreateInputModel);
-      //
-      //      await this.personService.Create(personServiceModel);
-      //
-      //      return this.Redirect("/");
-      //  }
+        [HttpPost]
+        public async Task<IActionResult> Create(OrganizationCreateInputModel organizationCreateInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+      
+      
+            OrganizationServiceModel organizationServiceModel = AutoMapper.Mapper.Map<OrganizationServiceModel>(organizationCreateInputModel);
+      
+            await this.organizationService.Create(organizationServiceModel);
+      
+            return this.Redirect("/");
+        }
 
         //  [HttpGet(Name = "Search")]
         //  public async Task<IActionResult> Search()

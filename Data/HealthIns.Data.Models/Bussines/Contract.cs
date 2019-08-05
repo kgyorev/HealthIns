@@ -1,10 +1,10 @@
-﻿using HealthIns.Data.Models.Enums;
+﻿using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models.PrsnOrg;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HealthIns.Data.Models
+namespace HealthIns.Data.Models.Bussines
 {
    public class Contract : BaseModel<long>
     {
@@ -21,6 +21,7 @@ namespace HealthIns.Data.Models
         public DateTime NextBillingDueDate { get; set; }
 
         public Product Product { get; set; }
+        public Distributor Distributor { get; set; }
         public Person Person { get; set; }
     }
 }

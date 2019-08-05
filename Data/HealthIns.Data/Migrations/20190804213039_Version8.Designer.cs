@@ -4,14 +4,16 @@ using HealthIns.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthIns.Data.Migrations
 {
     [DbContext(typeof(HealthInsDbContext))]
-    partial class HealthInsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190804213039_Version8")]
+    partial class Version8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,8 +30,6 @@ namespace HealthIns.Data.Migrations
                     b.Property<double>("Amount");
 
                     b.Property<DateTime>("CreationDate");
-
-                    b.Property<long?>("DistributorId");
 
                     b.Property<int>("Duration");
 
@@ -51,8 +51,6 @@ namespace HealthIns.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DistributorId");
-
                     b.HasIndex("PersonId");
 
                     b.HasIndex("ProductId");
@@ -66,17 +64,7 @@ namespace HealthIns.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FullName");
-
-                    b.Property<long?>("OrganizationId");
-
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Distributors");
                 });
@@ -359,10 +347,6 @@ namespace HealthIns.Data.Migrations
 
             modelBuilder.Entity("HealthIns.Data.Models.Bussines.Contract", b =>
                 {
-                    b.HasOne("HealthIns.Data.Models.Bussines.Distributor", "Distributor")
-                        .WithMany()
-                        .HasForeignKey("DistributorId");
-
                     b.HasOne("HealthIns.Data.Models.PrsnOrg.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId");
@@ -370,17 +354,6 @@ namespace HealthIns.Data.Migrations
                     b.HasOne("HealthIns.Data.Models.Bussines.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("HealthIns.Data.Models.Bussines.Distributor", b =>
-                {
-                    b.HasOne("HealthIns.Data.Models.PrsnOrg.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId");
-
-                    b.HasOne("HealthIns.Data.Models.HealthInsUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("HealthIns.Data.Models.Financial.MoneyIn", b =>

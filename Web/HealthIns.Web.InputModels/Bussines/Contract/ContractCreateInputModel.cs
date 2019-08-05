@@ -13,16 +13,24 @@ namespace HealthIns.Web.InputModels
 
         [Required(ErrorMessage = "Product Identifyer is required!")]
         public string ProductIdntfr { get; set; }
+        [Required(ErrorMessage = "Owner Id is required!")]
         public long PersonId { get; set; }
+        [Required(ErrorMessage = "Distributor Id is required!")]
+        public long DistributorId { get; set; }
 
         [Required(ErrorMessage = "Frequency is required!")]
         public string Frequency { get; set; }
 
+        [Required(ErrorMessage = "Amount Identifyer is required!")]
         public int Amount { get; set; }
 
+        [Required(ErrorMessage = "Contract Duration is required!")]
         public int Duration { get; set; }
 
+        [Required(ErrorMessage = "Next Billing Due Date is required!")]
         public DateTime NextBillingDueDate { get; set; }
+
+        [Required(ErrorMessage = "Contract Start Date is required!")]
         public DateTime StartDate { get; set; }
     }
 }

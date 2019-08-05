@@ -1,5 +1,4 @@
 ﻿using HealthIns.Data;
-using HealthIns.Data.Models;
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
@@ -9,7 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HealthIns.Data.Models.Enums;
+using HealthIns.Data.Models.Bussines;
+using HealthIns.Data.Models;
 
 namespace HealthIns.Services
 {
@@ -48,8 +48,10 @@ namespace HealthIns.Services
 
             Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
             Person person = this.context.Persons.SingleOrDefault(p => p.Id == contractServiceModel.PersonId);
+            Distributor distributor = this.context.Distributors.SingleOrDefault(d => d.Id == contractServiceModel.DistributorId);
             contract.Product = product;
             contract.Person = person;
+            contract.Distributor = distributor;
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
 
             context.Update(contract);
