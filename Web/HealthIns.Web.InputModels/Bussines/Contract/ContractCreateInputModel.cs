@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HealthIns.Web.InputModels
+namespace HealthIns.Web.InputModels.Bussines.Contract
 {
     public class ContractCreateInputModel: IMapFrom<ContractServiceModel>, IMapTo<ContractServiceModel>
     {

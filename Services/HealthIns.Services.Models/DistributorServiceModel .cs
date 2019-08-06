@@ -16,7 +16,7 @@ namespace HealthIns.Services.Models
         public Organization Organization { get; set; }
         public long OrganizationId { get; set; }
         public HealthInsUser HealthInsUser { get; set; }
-        public long HealthInsUserId { get; set; }
+        public string HealthInsUserUserName { get; set; }
 
     }
 }

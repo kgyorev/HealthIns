@@ -29,8 +29,10 @@ namespace HealthIns.Services
 
             Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
             Person person = this.context.Persons.SingleOrDefault(p => p.Id == contractServiceModel.PersonId);
+            Distributor distributor = this.context.Distributors.SingleOrDefault(p => p.Id == contractServiceModel.DistributorId);
             contract.Product = product;
             contract.Person = person;
+            contract.Distributor = distributor;
             contract.Status = Status.InForce;
             contract.CreationDate = DateTime.UtcNow;
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);

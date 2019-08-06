@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
-using HealthIns.Web.InputModels;
+using HealthIns.Web.InputModels.Bussines.Contract;
 using HealthIns.Web.ViewModels.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
