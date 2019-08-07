@@ -34,7 +34,11 @@ namespace HealthIns.Services
             contract.Person = person;
             contract.Distributor = distributor;
             contract.Status = Status.InForce;
-            contract.CreationDate = DateTime.UtcNow;
+            contract.CreationDate = DateTime.Now;
+
+            var premiumAmount = this.ReturnPremiumAmount(contract);
+            contract.PremiumAmount = premiumAmount;
+
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
 
             context.Contracts.Add(contract);
@@ -56,6 +60,8 @@ namespace HealthIns.Services
             contract.Distributor = distributor;
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
 
+            var premiumAmount = this.ReturnPremiumAmount(contract);
+            contract.PremiumAmount = premiumAmount;
             context.Update(contract);
             int result = await context.SaveChangesAsync();
 
@@ -76,6 +82,51 @@ namespace HealthIns.Services
                 .To<ContractServiceModel>()
                 .SingleOrDefault(contract => contract.Id == id);
         }
+
+        public double ReturnPremiumAmount(Contract contract)
+        {
+            int age = contract.Person.GetAge(contract.StartDate)+1;
+            int frequencyPeriods = this.GetFrequencyPeriods(contract.Frequency);
+            double premiumAmount = age * contract.Amount / (contract.Duration * 12 * 100) / frequencyPeriods;
+            return Math.Round(premiumAmount * 100.0) / 100.0;
+        }
+
+    public DateTime CalculateNextBillingDueDate(Contract contract)
+        {
+            String frequency = contract.Frequency;
+            int months = this.GetFrequencyMonths(frequency);
+            return contract.NextBillingDueDate.AddMonths(months);
+        }
+
+        private int GetFrequencyMonths(String frequency)
+        {
+            switch (frequency)
+            {
+                case "ANUAL":
+                    return 12;
+                case "SEMI_ANNUAL":
+                    return 6;
+                case "TRIMESTER":
+                    return 3;
+                default:
+                    return 1;
+            }
+        }
+        private int GetFrequencyPeriods(String frequency)
+        {
+            switch (frequency)
+            {
+                case "ANUAL":
+                    return 1;
+                case "SEMI_ANNUAL":
+                    return 2;
+                case "TRIMESTER":
+                    return 4;
+                default:
+                    return 12;
+            }
+        }
+
     }
 }
 

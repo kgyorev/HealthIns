@@ -1,4 +1,5 @@
-﻿using HealthIns.Services.Models;
+﻿using HealthIns.Data.Models.Bussines;
+using HealthIns.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace HealthIns.Services
 
         Task<bool> Create(ContractServiceModel contractServiceModel);
         Task<bool> Update(ContractServiceModel contractServiceModel);
+        double ReturnPremiumAmount(Contract contract);
+        DateTime CalculateNextBillingDueDate(Contract contract);
     }
 }

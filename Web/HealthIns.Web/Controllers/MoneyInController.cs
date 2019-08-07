@@ -5,43 +5,52 @@ using System.Threading.Tasks;
 using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
-using HealthIns.Web.InputModels;
-using HealthIns.Web.InputModels.Bussines.Distributor;
+using HealthIns.Web.InputModels.Bussines.Contract;
+using HealthIns.Web.InputModels.Financial;
 using HealthIns.Web.ViewModels.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthIns.Web.Controllers
 {
-    public class DistributorController : Controller
+    public class PremiumController : Controller
     {
 
-        private readonly IDistributorService distributorService;
+        private readonly IPremiumService premiumService;
 
-        public DistributorController(IDistributorService distributorService)
+        public PremiumController(IPremiumService premiumService)
         {
-            this.distributorService = distributorService;
+            this.premiumService = premiumService;
         }
 
         [HttpGet(Name = "Create")]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(long id)
         {
 
-            return this.View();
+           // var contractId = long.Parse(id);
+            PremiumServiceModel premiumServiceModel =  this.premiumService.SimulatePremiumForContract(id);
+            PremiumCreateInputModel premiumCreateInputModel = AutoMapper.Mapper.Map<PremiumCreateInputModel>(premiumServiceModel);
+            premiumCreateInputModel.ContractId = id;
+            return this.View(premiumCreateInputModel);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(DistributorCreateInputModel distributorCreateInputModel)
+        public async Task<IActionResult> Create(PremiumCreateInputModel premiumCreateInputModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
+                //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
 
 
-            DistributorServiceModel distributorServiceModel = AutoMapper.Mapper.Map<DistributorServiceModel>(distributorCreateInputModel);
-            await this.distributorService.Create(distributorServiceModel);
+            PremiumServiceModel premiumServiceModel = AutoMapper.Mapper.Map<PremiumServiceModel>(premiumCreateInputModel);
+            premiumServiceModel.ContractId = premiumCreateInputModel.Id;
+            premiumServiceModel.Id = 0;
+
+           await this.premiumService.Create(premiumServiceModel);
+
             return this.Redirect("/");
         }
 
