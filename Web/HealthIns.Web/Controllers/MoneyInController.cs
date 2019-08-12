@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthIns.Data.Models.Bussines;
 using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
@@ -13,30 +14,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthIns.Web.Controllers
 {
-    public class PremiumController : Controller
+    public class MoneyInController : Controller
     {
 
+        private readonly IMoneyInService moneyInService;
         private readonly IPremiumService premiumService;
+        private readonly IContractService contractService;
 
-        public PremiumController(IPremiumService premiumService)
+        public MoneyInController(IContractService contractService,IMoneyInService moneyInService, IPremiumService premiumService)
         {
-            this.premiumService = premiumService;
+            this.contractService = contractService;
+            this.moneyInService = moneyInService;
+             this.premiumService = premiumService;
         }
 
         [HttpGet(Name = "Create")]
         public async Task<IActionResult> Create(long id)
         {
 
-           // var contractId = long.Parse(id);
-            PremiumServiceModel premiumServiceModel =  this.premiumService.SimulatePremiumForContract(id);
-            PremiumCreateInputModel premiumCreateInputModel = AutoMapper.Mapper.Map<PremiumCreateInputModel>(premiumServiceModel);
-            premiumCreateInputModel.ContractId = id;
-            return this.View(premiumCreateInputModel);
+            // var contractId = long.Parse(id);
+            // PremiumServiceModel premiumServiceModel =  this.premiumService.SimulatePremiumForContract(id);
+            var contract = this.contractService.GetById(id);
+            MoneyInCreateInputModel moneyInCreateInputModel = new MoneyInCreateInputModel()
+            {
+                ContractId = id,
+                OperationAmount=contract.PremiumAmount
+
+            };
+            return this.View(moneyInCreateInputModel);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(PremiumCreateInputModel premiumCreateInputModel)
+        public async Task<IActionResult> Create(MoneyInCreateInputModel moneyInCreateInputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -45,11 +55,13 @@ namespace HealthIns.Web.Controllers
             }
 
 
-            PremiumServiceModel premiumServiceModel = AutoMapper.Mapper.Map<PremiumServiceModel>(premiumCreateInputModel);
-            premiumServiceModel.ContractId = premiumCreateInputModel.Id;
-            premiumServiceModel.Id = 0;
+            MoneyInServiceModel moneyInServiceModel = AutoMapper.Mapper.Map<MoneyInServiceModel>(moneyInCreateInputModel);
+            moneyInServiceModel.ContractId = moneyInCreateInputModel.Id;
+            moneyInServiceModel.Id = 0;
 
-           await this.premiumService.Create(premiumServiceModel);
+           await this.moneyInService.Create(moneyInServiceModel);
+           await this.contractService.TryToApplyFinancial(moneyInServiceModel.ContractId);
+
 
             return this.Redirect("/");
         }

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace HealthIns.Services
 {
-    public interface IPremiumService
+    public interface IMoneyInService
     {
-        IQueryable<PremiumServiceModel> GetAllPremiumsForContract(Contract contract);
+        IQueryable<MoneyInServiceModel> GetAllMoneyInsForContract(Contract contract);
 
-        PremiumServiceModel GetById(long id);
+        MoneyInServiceModel GetById(long id);
 
-        Task<bool> Create(PremiumServiceModel premiumServiceModel);
-        Task<bool> Update(PremiumServiceModel premiumServiceModel);
-        PremiumServiceModel SimulatePremiumForContract(long contractId);
+        Task<bool> Create(MoneyInServiceModel moneyInServiceModel);
+     //   Task<bool> Update(MoneyInServiceModel premiumServiceModel);
+
     }
 }

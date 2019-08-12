@@ -18,5 +18,6 @@ namespace HealthIns.Services
         Task<bool> Update(ContractServiceModel contractServiceModel);
         double ReturnPremiumAmount(Contract contract);
         DateTime CalculateNextBillingDueDate(Contract contract);
+        Task<bool> TryToApplyFinancial(long contractId);
     }
 }

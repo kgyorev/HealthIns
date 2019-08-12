@@ -1,8 +1,54 @@
-﻿
+﻿@model HealthIns.Web.InputModels.Financial.MoneyInCreateInputModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1 class="bg-primary text-white font-weight-bold text-center p-3 w-60 mx-auto rounded">Create Premium</h1>
+<div class="container mt-4">
+    <form class="my-4" method="post" enctype="multipart/form-data">
+        <h2 class="text-center">Create Money In</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="OperationAmount">Money In Amount(in EUR)</label>
+            <input type="number" class="form-control" id="operationAmount" name="operationAmount" input asp-for="OperationAmount" value="@Model.OperationAmount.ToString("F2")">
+            <span asp-validation-for="OperationAmount" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="button" data-toggle="modal" class="btn btn-primary" data-target="#save">
+                Save <i class="fas fa-chevron-circle-right"></i>
+            </button>
+        </div>
+        <div class="modal fade" id="save" tabindex="-1" role="dialog"
+             aria-labelledby="deleteUserLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteUserLabel">This action can't be undone</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to save this money in?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button name="action" value="save" class="btn btn-primary" type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

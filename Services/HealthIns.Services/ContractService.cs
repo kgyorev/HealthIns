@@ -10,12 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models;
+using HealthIns.Data.Models.Financial;
 
 namespace HealthIns.Services
 {
     public class ContractService : IContractService
     {
         private readonly HealthInsDbContext context;
+        private readonly IPremiumService premiumService;
+        private readonly IMoneyInService moneyInService;
 
         public ContractService(HealthInsDbContext context)
         {
@@ -70,7 +73,7 @@ namespace HealthIns.Services
 
         public IQueryable<ContractServiceModel> GetAllContracts()
         {
-            
+
             var contracts = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person);
             var allContracts = contracts.To<ContractServiceModel>();
             return allContracts;
@@ -85,13 +88,13 @@ namespace HealthIns.Services
 
         public double ReturnPremiumAmount(Contract contract)
         {
-            int age = contract.Person.GetAge(contract.StartDate)+1;
+            int age = contract.Person.GetAge(contract.StartDate) + 1;
             int frequencyPeriods = this.GetFrequencyPeriods(contract.Frequency);
             double premiumAmount = age * contract.Amount / (contract.Duration * 12 * 100) / frequencyPeriods;
             return Math.Round(premiumAmount * 100.0) / 100.0;
         }
 
-    public DateTime CalculateNextBillingDueDate(Contract contract)
+        public DateTime CalculateNextBillingDueDate(Contract contract)
         {
             String frequency = contract.Frequency;
             int months = this.GetFrequencyMonths(frequency);
@@ -127,6 +130,22 @@ namespace HealthIns.Services
             }
         }
 
+        public async Task<bool> TryToApplyFinancial(long contractId)
+        {
+         //   var contract = this.context.Contracts.SingleOrDefault(c => c.Id == contractId);
+            Premium pendingPremium =  this.context.Premiums.OrderByDescending(p=>p.StartDate).FirstOrDefault(p => p.Contract.Id == contractId &&p.Status== Data.Models.Financial.Enums.Status.Pending);
+            MoneyIn pendingMoneyIn = this.context.MoneyIns.OrderByDescending(p => p.RecordDate).FirstOrDefault(p => p.Contract.Id == contractId && p.Status == Data.Models.Financial.Enums.Status.Pending);
+
+            if(pendingPremium!=null&& pendingMoneyIn != null)
+            {
+                pendingPremium.Status = Data.Models.Financial.Enums.Status.Paid;
+                pendingPremium.MoneyIn = pendingMoneyIn;
+                pendingMoneyIn.Status = Data.Models.Financial.Enums.Status.Paid;
+                int result = await context.SaveChangesAsync();
+                return result > 0;
+            }
+           return false;
+        }
     }
 }
 

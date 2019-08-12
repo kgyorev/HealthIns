@@ -10,57 +10,58 @@ using HealthIns.Services.Models;
 
 namespace HealthIns.Services
 {
-    public class PremiumService : IPremiumService
+    public class MoneyInService : IMoneyInService
     {
         private readonly HealthInsDbContext context;
         private readonly IContractService contractService;
 
-        public PremiumService(HealthInsDbContext context, IContractService contractService)
+        public MoneyInService(HealthInsDbContext context, IContractService contractService)
         {
             this.context = context;
             this.contractService = contractService;
         }
-        public async Task<bool> Create(PremiumServiceModel premiumServiceModel)
+        public async Task<bool> Create(MoneyInServiceModel moneyInServiceModel)
         {
-            Premium premium = AutoMapper.Mapper.Map<Premium>(premiumServiceModel);
-            Contract contract = this.context.Contracts.SingleOrDefault(p => p.Id == premiumServiceModel.ContractId);
-            premium.Contract = contract;
-            context.Premiums.Add(premium);
-            contract.NextBillingDueDate = this.contractService.CalculateNextBillingDueDate(contract);
+            MoneyIn moneyIn = AutoMapper.Mapper.Map<MoneyIn>(moneyInServiceModel);
+            Contract contract = this.context.Contracts.SingleOrDefault(p => p.Id == moneyInServiceModel.ContractId);
+            moneyIn.Contract = contract;
+            moneyIn.RecordDate = DateTime.UtcNow;
+            moneyIn.Status = HealthIns.Data.Models.Financial.Enums.Status.Pending;
+            context.MoneyIns.Add(moneyIn);
             int result = await context.SaveChangesAsync();
             return result > 0;
         }
 
-        public IQueryable<PremiumServiceModel> GetAllPremiumsForContract(Contract contract)
+        public IQueryable<MoneyInServiceModel> GetAllMoneyInsForContract(Contract contract)
         {
             throw new NotImplementedException();
         }
 
-        public PremiumServiceModel GetById(long id)
+       public MoneyInServiceModel GetById(long id)
         {
             throw new NotImplementedException();
         }
 
-        public PremiumServiceModel SimulatePremiumForContract(long contractId)
-        {
-          ContractServiceModel contractServiceModel =  this.contractService.GetById(contractId);
-            Contract contract = AutoMapper.Mapper.Map<Contract>(contractServiceModel);
+        //public PremiumServiceModel SimulatePremiumForContract(long contractId)
+        //{
+        //  ContractServiceModel contractServiceModel =  this.contractService.GetById(contractId);
+        //    Contract contract = AutoMapper.Mapper.Map<Contract>(contractServiceModel);
 
-            PremiumServiceModel premium = new PremiumServiceModel()
-            {
-                OperationAmount = contract.PremiumAmount,
-                StartDate = contract.NextBillingDueDate,
-                Contract = contract,
-                EndDate = this.contractService.CalculateNextBillingDueDate(contract).AddDays(-1),
-            };
+        //    PremiumServiceModel premium = new PremiumServiceModel()
+        //    {
+        //        OperationAmount = contract.PremiumAmount,
+        //        StartDate = contract.NextBillingDueDate,
+        //        Contract = contract,
+        //        EndDate = this.contractService.CalculateNextBillingDueDate(contract).AddDays(-1),
+        //    };
 
-            return premium;
-        }
+        //    return premium;
+        //}
 
-        public Task<bool> Update(PremiumServiceModel premiumServiceModel)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<bool> Update(PremiumServiceModel premiumServiceModel)
+        //{
+        //    throw new NotImplementedException();
+        //}
         private void TryToPay(Premium premium)
         {
         }

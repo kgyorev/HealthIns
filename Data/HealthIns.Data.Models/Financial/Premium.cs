@@ -9,8 +9,6 @@ namespace HealthIns.Data.Models.Financial
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
-        public Contract Contract { get; set; }
         public MoneyIn MoneyIn { get; set; }
 
     }

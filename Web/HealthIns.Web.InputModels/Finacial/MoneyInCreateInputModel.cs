@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HealthIns.Web.InputModels.Financial
 {
-    public class PremiumCreateInputModel: IMapFrom<PremiumServiceModel>, IMapTo<PremiumServiceModel>
+    public class MoneyInCreateInputModel: IMapFrom<MoneyInServiceModel>, IMapTo<MoneyInServiceModel>
     {
 
         public DateTime RecordDate { get; set; }
@@ -19,7 +19,7 @@ namespace HealthIns.Web.InputModels.Financial
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public long ContractId { get; set; }
-        public long MoneyInId { get; set; }
+   
 
     }
 }

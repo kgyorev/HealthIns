@@ -17,10 +17,12 @@ namespace HealthIns.Web.Controllers
     {
 
         private readonly IPremiumService premiumService;
+        private readonly IContractService contractService;
 
-        public PremiumController(IPremiumService premiumService)
+        public PremiumController(IPremiumService premiumService, IContractService contractService)
         {
             this.premiumService = premiumService;
+            this.contractService = contractService;
         }
 
         [HttpGet(Name = "Create")]
@@ -50,6 +52,7 @@ namespace HealthIns.Web.Controllers
             premiumServiceModel.Id = 0;
 
            await this.premiumService.Create(premiumServiceModel);
+           await this.contractService.TryToApplyFinancial(premiumServiceModel.ContractId);
 
             return this.Redirect("/");
         }

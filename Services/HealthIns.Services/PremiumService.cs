@@ -25,6 +25,8 @@ namespace HealthIns.Services
             Premium premium = AutoMapper.Mapper.Map<Premium>(premiumServiceModel);
             Contract contract = this.context.Contracts.SingleOrDefault(p => p.Id == premiumServiceModel.ContractId);
             premium.Contract = contract;
+            premium.RecordDate = DateTime.UtcNow;
+            premium.Status = HealthIns.Data.Models.Financial.Enums.Status.Pending;
             context.Premiums.Add(premium);
             contract.NextBillingDueDate = this.contractService.CalculateNextBillingDueDate(contract);
             int result = await context.SaveChangesAsync();

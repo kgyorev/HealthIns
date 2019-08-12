@@ -67,7 +67,7 @@ namespace HealthIns.Web
             services.AddTransient<IOrganizationService, OrganizationService>();
             services.AddTransient<IDistributorService, DistributorService>();
             services.AddTransient<IPremiumService, PremiumService>();
-           // services.AddTransient<IMoneyInService, MoneyInService>();
+            services.AddTransient<IMoneyInService, MoneyInService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
