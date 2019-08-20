@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
@@ -19,6 +21,11 @@
     <ProjectReference Include="..\..\Services\HealthIns.Services\HealthIns.Services.csproj" />
     <ProjectReference Include="..\HealthIns.Web.InputModels\HealthIns.Web.InputModels.csproj" />
     <ProjectReference Include="..\HealthIns.Web.ViewModels\HealthIns.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

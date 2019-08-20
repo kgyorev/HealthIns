@@ -35,6 +35,7 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData["info"] = "Contract was NOT created";
                 return this.View();
                 //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
@@ -43,6 +44,8 @@ namespace HealthIns.Web.Controllers
             ContractServiceModel contractServiceModel = AutoMapper.Mapper.Map<ContractServiceModel>(contractCreateInputModel);
 
             await this.contractService.Create(contractServiceModel);
+
+       
 
             return this.Redirect("/");
         }
