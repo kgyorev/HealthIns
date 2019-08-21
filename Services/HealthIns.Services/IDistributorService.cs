@@ -1,4 +1,5 @@
 ﻿using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Distributor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace HealthIns.Services
 
         Task<bool> Create(DistributorServiceModel distributorServiceModel);
         Task<bool> Update(DistributorServiceModel distributorServiceModel);
+        IQueryable<DistributorServiceModel> SearchDistributor(DistributorSearchViewModel distributorSearchModel);
     }
 }

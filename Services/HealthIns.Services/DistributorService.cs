@@ -4,6 +4,8 @@ using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Distributor;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +49,22 @@ namespace HealthIns.Services
             return this.context.Distributors
                 .To<DistributorServiceModel>()
                 .SingleOrDefault(distributor => distributor.Id == id);
+        }
+
+        public IQueryable<DistributorServiceModel> SearchDistributor(DistributorSearchViewModel distributorSearchModel)
+        {
+            string searchBy = distributorSearchModel.SearchBy;
+            string referenceIdStr = distributorSearchModel.ReferenceId;
+            if (referenceIdStr == null || referenceIdStr.Equals(""))
+            {
+                return this.context.Distributors.To<DistributorServiceModel>();
+            }
+            switch (searchBy)
+            {
+                case "userId": return this.context.Distributors.Include(d => d.User).Where(d => d.User.UserName == referenceIdStr).To<DistributorServiceModel>(); 
+                case "organizationId": long.TryParse(distributorSearchModel.ReferenceId, out long referenceId); return this.context.Distributors.Include(d=>d.Organization).Where(d => d.Organization.Id == referenceId).To<DistributorServiceModel>();
+                default: long.TryParse(distributorSearchModel.ReferenceId, out referenceId); return this.context.Distributors.Where(d => d.Id == referenceId).To<DistributorServiceModel>();
+            }
         }
 
         public async Task<bool> Update(DistributorServiceModel distributorServiceModel)

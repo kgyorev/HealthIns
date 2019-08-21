@@ -2,6 +2,7 @@
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Organization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,33 @@ namespace HealthIns.Services
             return this.context.Organizations
                 .To<OrganizationServiceModel>()
                 .SingleOrDefault(org => org.Id == id);
+        }
+
+        public IQueryable<OrganizationServiceModel> SearchOrganization(OrganizationSearchViewModel organizationSearchViewModel)
+        {
+
+            string vat = organizationSearchViewModel.Vat??"";
+            string fullName = organizationSearchViewModel.FullName??"";
+
+            IQueryable<OrganizationServiceModel> organizationAll;
+
+            if (!vat.Equals("") && !fullName.Equals(""))
+            {
+                organizationAll = this.context.Organizations.Where(p => p.Vat == vat && p.FullName.Contains(fullName)).To<OrganizationServiceModel>();
+            }
+            else if (!vat.Equals("") && fullName.Equals(""))
+            {
+                organizationAll = this.context.Organizations.Where(o => o.Vat == vat).To<OrganizationServiceModel>();
+            }
+            else if (vat.Equals("") && !fullName.Equals(""))
+            {
+                organizationAll = this.context.Organizations.Where(o => o.FullName.Contains(fullName)).To<OrganizationServiceModel>();
+            }
+            else
+            {
+                organizationAll = this.GetAllOrganizations();
+            }
+            return organizationAll;
         }
 
         public async Task<bool> Update(OrganizationServiceModel organizationServiceModel)

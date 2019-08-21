@@ -14,12 +14,14 @@ namespace HealthIns.Web.Controllers
 {
     public class ContractController : Controller
     {
-
+        public const string  CONTRACT_CREATED = "Contract with #{0} was created";
         private readonly IContractService contractService;
+        private readonly IProductService productService;
 
-        public ContractController(IContractService contractService)
+        public ContractController(IContractService contractService, IProductService productService)
         {
             this.contractService = contractService;
+            this.productService = productService;
         }
 
         [HttpGet(Name = "Create")]
@@ -35,7 +37,6 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData["info"] = "Contract was NOT created";
                 return this.View();
                 //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
@@ -43,9 +44,19 @@ namespace HealthIns.Web.Controllers
 
             ContractServiceModel contractServiceModel = AutoMapper.Mapper.Map<ContractServiceModel>(contractCreateInputModel);
 
+            var output = this.productService.CheckProductRules(contractServiceModel);
+
+            if (output.Any())
+            {
+
+                this.TempData["error"] = output.FirstOrDefault();
+                return this.View();
+            }
+
+
             await this.contractService.Create(contractServiceModel);
 
-       
+            this.TempData["info"] = String.Format(CONTRACT_CREATED, contractServiceModel.Id);
 
             return this.Redirect("/");
         }
@@ -80,15 +91,24 @@ namespace HealthIns.Web.Controllers
         }
 
         [HttpGet(Name = "Search")]
-        public async Task<IActionResult> Search()
+        public async Task<IActionResult> Search(ContractSearchViewModel contractSearchInputModel)
         {
 
-            List<ContractServiceModel> contractsFromDb = await this.contractService.GetAllContracts().ToListAsync();
 
-            List<ContractViewModel> contractsAll = contractsFromDb
-                .Select(contract => contract.To<ContractViewModel>()).ToList();
+            List<ContractServiceModel> contractsFoundService = await this.contractService.SearchContract(contractSearchInputModel).ToListAsync();
+            List<ContractViewModel> contractsFound = contractsFoundService
+             .Select(d => d.To<ContractViewModel>()).ToList();
+            contractSearchInputModel.ContractsFound = contractsFound;
+            return this.View(contractSearchInputModel);
 
-            return this.View(contractsAll);
+
+
+          //  List<ContractServiceModel> contractsFromDb = await this.contractService.GetAllContracts().ToListAsync();
+          //
+          //  List<ContractViewModel> contractsAll = contractsFromDb
+          //      .Select(contract => contract.To<ContractViewModel>()).ToList();
+          //
+          //  return this.View(contractsAll);
         }
     }
 }

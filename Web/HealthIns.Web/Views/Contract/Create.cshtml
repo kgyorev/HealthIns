@@ -7,7 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="bg-primary text-white font-weight-bold text-center p-3 w-60 mx-auto rounded">Create Product</h1>
 <div class="container mt-4">
     <form class="my-4" method="post" enctype="multipart/form-data">
         <h2 class="text-center">New Business</h2>
@@ -49,7 +48,7 @@
         </div>
         <div class="form-group">
             <label asp-for="Frequency">Frequency</label>
-            <select class="form-control" id="frequency" name="frequency">
+            <select asp-for="Frequency" class="form-control" id="frequency" name="frequency">
                 <option value="MONTHLY" selected="selected">Monthly</option>
                 <option value="TRIMESTER">Trimester</option>
                 <option value="SEMI_ANNUAL">Semi-Annual</option>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models;
 using HealthIns.Data.Models.Financial;
+using HealthIns.Web.ViewModels.Contract;
 
 namespace HealthIns.Services
 {
@@ -46,7 +47,7 @@ namespace HealthIns.Services
 
             context.Contracts.Add(contract);
             int result = await context.SaveChangesAsync();
-
+            contractServiceModel.Id = contract.Id;
             return result > 0;
         }
 
@@ -145,6 +146,31 @@ namespace HealthIns.Services
                 return result > 0;
             }
            return false;
+        }
+
+        public IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel)
+        {
+            string id = contractSearchInputModel.CntrctId;
+            string status = contractSearchInputModel.Status;
+            Status statusParsed = (Status)Enum.Parse(typeof(Status), status);
+            IQueryable<ContractServiceModel> allContractsViewModel;
+            if (!id.Equals("") && !(status == null))
+            {
+                allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Id == long.Parse(id) && c.Status == statusParsed).To<ContractServiceModel>();
+            }
+            else if (!id.Equals("") && status == null)
+            {
+                allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Id == long.Parse(id)).To<ContractServiceModel>();
+            }
+            else if (id.Equals("") && !(status == null))
+            {
+                allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Status == statusParsed).To<ContractServiceModel>();
+            }
+            else
+            {
+                allContractsViewModel = this.GetAllContracts();
+            }
+            return allContractsViewModel;
         }
     }
 }

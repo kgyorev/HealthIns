@@ -1,5 +1,6 @@
 ﻿using HealthIns.Data.Models.Bussines;
 using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,6 @@ namespace HealthIns.Services
         double ReturnPremiumAmount(Contract contract);
         DateTime CalculateNextBillingDueDate(Contract contract);
         Task<bool> TryToApplyFinancial(long contractId);
+        IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel);
     }
 }

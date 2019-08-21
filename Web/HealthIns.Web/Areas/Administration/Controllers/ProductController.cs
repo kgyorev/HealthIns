@@ -33,13 +33,14 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
             if (!this.ModelState.IsValid)
             {
                 return this.View();
-             //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
 
 
             ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
 
-                await this.productService.Create(productServiceModel);
+            string frequencyRule = string.Join(",",productCreateInputModel.FrequencyRule);
+            productServiceModel.FrequencyRule = frequencyRule;
+            await this.productService.Create(productServiceModel);
 
             return this.Redirect("/");
         }

@@ -1,4 +1,5 @@
 ﻿using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Organization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace HealthIns.Services
         Task<bool> Create(OrganizationServiceModel organizationServiceModel);
         IQueryable<OrganizationServiceModel> GetAllOrganizations();
         Task<bool> Update(OrganizationServiceModel organizationServiceModel);
+        IQueryable<OrganizationServiceModel> SearchOrganization(OrganizationSearchViewModel organizationSearchViewModel);
     }
 }

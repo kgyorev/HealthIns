@@ -45,5 +45,45 @@ namespace HealthIns.Services
                 .To<ProductServiceModel>()
                 .SingleOrDefault(product => product.Id == id);
         }
+
+        public List<string> CheckProductRules(ContractServiceModel contract)
+        {
+            var productId = contract.ProductIdntfr;
+            var product =  this.context.Products.SingleOrDefault(p => p.Idntfr == productId);
+
+
+            DateTime startDt = contract.StartDate;
+            List<string> output = new List<string>();
+            if (!product.FrequencyRule.Contains(contract.Frequency.ToString()))
+            {
+                string[] freqRule = product.FrequencyRule.Replace('_','-').Split(",");
+                string concat = "";
+                foreach (var s in freqRule)
+                {
+                    if (freqRule[freqRule.Length - 1].Equals(s))
+                    {
+                        concat += s.First().ToString().ToUpper() + String.Join("", s.ToLower().Skip(1)) + "!";
+                    }
+                    else
+                        concat += s.First().ToString().ToUpper() + String.Join("", s.ToLower().Skip(1)) + ", ";
+                }
+                output.Add("Please fill the form correctly, allowed frequencies for this product are " + concat);
+            }
+            var person = this.context.Persons.SingleOrDefault(p => p.Id == contract.PersonId);
+            int age = person.GetAge(startDt);
+            int maxAge = product.MaxAge;
+            int minAge = product.MinAge;
+            if (age > maxAge)
+            {
+                output.Add(String.Format("Please fill the form correctly, at contract start date Owner is {0} years old, maximum allowed age for this product is {1}!", age, maxAge));
+            }
+            if (age < minAge)
+            {
+                output.Add(String.Format("Please fill the form correctly, at contract start date Owner is {0} years old, minimum allowed age for this product is {1}!", age, minAge));
+            }
+            return output;
+        }
+
+
     }
 }

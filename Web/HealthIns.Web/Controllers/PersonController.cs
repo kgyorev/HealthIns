@@ -74,15 +74,16 @@ namespace HealthIns.Web.Controllers
 
 
         [HttpGet(Name = "Search")]
-        public async Task<IActionResult> Search()
+        public async Task<IActionResult> Search(PersonSearchViewModel personSearchViewModel)
         {
-      
-            List<PersonServiceModel> contractsFromDb = await this.personService.GetAllPersons().ToListAsync();
-      
-            List<PersonViewModel> personsAll = contractsFromDb
-                .Select(person => person.To<PersonViewModel>()).ToList();
-      
-            return this.View(personsAll);
+
+
+
+            List<PersonServiceModel> personsFoundService = await this.personService.SearchPerson(personSearchViewModel).ToListAsync();
+            List<PersonViewModel> personsFound = personsFoundService
+             .Select(d => d.To<PersonViewModel>()).ToList();
+            personSearchViewModel.PersonsFound = personsFound;
+            return this.View(personSearchViewModel);
         }
     }
 }

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\HealthIns.Data\HealthIns.Data.csproj" />
+    <ProjectReference Include="..\..\Web\HealthIns.Web.ViewModels\HealthIns.Web.ViewModels.csproj" />
     <ProjectReference Include="..\HealthIns.Services.Models\HealthIns.Services.Models.csproj" />
   </ItemGroup>
 

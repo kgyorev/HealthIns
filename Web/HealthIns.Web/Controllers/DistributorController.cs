@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
-using HealthIns.Web.InputModels;
+
 using HealthIns.Web.InputModels.Bussines.Distributor;
-using HealthIns.Web.ViewModels.Contract;
+using HealthIns.Web.ViewModels.Distributor;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -74,16 +74,21 @@ namespace HealthIns.Web.Controllers
         //    return this.Redirect("/");
         //}
 
-        //[HttpGet(Name = "Search")]
-        //public async Task<IActionResult> Search()
-        //{
+       [HttpGet(Name = "Search")]
+       public async Task<IActionResult> Search(DistributorSearchViewModel distributorSearchModel)
+       {
 
-        //    List<ContractServiceModel> contractsFromDb = await this.contractService.GetAllContracts().ToListAsync();
+            //  var distributorSearchModel = new DistributorSearchInputModel()
+            //  {
+            //      ReferenceId = "",
+            //      SearchBy = "distributorId"
+            //  };
 
-        //    List<ContractViewModel> contractsAll = contractsFromDb
-        //        .Select(contract => contract.To<ContractViewModel>()).ToList();
-
-        //    return this.View(contractsAll);
-        //}
+            List<DistributorServiceModel> distributorsFoundService=  await this.distributorService.SearchDistributor(distributorSearchModel).ToListAsync();
+            List<DistributorViewModel> distributorsFound = distributorsFoundService
+             .Select(d => d.To<DistributorViewModel>()).ToList();
+           distributorSearchModel.DistributorsFound = distributorsFound;
+           return this.View(distributorSearchModel);
+       }
     }
 }
