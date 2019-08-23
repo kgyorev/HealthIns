@@ -15,7 +15,8 @@ namespace HealthIns.Services
         MoneyInServiceModel GetById(long id);
 
         Task<bool> Create(MoneyInServiceModel moneyInServiceModel);
-     //   Task<bool> Update(MoneyInServiceModel premiumServiceModel);
+        IQueryable<MoneyInServiceModel> FindMoneyInsByContractId(long id);
+        //   Task<bool> Update(MoneyInServiceModel premiumServiceModel);
 
     }
 }

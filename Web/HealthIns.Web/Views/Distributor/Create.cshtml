@@ -11,9 +11,9 @@
         <h2 class="text-center">New Distributor</h2>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="HealthInsUserUserName">User Name</label>
-            <input type="text" class="form-control" id="healthInsUserUserName" name="healthInsUserUserName" input asp-for="HealthInsUserUserName">
-            <span asp-validation-for="HealthInsUserUserName" class="text-danger"></span>
+            <label asp-for="UserUserName">User Name</label>
+            <input type="text" class="form-control" id="userUserName" name="userUserName" input asp-for="UserUserName">
+            <span asp-validation-for="UserUserName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="OrganizationId">Organization Id</label>
@@ -58,6 +58,6 @@
 
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

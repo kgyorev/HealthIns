@@ -1,4 +1,4 @@
-﻿using HealthIns.Data.Models.Bussines;
+﻿using HealthIns.Data.Models.Bussines.Enums;
 using HealthIns.Data.Models.PrsnOrg;
 using System;
 using System.Collections.Generic;

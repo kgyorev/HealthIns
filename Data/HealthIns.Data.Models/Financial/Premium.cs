@@ -10,6 +10,7 @@ namespace HealthIns.Data.Models.Financial
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public MoneyIn MoneyIn { get; set; }
+        public long? MoneyInId { get; set; }
 
     }
 }

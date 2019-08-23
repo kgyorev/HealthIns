@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using HealthIns.Data;
 using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models.Financial;
+using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthIns.Services
 {
@@ -33,10 +35,11 @@ namespace HealthIns.Services
             return result > 0;
         }
 
-        public IQueryable<PremiumServiceModel> GetAllPremiumsForContract(Contract contract)
+        public IQueryable<PremiumServiceModel> FindPremiumsByContractId(long id)
         {
-            throw new NotImplementedException();
+            return context.Premiums.Include(p => p.Contract).Where(p => p.Contract.Id == id).To<PremiumServiceModel>();
         }
+
 
         public PremiumServiceModel GetById(long id)
         {

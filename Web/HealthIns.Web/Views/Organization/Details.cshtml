@@ -1,0 +1,34 @@
+﻿@model HealthIns.Web.InputModels.PersOrg.OrganizationCreateInputModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <form class="my-4" method="post" enctype="multipart/form-data">
+        <h2 class="text-center">New Organization</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FullName">Name</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" input asp-for="FullName">
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Vat">Vat</label>
+            <input type="text" class="form-control" id="vat" name="vat" input asp-for="Vat">
+            <span asp-validation-for="Vat" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate">Creation Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Return</button>
+        </div>
+    </form>
+</div>
+
+

@@ -8,8 +8,9 @@ using System.Text;
 
 namespace HealthIns.Web.InputModels.Bussines
 {
-   public class ProductCreateInputModel : IMapTo<ProductServiceModel>, IHaveCustomMappings
+   public class ProductCreateInputModel : IMapTo<ProductServiceModel>, IMapFrom<ProductServiceModel>
     {
+        public long Id { get; set; }
         [Required(ErrorMessage = "Product Identifyer is required!")]
         public string Idntfr { get; set; }
 
@@ -26,13 +27,5 @@ namespace HealthIns.Web.InputModels.Bussines
 
         [Required(ErrorMessage = "Frequency is required!")]
         public List<string> FrequencyRule { get; set; }
-
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration
-                .CreateMap<ProductCreateInputModel, ProductServiceModel>();
-        }
-
     }
 }

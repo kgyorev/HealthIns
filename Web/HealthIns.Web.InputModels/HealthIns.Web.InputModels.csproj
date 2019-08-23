@@ -6,11 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Services\HealthIns.Services.Mapping\HealthIns.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\HealthIns.Services.Models\HealthIns.Services.Models.csproj" />
+    <ProjectReference Include="..\..\Services\HealthIns.Services\HealthIns.Services.csproj" />
   </ItemGroup>
 
 </Project>

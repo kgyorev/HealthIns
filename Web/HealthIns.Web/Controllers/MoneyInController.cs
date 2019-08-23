@@ -9,11 +9,13 @@ using HealthIns.Services.Models;
 using HealthIns.Web.InputModels.Bussines.Contract;
 using HealthIns.Web.InputModels.Financial;
 using HealthIns.Web.ViewModels.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthIns.Web.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class MoneyInController : Controller
     {
 
@@ -63,7 +65,7 @@ namespace HealthIns.Web.Controllers
            await this.contractService.TryToApplyFinancial(moneyInServiceModel.ContractId);
 
 
-            return this.Redirect("/");
+            return this.Redirect($"/Contract/Details/{moneyInServiceModel.ContractId}");
         }
 
 

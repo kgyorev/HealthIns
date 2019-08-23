@@ -1,4 +1,5 @@
 ﻿using HealthIns.Data.Models.Bussines;
+using HealthIns.Data.Models.Bussines.Enums;
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using System;

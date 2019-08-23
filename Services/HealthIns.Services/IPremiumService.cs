@@ -10,12 +10,12 @@ namespace HealthIns.Services
 {
     public interface IPremiumService
     {
-        IQueryable<PremiumServiceModel> GetAllPremiumsForContract(Contract contract);
 
         PremiumServiceModel GetById(long id);
 
         Task<bool> Create(PremiumServiceModel premiumServiceModel);
         Task<bool> Update(PremiumServiceModel premiumServiceModel);
         PremiumServiceModel SimulatePremiumForContract(long contractId);
+        IQueryable<PremiumServiceModel> FindPremiumsByContractId(long id);
     }
 }

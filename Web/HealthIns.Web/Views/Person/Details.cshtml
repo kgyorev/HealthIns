@@ -1,0 +1,45 @@
+﻿@model HealthIns.Web.InputModels.PersOrg.PersonCreateInputModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <form class="my-4" enctype="multipart/form-data" action="/Person/Search">
+        <h2 class="text-center">Information for Person ID: @Model.Id</h2>
+        <div class="form-group">
+            <label asp-for="FullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" input asp-for="FullName" disabled>
+        </div>
+        <div class="form-group">
+            <label asp-for="Egn">EGN</label>
+            <input type="text" class="form-control" id="egn" name="egn" input asp-for="Egn" disabled>
+        </div>
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="smoker" id="issmoker" asp-for="Smoker" value="true" disabled>
+            <label class="custom-control-label" for="issmoker">is smoker?</label>
+        </div>
+        <fieldset class="form-group">
+            <legend>gender</legend>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" asp-for="Sex" id="male" name="sex" value="male" disabled>
+                <label class="custom-control-label" for="male">male</label>
+            </div>
+            <div class="custom-control custom-radio mb-3">
+                <input type="radio" class="custom-control-input" asp-for="Sex" id="female" name="sex" value="female" disabled>
+                <label class="custom-control-label" for="female">female</label>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <label asp-for="StartDate">Birth Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" asp-for="StartDate" disabled>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Return</button>
+        </div>
+    </form>
+</div>
+
+
+

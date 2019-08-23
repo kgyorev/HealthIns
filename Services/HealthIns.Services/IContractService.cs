@@ -21,5 +21,6 @@ namespace HealthIns.Services
         DateTime CalculateNextBillingDueDate(Contract contract);
         Task<bool> TryToApplyFinancial(long contractId);
         IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel);
+        IQueryable<ContractServiceModel> FindContractsByDistributorId(long id);
     }
 }

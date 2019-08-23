@@ -8,11 +8,13 @@ using HealthIns.Services.Models;
 using HealthIns.Web.InputModels.Bussines.Contract;
 using HealthIns.Web.InputModels.Financial;
 using HealthIns.Web.ViewModels.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthIns.Web.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class PremiumController : Controller
     {
 
@@ -54,7 +56,7 @@ namespace HealthIns.Web.Controllers
            await this.premiumService.Create(premiumServiceModel);
            await this.contractService.TryToApplyFinancial(premiumServiceModel.ContractId);
 
-            return this.Redirect("/");
+            return this.Redirect($"/Contract/Details/{premiumServiceModel.ContractId}");
         }
 
 

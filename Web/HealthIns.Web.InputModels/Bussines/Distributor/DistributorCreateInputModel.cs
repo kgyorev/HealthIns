@@ -12,7 +12,7 @@ namespace HealthIns.Web.InputModels.Bussines.Distributor
         public long Id { get; set; }
 
         [Required(ErrorMessage = "User Name is required!")]
-        public string HealthInsUserUserName { get; set; }
+        public string UserUserName { get; set; }
         [Required(ErrorMessage = "Organization Id is required!")]
         public long OrganizationId { get; set; }
         [Required(ErrorMessage = "Full Name is required!")]

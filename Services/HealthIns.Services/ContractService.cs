@@ -12,6 +12,7 @@ using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models;
 using HealthIns.Data.Models.Financial;
 using HealthIns.Web.ViewModels.Contract;
+using HealthIns.Data.Models.Bussines.Enums;
 
 namespace HealthIns.Services
 {
@@ -39,7 +40,7 @@ namespace HealthIns.Services
             contract.Distributor = distributor;
             contract.Status = Status.InForce;
             contract.CreationDate = DateTime.Now;
-
+            contract.EndDate = contract.StartDate.AddYears(contract.Duration);
             var premiumAmount = this.ReturnPremiumAmount(contract);
             contract.PremiumAmount = premiumAmount;
 
@@ -54,19 +55,21 @@ namespace HealthIns.Services
         public async Task<bool> Update(ContractServiceModel contractServiceModel)
         {
 
-            Contract contract = AutoMapper.Mapper.Map<Contract>(contractServiceModel);
-
-            Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
-            Person person = this.context.Persons.SingleOrDefault(p => p.Id == contractServiceModel.PersonId);
+            Contract contractDB = this.context.Contracts.Include(c=>c.Person).Include(c=>c.Product).SingleOrDefault(p => p.Id == contractServiceModel.Id);
+            //Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
+            //Person person = this.context.Persons.SingleOrDefault(p => p.Id == contractServiceModel.PersonId);
             Distributor distributor = this.context.Distributors.SingleOrDefault(d => d.Id == contractServiceModel.DistributorId);
-            contract.Product = product;
-            contract.Person = person;
-            contract.Distributor = distributor;
+            contractDB.Distributor = distributor;
             //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
 
-            var premiumAmount = this.ReturnPremiumAmount(contract);
-            contract.PremiumAmount = premiumAmount;
-            context.Update(contract);
+
+            //contractDB.Status = contractDB.Status;
+            // contractDB.CreationDate = contractDB.CreationDate;
+            contractDB.Frequency = contractServiceModel.Frequency;
+            contractDB.EndDate = contractServiceModel.StartDate.AddYears(contractServiceModel.Duration);
+            var premiumAmount = this.ReturnPremiumAmount(contractDB);
+            contractDB.PremiumAmount = premiumAmount;
+            context.Update(contractDB);
             int result = await context.SaveChangesAsync();
 
             return result > 0;
@@ -134,8 +137,8 @@ namespace HealthIns.Services
         public async Task<bool> TryToApplyFinancial(long contractId)
         {
          //   var contract = this.context.Contracts.SingleOrDefault(c => c.Id == contractId);
-            Premium pendingPremium =  this.context.Premiums.OrderByDescending(p=>p.StartDate).FirstOrDefault(p => p.Contract.Id == contractId &&p.Status== Data.Models.Financial.Enums.Status.Pending);
-            MoneyIn pendingMoneyIn = this.context.MoneyIns.OrderByDescending(p => p.RecordDate).FirstOrDefault(p => p.Contract.Id == contractId && p.Status == Data.Models.Financial.Enums.Status.Pending);
+            Premium pendingPremium =  this.context.Premiums.OrderBy(p=>p.StartDate).FirstOrDefault(p => p.Contract.Id == contractId &&p.Status== Data.Models.Financial.Enums.Status.Pending);
+            MoneyIn pendingMoneyIn = this.context.MoneyIns.OrderBy(p => p.RecordDate).FirstOrDefault(p => p.Contract.Id == contractId && p.Status == Data.Models.Financial.Enums.Status.Pending);
 
             if(pendingPremium!=null&& pendingMoneyIn != null)
             {
@@ -150,7 +153,7 @@ namespace HealthIns.Services
 
         public IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel)
         {
-            string id = contractSearchInputModel.CntrctId;
+            string id = contractSearchInputModel.CntrctId??"";
             string status = contractSearchInputModel.Status;
             Status statusParsed = (Status)Enum.Parse(typeof(Status), status);
             IQueryable<ContractServiceModel> allContractsViewModel;
@@ -171,6 +174,12 @@ namespace HealthIns.Services
                 allContractsViewModel = this.GetAllContracts();
             }
             return allContractsViewModel;
+        }
+
+        public IQueryable<ContractServiceModel> FindContractsByDistributorId(long id)
+        {
+            var allContracts = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Include(dist => dist.Distributor).Where(c => c.Distributor.Id==id).To<ContractServiceModel>();
+            return allContracts;
         }
     }
 }

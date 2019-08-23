@@ -2,6 +2,7 @@
 using HealthIns.Data.Models.Bussines;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,29 @@ namespace HealthIns.Services
             return output;
         }
 
+        public IQueryable<ProductServiceModel> SearchProduct(ProductSearchViewModel productSearchInputModel)
+        {
+            string idntfr = productSearchInputModel.Idntfr??"";
+            IQueryable<ProductServiceModel> allProductsViewModel;
+            if (!idntfr.Equals(""))
+            {
+                allProductsViewModel = this.context.Products.Where(p=>p.Idntfr.Contains(idntfr)).To<ProductServiceModel>();
+            }
+            else
+            {
+                allProductsViewModel = this.GetAllProducts();
+            }
+            return allProductsViewModel;
+        }
 
+        public async Task<bool> Update(ProductServiceModel productServiceModel)
+        {
+
+            Product product = AutoMapper.Mapper.Map<Product>(productServiceModel);
+            context.Update(product);
+            int result = await context.SaveChangesAsync();
+
+            return result > 0;
+        }
     }
 }

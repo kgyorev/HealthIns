@@ -10,9 +10,11 @@ namespace HealthIns.Services
 {
     public interface IOrganizationService
     {
+        OrganizationServiceModel GetById(long id);
         Task<bool> Create(OrganizationServiceModel organizationServiceModel);
         IQueryable<OrganizationServiceModel> GetAllOrganizations();
         Task<bool> Update(OrganizationServiceModel organizationServiceModel);
         IQueryable<OrganizationServiceModel> SearchOrganization(OrganizationSearchViewModel organizationSearchViewModel);
+        bool VerifyVat(string vat);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HealthIns.Services.Models;
+using HealthIns.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace HealthIns.Services
 
         Task<bool> Create(ProductServiceModel productServiceModel);
         List<string> CheckProductRules(ContractServiceModel contract);
+        IQueryable<ProductServiceModel> SearchProduct(ProductSearchViewModel productSearchInputModel);
+        Task<bool> Update(ProductServiceModel productServiceModel);
     }
 }

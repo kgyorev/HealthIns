@@ -29,6 +29,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
+                <th scope="col">Organization Full Name</th>
+                <th scope="col">Creation Date</th>
                 <th scope="col">VAT</th>
                 <th scope="col">Action</th>
             </tr>
@@ -36,23 +38,25 @@
         <tbody>
             @for (int i = 0; i < Model.OrganizationsFound.Count; i++)
             {
-                <tr>
-                    <th scope="row">@(i + 1)</th>
-                    <th>@Model.OrganizationsFound[i].Id</th>
-                    <td>@Model.OrganizationsFound[i].Vat</td>
-                    <td>
-                        <a href="/Organization/Details/@Model.OrganizationsFound[i].Id">
-                            <i class="fas fa-binoculars"
-                               title="Organization details"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/Organization/Edit/@Model.OrganizationsFound[i].Id">
-                            <i class="fas fa-edit"
-                               title="Edit organization"></i>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <th scope="row">@(i + 1)</th>
+                <th>@Model.OrganizationsFound[i].Id</th>
+                <td>@Model.OrganizationsFound[i].FullName</td>
+                <td>@Model.OrganizationsFound[i].StartDate.ToShortDateString()</td>
+                <td>@Model.OrganizationsFound[i].Vat</td>
+                <td>
+                    <a href="/Organization/Details/@Model.OrganizationsFound[i].Id">
+                        <i class="fas fa-binoculars"
+                           title="Organization details"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/Organization/Edit/@Model.OrganizationsFound[i].Id">
+                        <i class="fas fa-edit"
+                           title="Edit organization"></i>
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

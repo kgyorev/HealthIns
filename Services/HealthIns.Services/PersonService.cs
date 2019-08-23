@@ -25,6 +25,7 @@ namespace HealthIns.Services
             Person person = AutoMapper.Mapper.Map<Person>(personServiceModel);
             context.Persons.Add(person);
             int result = await context.SaveChangesAsync();
+            personServiceModel.Id = person.Id;
             return result > 0;
         }
 
@@ -74,6 +75,11 @@ namespace HealthIns.Services
             context.Update(person);
             int result = await context.SaveChangesAsync();
             return result > 0;
+        }
+
+        public bool VerifyEgn(string egn)
+        {
+            return this.context.Persons.Where(person => person.Egn == egn).ToList().Any();
         }
     }
 }

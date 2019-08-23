@@ -1,0 +1,46 @@
+﻿@model HealthIns.Web.InputModels.Bussines.ProductCreateInputModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container mt-4">
+        <form class="my-4" enctype="multipart/form-data">
+            <h2 class="text-center">Information for Product Identifier: @Model.Idntfr</h2>
+            <div class="form-group">
+                <label asp-for="Idntfr">Product Identifier</label>
+                <input type="text" class="form-control" id="idntfr" name="idntfr" input asp-for="Idntfr" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="Label">Product Label</label>
+                <input type="text" class="form-control" id="label" name="label" input asp-for="Label" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinAge">Minimum Owner Age</label>
+                <input type="number" class="form-control" id="minAge" name="minAge" input asp-for="MinAge" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxAge">Maximum Owner Age</label>
+                <input type="number" class="form-control" id="maxAge" name="maxAge" input asp-for="MaxAge" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrequencyRule">Frequency</label>
+                <select multiple="multiple" class="form-control" id="frequencyRule" name="frequencyRule" input asp-for="FrequencyRule" readonly>
+                        <option value="MONTHLY">Monthly</option>
+                        <option value="TRIMESTER">Trimester</option>
+                        <option value="SEMI_ANNUAL">Semi-Annual</option>
+                        <option value="ANUAL">Annual</option>
+                    </select>
+            </div>
+        </form>
+        <form action="/Administration/Product/Search">
+            <div class="text-center">
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fas fa-chevron-circle-left"></i> Return
+                </button>
+            </div>
+        </form>
+    </div>
+

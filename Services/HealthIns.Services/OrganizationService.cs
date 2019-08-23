@@ -25,6 +25,7 @@ namespace HealthIns.Services
             Organization org = AutoMapper.Mapper.Map<Organization>(organizationServiceModel);
             context.Organizations.Add(org);
             int result = await context.SaveChangesAsync();
+            organizationServiceModel.Id = org.Id;
             return result > 0;
         }
 
@@ -75,6 +76,10 @@ namespace HealthIns.Services
             context.Update(org);
             int result = await context.SaveChangesAsync();
             return result > 0;
+        }
+        public bool VerifyVat(string vat)
+        {
+            return this.context.Organizations.Where(org => org.Vat == vat).ToList().Any();
         }
     }
 }

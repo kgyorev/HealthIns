@@ -1,0 +1,73 @@
+﻿@model HealthIns.Web.InputModels.Bussines.ProductCreateInputModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <form class="my-4" method="post" enctype="multipart/form-data">
+        <h2 class="text-center">New Product</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Idntfr">Product Identifier</label>
+            <input type="text" class="form-control" id="idntfr" name="idntfr" input asp-for="Idntfr">
+            <span asp-validation-for="Idntfr" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Label">Product Label</label>
+            <input type="text" class="form-control" id="label" name="label" input asp-for="Label">
+            <span asp-validation-for="Label" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinAge">Minimum Owner Age</label>
+            <input type="number" class="form-control" id="minAge" name="minAge" input asp-for="MinAge">
+            <span asp-validation-for="MinAge" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxAge">Maximum Owner Age</label>
+            <input type="number" class="form-control" id="maxAge" name="maxAge" input asp-for="MaxAge">
+            <span asp-validation-for="MaxAge" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FrequencyRule">Frequency</label>
+            <select multiple="multiple" class="form-control" id="frequencyRule" name="frequencyRule" input asp-for="FrequencyRule">
+                <option value="MONTHLY">Monthly</option>
+                <option value="TRIMESTER">Trimester</option>
+                <option value="SEMI_ANNUAL">Semi-Annual</option>
+                <option value="ANUAL">Annual</option>
+            </select>
+            <span asp-validation-for="FrequencyRule" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="button" data-toggle="modal" class="btn btn-primary" data-target="#save">
+                Save <i class="fas fa-chevron-circle-right"></i>
+            </button>
+        </div>
+        <div class="modal fade" id="save" tabindex="-1" role="dialog"
+             aria-labelledby="deleteUserLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteUserLabel">This action can't be undone</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to save this product?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button name="action" value="save" class="btn btn-primary" type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+

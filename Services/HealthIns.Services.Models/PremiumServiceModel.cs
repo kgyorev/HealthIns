@@ -1,5 +1,6 @@
 ﻿using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models.Financial;
+using HealthIns.Data.Models.Financial.Enums;
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using System;

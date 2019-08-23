@@ -147,7 +147,9 @@ namespace HealthIns.Data.Migrations
 
                     b.HasIndex("ContractId");
 
-                    b.HasIndex("MoneyInId");
+                    b.HasIndex("MoneyInId")
+                        .IsUnique()
+                        .HasFilter("[MoneyInId] IS NOT NULL");
 
                     b.ToTable("Premiums");
                 });
@@ -397,8 +399,8 @@ namespace HealthIns.Data.Migrations
                         .HasForeignKey("ContractId");
 
                     b.HasOne("HealthIns.Data.Models.Financial.MoneyIn", "MoneyIn")
-                        .WithMany()
-                        .HasForeignKey("MoneyInId");
+                        .WithOne("Premium")
+                        .HasForeignKey("HealthIns.Data.Models.Financial.Premium", "MoneyInId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -27,7 +27,7 @@ namespace HealthIns.Services
         {
             Distributor distributor = AutoMapper.Mapper.Map<Distributor>(distributorServiceModel);
 
-            HealthInsUser user = this.context.Users.SingleOrDefault(p => p.UserName == distributorServiceModel.HealthInsUserUserName);
+            HealthInsUser user = this.context.Users.SingleOrDefault(p => p.UserName == distributorServiceModel.UserUserName);
             Organization org = this.context.Organizations.SingleOrDefault(p => p.Id == distributorServiceModel.OrganizationId);
             distributor.User = user;
             distributor.Organization = org;
@@ -46,7 +46,7 @@ namespace HealthIns.Services
 
         public DistributorServiceModel GetById(long id)
         {
-            return this.context.Distributors
+            return this.context.Distributors.Include(d => d.User)
                 .To<DistributorServiceModel>()
                 .SingleOrDefault(distributor => distributor.Id == id);
         }
@@ -70,6 +70,10 @@ namespace HealthIns.Services
         public async Task<bool> Update(DistributorServiceModel distributorServiceModel)
         {
             Distributor distributor = AutoMapper.Mapper.Map<Distributor>(distributorServiceModel);
+            HealthInsUser user = this.context.Users.SingleOrDefault(p => p.UserName == distributorServiceModel.UserUserName);
+            Organization org = this.context.Organizations.SingleOrDefault(p => p.Id == distributorServiceModel.OrganizationId);
+            distributor.User = user;
+            distributor.Organization = org;
             context.Update(distributor);
             int result = await context.SaveChangesAsync();
             return result > 0;

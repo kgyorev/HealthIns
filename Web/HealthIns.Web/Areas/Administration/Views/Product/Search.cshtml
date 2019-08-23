@@ -1,0 +1,57 @@
+﻿@model HealthIns.Web.ViewModels.Product.ProductSearchViewModel
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container col-sm-4 mt-3">
+    <form method="GET" action="/Administration/Product/Search">
+        <div class="form-group">
+            <label asp-for="Idntfr">Product Identifier</label>
+            <input asp-for="Idntfr" type="text" class="form-control" id="cntrctId" value="@Model.Idntfr" name="Idntfr" placeholder="Search by Product Identifier...">
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i>Search</button>
+                <a class="btn btn-outline-secondary" href="/Administration/Product/Search" type="submit"><i class="fas fa-eraser"></i>Reset</a>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="table-responsive-sm">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Identifier</th>
+                <th scope="col">Label</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ProductsFound.Count; i++)
+            {
+            <tr>
+                <th scope="row">@(i + 1)</th>
+                <th>@Model.ProductsFound[i].Id</th>
+                <td>@Model.ProductsFound[i].Idntfr</td>
+                <td>@Model.ProductsFound[i].Label</td>
+                <td>
+                    <a href="/Administration/Product/Details/@Model.ProductsFound[i].Id">
+                        <i class="fas fa-binoculars"
+                           title="Product details"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/Administration/Product/Edit/@Model.ProductsFound[i].Id">
+                        <i class="fas fa-edit"
+                           title="Edit product"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

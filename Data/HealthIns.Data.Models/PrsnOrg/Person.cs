@@ -15,6 +15,10 @@ namespace HealthIns.Data.Models.PrsnOrg
         public int GetAge()
         {
             DateTime zeroTime = new DateTime(1, 1, 1);
+            if (DateTime.Now <= this.StartDate)
+            {
+                return 0;
+            }
             TimeSpan span = DateTime.Now - this.StartDate;
             int years = (zeroTime + span).Year - 1;
             return years;
@@ -23,6 +27,10 @@ namespace HealthIns.Data.Models.PrsnOrg
         public int GetAge(DateTime currentDate)
         {
             DateTime zeroTime = new DateTime(1, 1, 1);
+            if(currentDate<= this.StartDate)
+            {
+                return 0;
+            }
             TimeSpan span = currentDate - this.StartDate;
             int years = (zeroTime + span).Year - 1;
             return years;

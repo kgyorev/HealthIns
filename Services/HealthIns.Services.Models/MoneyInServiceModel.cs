@@ -1,5 +1,6 @@
 ﻿using HealthIns.Data.Models.Bussines;
 using HealthIns.Data.Models.Financial;
+using HealthIns.Data.Models.Financial.Enums;
 using HealthIns.Data.Models.PrsnOrg;
 using HealthIns.Services.Mapping;
 using System;
@@ -18,6 +19,8 @@ namespace HealthIns.Services.Models
         public DateTime EndDate { get; set; }
         public Contract Contract { get; set; }
         public long ContractId { get; set; }
+        public Premium Premium { get; set; }
+        public long PremiumId { get; set; }
 
     }
 }
