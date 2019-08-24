@@ -18,10 +18,10 @@ namespace HealthIns.Web.Controllers
     [Authorize(Roles = "Admin,User")]
     public class DistributorController : Controller
     {
-
+        public const string DISTRIBUTOR_CREATED = "Distributor with #{0} was created";
+        public const string DISTRIBUTOR_UPDATED = "Distributor with #{0} was updated";
         private readonly IDistributorService distributorService;
         private readonly IContractService contractService;
-
         public DistributorController(IDistributorService distributorService, IContractService contractService)
         {
             this.distributorService = distributorService;
@@ -31,11 +31,8 @@ namespace HealthIns.Web.Controllers
         [HttpGet(Name = "Create")]
         public async Task<IActionResult> Create()
         {
-
             return this.View();
         }
-
-
         [HttpPost]
         public async Task<IActionResult> Create(DistributorCreateInputModel distributorCreateInputModel)
         {
@@ -43,21 +40,16 @@ namespace HealthIns.Web.Controllers
             {
                 return this.View();
             }
-
-
             DistributorServiceModel distributorServiceModel = AutoMapper.Mapper.Map<DistributorServiceModel>(distributorCreateInputModel);
             await this.distributorService.Create(distributorServiceModel);
+            this.TempData["info"] = String.Format(DISTRIBUTOR_CREATED, distributorServiceModel.Id);
             return this.Redirect("/");
         }
-
-
         [HttpGet]
         public async Task<IActionResult> Edit(long Id)
         {
             DistributorServiceModel distributorFromDB = this.distributorService.GetById(Id);
-
             DistributorCreateInputModel distributor = distributorFromDB.To<DistributorCreateInputModel>();
-
             return this.View(distributor);
         }
         [HttpPost]
@@ -67,29 +59,19 @@ namespace HealthIns.Web.Controllers
             {
                 return this.View();
             }
-
-
             DistributorServiceModel distributorServiceModel = AutoMapper.Mapper.Map<DistributorServiceModel>(distributorCreateInputModel);
-
             await this.distributorService.Update(distributorServiceModel);
-           // this.TempData["info"] = String.Format(UPDATED_Distributor, distributorServiceModel.Id);
-            return this.Redirect("/");
+            this.TempData["info"] = String.Format(DISTRIBUTOR_UPDATED, distributorServiceModel.Id);
+            return this.Redirect("Distributor/Search");
         }
-
-
-
         [HttpGet]
         public async Task<IActionResult> Details(DistributorViewModel distributorViewModel)
         {
             DistributorServiceModel distributorFromDB = this.distributorService.GetById(distributorViewModel.Id);
-
             List<ContractServiceModel> contractsForDistributorServiceModel = await this.contractService.FindContractsByDistributorId(distributorViewModel.Id).ToListAsync();
-
             List<ContractViewModel> contractsForDistributorViewModel = AutoMapper.Mapper.Map<List<ContractViewModel>>(contractsForDistributorServiceModel);
-
             DistributorViewModel distributor =distributorFromDB.To<DistributorViewModel>();
             distributor.ContractsFound = contractsForDistributorViewModel;
-
             distributor.SelectedTab = distributorViewModel.SelectedTab;
             return this.View(distributor);
         }
@@ -97,13 +79,6 @@ namespace HealthIns.Web.Controllers
         [HttpGet(Name = "Search")]
        public async Task<IActionResult> Search(DistributorSearchViewModel distributorSearchModel)
        {
-
-            //  var distributorSearchModel = new DistributorSearchInputModel()
-            //  {
-            //      ReferenceId = "",
-            //      SearchBy = "distributorId"
-            //  };
-
             List<DistributorServiceModel> distributorsFoundService=  await this.distributorService.SearchDistributor(distributorSearchModel).ToListAsync();
             List<DistributorViewModel> distributorsFound = distributorsFoundService
              .Select(d => d.To<DistributorViewModel>()).ToList();

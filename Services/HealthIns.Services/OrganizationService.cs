@@ -77,9 +77,9 @@ namespace HealthIns.Services
             int result = await context.SaveChangesAsync();
             return result > 0;
         }
-        public bool VerifyVat(string vat)
+        public OrganizationServiceModel VerifyVat(string vat)
         {
-            return this.context.Organizations.Where(org => org.Vat == vat).ToList().Any();
+            return this.context.Organizations.Where(org => org.Vat == vat).To<OrganizationServiceModel>().SingleOrDefault();
         }
     }
 }

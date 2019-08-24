@@ -24,7 +24,7 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGet()
         {
             await _signInManager.SignOutAsync();
-
+            this.TempData["info"] = String.Format("Logut Successful!");
             return Redirect("/Identity/Account/Login");
         }
     }

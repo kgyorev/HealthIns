@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.InputModels.Utils.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,7 @@ namespace HealthIns.Web.InputModels.Bussines
     {
         public long Id { get; set; }
         [Required(ErrorMessage = "Product Identifyer is required!")]
+        [ProductIdntfrUniqeValidator]
         public string Idntfr { get; set; }
 
         [Required(ErrorMessage = "Label is required!")]

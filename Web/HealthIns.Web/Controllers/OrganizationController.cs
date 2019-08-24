@@ -29,7 +29,6 @@ namespace HealthIns.Web.Controllers
         [HttpGet(Name = "Create")]
         public async Task<IActionResult> Create()
         {
-
             return this.View();
         }
 
@@ -41,14 +40,7 @@ namespace HealthIns.Web.Controllers
             {
                 return this.View();
             }
-
-            if (this.organizationService.VerifyVat(organizationCreateInputModel.Vat))
-            {
-                this.TempData["error"] = ORG_VAT_EXISTS;
-                return this.View();
-            }
             OrganizationServiceModel organizationServiceModel = AutoMapper.Mapper.Map<OrganizationServiceModel>(organizationCreateInputModel);
-      
             await this.organizationService.Create(organizationServiceModel);
             this.TempData["info"] = String.Format(CREATED_ORG, organizationServiceModel.Id);
             return this.Redirect("/");
@@ -57,9 +49,7 @@ namespace HealthIns.Web.Controllers
         public async Task<IActionResult> Edit(long Id)
         {
             OrganizationServiceModel organizationFromDB = this.organizationService.GetById(Id);
-
             OrganizationCreateInputModel org = organizationFromDB.To<OrganizationCreateInputModel>();
-
             return this.View(org);
         }
         [HttpPost]
@@ -68,15 +58,11 @@ namespace HealthIns.Web.Controllers
             if (!this.ModelState.IsValid)
             {
                 return this.View();
-                //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
-
-
             OrganizationServiceModel organizationServiceModel = AutoMapper.Mapper.Map<OrganizationServiceModel>(organizationCreateInputModel);
-
             await this.organizationService.Update(organizationServiceModel);
             this.TempData["info"] = String.Format(UPDATED_ORG, organizationServiceModel.Id);
-            return this.Redirect("/");
+            return this.Redirect("Organization/Search");
         }
 
         [HttpGet(Name = "Search")]

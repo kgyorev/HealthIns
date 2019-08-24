@@ -73,11 +73,13 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    this.TempData["info"] = String.Format("Login Successful!");
                     return Redirect(returnUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                   // ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    this.TempData["info"] = String.Format("Invalid login attempt!");
                     return Page();
                 }
             }

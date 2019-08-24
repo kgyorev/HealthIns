@@ -77,9 +77,9 @@ namespace HealthIns.Services
             return result > 0;
         }
 
-        public bool VerifyEgn(string egn)
+        public PersonServiceModel VerifyEgn(string egn)
         {
-            return this.context.Persons.Where(person => person.Egn == egn).ToList().Any();
+            return this.context.Persons.Where(person => person.Egn == egn).To<PersonServiceModel>().SingleOrDefault();
         }
     }
 }

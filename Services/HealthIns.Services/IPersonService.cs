@@ -17,6 +17,6 @@ namespace HealthIns.Services
         Task<bool> Create(PersonServiceModel personServiceModel);
         Task<bool> Update(PersonServiceModel personServiceModel);
         IQueryable<PersonServiceModel> SearchPerson(PersonSearchViewModel personSearchViewModel);
-        bool VerifyEgn(string egn);
+        PersonServiceModel VerifyEgn(string egn);
     }
 }

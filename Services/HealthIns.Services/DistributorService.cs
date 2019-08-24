@@ -7,9 +7,7 @@ using HealthIns.Services.Models;
 using HealthIns.Web.ViewModels.Distributor;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HealthIns.Services
@@ -31,7 +29,6 @@ namespace HealthIns.Services
             Organization org = this.context.Organizations.SingleOrDefault(p => p.Id == distributorServiceModel.OrganizationId);
             distributor.User = user;
             distributor.Organization = org;
-
             context.Distributors.Add(distributor);
             int result = await context.SaveChangesAsync();
             return result > 0;

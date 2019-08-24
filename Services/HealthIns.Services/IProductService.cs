@@ -17,5 +17,6 @@ namespace HealthIns.Services
         List<string> CheckProductRules(ContractServiceModel contract);
         IQueryable<ProductServiceModel> SearchProduct(ProductSearchViewModel productSearchInputModel);
         Task<bool> Update(ProductServiceModel productServiceModel);
+        ProductServiceModel GetByIdntfr(string productIdntfr);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.InputModels.Utils.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace HealthIns.Web.InputModels.PersOrg
         [Required(ErrorMessage = "Full Name is required!")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "EGN is required!")]
+        [PersonEgnUniqeValidator]
         public string Egn { get; set; }
 
         public string Smoker { get; set; }

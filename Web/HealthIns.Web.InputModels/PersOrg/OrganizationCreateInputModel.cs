@@ -1,5 +1,6 @@
 ﻿using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
+using HealthIns.Web.InputModels.Utils.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace HealthIns.Web.InputModels.PersOrg
         [Required(ErrorMessage = "Full Name is required!")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "Vat is required!")]
+        [OrganizationVatUniqeValidator]
         public string Vat { get; set; }
         [Required(ErrorMessage = "Start Date is required!")]
         public DateTime StartDate { get; set; }

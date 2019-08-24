@@ -6,7 +6,6 @@ namespace HealthIns.Data.Models.Bussines
 {
     public class Product : BaseModel<long>
     { 
-        //public long Id { get; set; }
         public string Idntfr { get; set; }
         public string Label { get; set; }
         public int MinAge { get; set; }

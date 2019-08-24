@@ -6,185 +6,185 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4">
-    <ul class="nav nav-tabs" id="myTab">
-        <li class="nav-item">
-            <a class="nav-link @(Model.SelectedTab=="summary"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=summary">Summary</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link @(Model.SelectedTab=="premium"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=premium">Premium</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link @(Model.SelectedTab=="moneyIn"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=moneyIn">Money In</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contextual Activity</a>
-            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a class="dropdown-item" href="/Premium/Create/@Model.Id">
-                    Create
-                    Premium
-                </a>
-                <a class="dropdown-item" href="/MoneyIn/Create/@Model.Id">
-                    Create
-                    Money In
-                </a>
+    <div class="container mt-4">
+        <h2 class="text-center">Contract Area for Contract ID: @Model.Id </h2>
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="nav-item">
+                <a class="nav-link @(Model.SelectedTab=="summary"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=summary">Summary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(Model.SelectedTab=="premium"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=premium">Premium</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(Model.SelectedTab=="moneyIn"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=moneyIn">Money In</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contextual Activity</a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="/Premium/Create/@Model.Id">
+                        Create
+                        Premium
+                    </a>
+                    <a class="dropdown-item" href="/MoneyIn/Create/@Model.Id">
+                        Create
+                        Money In
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade @(Model.SelectedTab=="summary"?"show active":"")" id="summary">
+                <form class="my-4" method="post">
+                    <div class="form-group">
+                        <label asp-for="ProductIdntfr">Product ID</label>
+                        <input asp-for="ProductIdntfr" type="text" class="form-control" id="productIdntfr" name="productIdntfr" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PersonId">Owner ID</label>
+                        <input asp-for="PersonId" type="text" class="form-control" id="personId" name="personId" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DistributorId">Distributor ID</label>
+                        <input asp-for="DistributorId" type="text" class="form-control" id="distributor" name="distributor" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate">Contract Start Date</label>
+                        <input asp-for="StartDate" class="form-control" type="date" id="startDate" name="startDate" readonly="">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NextBillingDueDate">Next Billing Due Date</label>
+                        <input asp-for="NextBillingDueDate" class="form-control" type="date" id="nextBillingDueDate" name="nextBillingDueDate" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Duration">Contract Duration(in Years)</label>
+                        <input asp-for="Duration" type="number" class="form-control" id="duration" name="duration" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Frequency">Frequency</label>
+                        <input asp-for="Frequency" type="text" class="form-control" id="frequencyShow" name="frequencyShow" value="@Model.Frequency" readonly="">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount">Beneficiary Amount(in EUR)</label>
+                        <input asp-for="Amount" type="number" class="form-control" id="amount" name="amount" readonly="">
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PremiumAmount">Premium Amount(in EUR)</label>
+                        <input asp-for="PremiumAmount" type="number" class="form-control" id="premimAmount" name="premiumAmount" readonly="">
+                    </div>
+                </form>
             </div>
-        </li>
-    </ul>
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade @(Model.SelectedTab=="summary"?"show active":"")" id="summary">
-            <form class="my-4" method="post">
-                <h2 class="text-center">Summary of Contract ID: @Model.Id</h2>
-                <div class="form-group">
-                    <label asp-for="ProductIdntfr">Product ID</label>
-                    <input asp-for="ProductIdntfr" type="text" class="form-control" id="productIdntfr" name="productIdntfr" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="PersonId">Owner ID</label>
-                    <input asp-for="PersonId" type="text" class="form-control" id="personId" name="personId" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="DistributorId">Distributor ID</label>
-                    <input asp-for="DistributorId" type="text" class="form-control" id="distributor" name="distributor" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="StartDate">Contract Start Date</label>
-                    <input asp-for="StartDate" class="form-control" type="date" id="startDate" name="startDate" readonly="">
-                </div>
-                <div class="form-group">
-                    <label asp-for="NextBillingDueDate">Next Billing Due Date</label>
-                    <input asp-for="NextBillingDueDate" class="form-control" type="date" id="nextBillingDueDate" name="nextBillingDueDate" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Duration">Contract Duration(in Years)</label>
-                    <input asp-for="Duration" type="number" class="form-control" id="duration" name="duration" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Frequency">Frequency</label>
-                    <input asp-for="Frequency" type="text" class="form-control" id="frequencyShow" name="frequencyShow" value="@Model.Frequency" readonly="">
-                </div>
-                <div class="form-group">
-                    <label asp-for="Amount">Beneficiary Amount(in EUR)</label>
-                    <input asp-for="Amount" type="number" class="form-control" id="amount" name="amount" readonly="">
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="PremiumAmount">Premium Amount(in EUR)</label>
-                    <input asp-for="PremiumAmount" type="number" class="form-control" id="premimAmount" name="premiumAmount" readonly="">
-                </div>
-            </form>
-        </div>
-        <div class="tab-pane fade mt-4 @(Model.SelectedTab=="premium"?"show active":"")" id="premium">
-            <div class="table-responsive-sm">
-                @if (Model.SelectedTab == "premium")
-                {
-                    @for (int i = 0; i < Model.PremiumsFound.Count; i++)
+            <div class="tab-pane fade mt-4 @(Model.SelectedTab=="premium"?"show active":"")" id="premium">
+                <div class="table-responsive-sm">
+                    @if (Model.SelectedTab == "premium")
                     {
-                        <div class="modal fade" id="@Model.PremiumsFound[i].Id" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteUserLabel">Details for Premium ID: @Model.PremiumsFound[i].Id</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <div>Contract ID: @Model.PremiumsFound[i].ContractId</div>
-                                            <div>Record Date: @Model.PremiumsFound[i].RecordDate.ToShortDateString()</div>
-                                            <div>Start Date: @Model.PremiumsFound[i].StartDate.ToShortDateString()</div>
-                                            <div>End Date: @Model.PremiumsFound[i].EndDate.ToShortDateString()</div>
-                                            <div>Frequency: @Model.PremiumsFound[i].ContractFrequency</div>
-                                            <div>Premium Amount(EUR): @Model.PremiumsFound[i].OperationAmount</div>
-                                            <div>Status: @Model.PremiumsFound[i].Status</div>
-                                            @if (Model.PremiumsFound[i].Status == Status.Paid)
-                                            {
-                                              <div>Paid By Money In ID:  @Model.PremiumsFound[i].MoneyInId</div>
-                                            }
-
+                        @for (int i = 0; i < Model.PremiumsFound.Count; i++)
+                        {
+                            <div class="modal fade" id="@Model.PremiumsFound[i].Id" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteUserLabel">Details for Premium ID: @Model.PremiumsFound[i].Id</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Return
-                                        </button>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div>Contract ID: @Model.PremiumsFound[i].ContractId</div>
+                                                <div>Record Date: @Model.PremiumsFound[i].RecordDate.ToShortDateString()</div>
+                                                <div>Start Date: @Model.PremiumsFound[i].StartDate.ToShortDateString()</div>
+                                                <div>End Date: @Model.PremiumsFound[i].EndDate.ToShortDateString()</div>
+                                                <div>Frequency: @Model.PremiumsFound[i].ContractFrequency</div>
+                                                <div>Premium Amount(EUR): @Model.PremiumsFound[i].OperationAmount</div>
+                                                <div>Status: @Model.PremiumsFound[i].Status</div>
+                                                @if (Model.PremiumsFound[i].Status == Status.Paid)
+                                                {
+                                                    <div>Paid By Money In ID:  @Model.PremiumsFound[i].MoneyInId</div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Return
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">End Date</th>
-                                <th scope="col">Operation Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.PremiumsFound.Count; i++)
-                            {
+                        }
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <th scope="row">@(i+1)</th>
-                                    <th>@Model.PremiumsFound[i].Id</th>
-                                    <td>@Model.PremiumsFound[i].StartDate.ToShortDateString()</td>
-                                    <td>@Model.PremiumsFound[i].EndDate.ToShortDateString()</td>
-                                    <td>@Model.PremiumsFound[i].OperationAmount</td>
-                                    <td class="@(Model.PremiumsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.PremiumsFound[i].Status</td>
-                                    <td><a href="" data-toggle="modal" data-target="#@Model.PremiumsFound[i].Id"><svg class="svg-inline--fa fa-binoculars fa-w-16" title="Contract details" aria-labelledby="svg-inline--fa-title-1" data-prefix="fas" data-icon="binoculars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><title id="svg-inline--fa-title-1">Contract details</title><path fill="currentColor" d="M192 104H96V56c0-13.255 10.745-24 24-24h48c13.255 0 24 10.745 24 24v48zm224-48c0-13.255-10.745-24-24-24h-48c-13.255 0-24 10.745-24 24v48h96V56zM0 456c0 13.255 10.745 24 24 24h120c13.255 0 24-10.745 24-24v-16H0v16zm88-328c-13.255 0-24 10.745-24 24C64 256 0 272 0 416h168V312c0-13.255 10.745-24 24-24V128H88zm256 328c0 13.255 10.745 24 24 24h120c13.255 0 24-10.745 24-24v-16H344v16zM216 128v160h80V128h-80zm128 288h168c0-144-64-160-64-264 0-13.255-10.745-24-24-24H320v160c13.255 0 24 10.745 24 24v104z"></path></svg><!-- <i class="fas fa-binoculars" title="Contract details"></i> --></a></td>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Operation Amount</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            }
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.PremiumsFound.Count; i++)
+                                {
+                                    <tr>
+                                        <th scope="row">@(i + 1)</th>
+                                        <th>@Model.PremiumsFound[i].Id</th>
+                                        <td>@Model.PremiumsFound[i].StartDate.ToShortDateString()</td>
+                                        <td>@Model.PremiumsFound[i].EndDate.ToShortDateString()</td>
+                                        <td>@Model.PremiumsFound[i].OperationAmount</td>
+                                        <td class="@(Model.PremiumsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.PremiumsFound[i].Status</td>
+                                        <td><a href="" data-toggle="modal" data-target="#@Model.PremiumsFound[i].Id"><i class="fas fa-binoculars" title="Contract details"></i></a></td>
+                                    </tr>
+                                }
                             </tbody>
-                    </table>
-                }
+                        </table>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="tab-pane fade mt-4 @(Model.SelectedTab=="moneyIn"?"show active":"")" id="moneyIn">
-            <div class="table-responsive-sm">
-                @if (Model.SelectedTab == "moneyIn")
-                {
-                    @for (int i = 0; i < Model.MoneyInsFound.Count; i++)
+            <div class="tab-pane fade mt-4 @(Model.SelectedTab=="moneyIn"?"show active":"")" id="moneyIn">
+                <div class="table-responsive-sm">
+                    @if (Model.SelectedTab == "moneyIn")
                     {
-                        <div class="modal fade" id="@Model.MoneyInsFound[i].Id" tabindex="-1" role="dialog" aria-labelledby="detailsMoneyInLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="detailsMoneyInLabel">Details for Money ID: @Model.MoneyInsFound[i].Id</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <div>Contract ID: @Model.MoneyInsFound[i].ContractId</div>
-                                            <div>Record Date: @Model.MoneyInsFound[i].RecordDate.ToShortDateString()</div>
-                                            <div>Money In Amount(EUR): @Model.MoneyInsFound[i].OperationAmount</div>
-                                            <div>Status: @Model.MoneyInsFound[i].Status</div>
-                                            @if (Model.MoneyInsFound[i].Status == Status.Paid)
-                                            {
-                                              <div>Pay Premium With ID:   @Model.MoneyInsFound[i].PremiumId</div>
-                                            }
+                        @for (int i = 0; i < Model.MoneyInsFound.Count; i++)
+                        {
+                            <div class="modal fade" id="@Model.MoneyInsFound[i].Id" tabindex="-1" role="dialog" aria-labelledby="detailsMoneyInLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="detailsMoneyInLabel">Details for Money ID: @Model.MoneyInsFound[i].Id</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Return
-                                        </button>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div>Contract ID: @Model.MoneyInsFound[i].ContractId</div>
+                                                <div>Record Date: @Model.MoneyInsFound[i].RecordDate.ToShortDateString()</div>
+                                                <div>Money In Amount(EUR): @Model.MoneyInsFound[i].OperationAmount</div>
+                                                <div>Status: @Model.MoneyInsFound[i].Status</div>
+                                                @if (Model.MoneyInsFound[i].Status == Status.Paid)
+                                                {
+                                                    <div>Pay Premium With ID:   @Model.MoneyInsFound[i].PremiumId</div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Return
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -198,25 +198,26 @@
                             <tbody>
                                 @for (int i = 0; i < Model.MoneyInsFound.Count; i++)
                                 {
-                                <tr>
-                                    <th scope="row">@(i + 1)</th>
-                                    <th>@Model.MoneyInsFound[i].Id</th>
-                                    <td>@Model.MoneyInsFound[i].OperationAmount</td>
-                                    <td class="@(Model.MoneyInsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.MoneyInsFound[i].Status</td>
-                                    <td><a href="" data-toggle="modal" data-target="#@Model.MoneyInsFound[i].Id"><svg class="svg-inline--fa fa-binoculars fa-w-16" title="Money In details" aria-labelledby="svg-inline--fa-title-11" data-prefix="fas" data-icon="binoculars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><title id="svg-inline--fa-title-11">Money In details</title><path fill="currentColor" d="M192 104H96V56c0-13.255 10.745-24 24-24h48c13.255 0 24 10.745 24 24v48zm224-48c0-13.255-10.745-24-24-24h-48c-13.255 0-24 10.745-24 24v48h96V56zM0 456c0 13.255 10.745 24 24 24h120c13.255 0 24-10.745 24-24v-16H0v16zm88-328c-13.255 0-24 10.745-24 24C64 256 0 272 0 416h168V312c0-13.255 10.745-24 24-24V128H88zm256 328c0 13.255 10.745 24 24 24h120c13.255 0 24-10.745 24-24v-16H344v16zM216 128v160h80V128h-80zm128 288h168c0-144-64-160-64-264 0-13.255-10.745-24-24-24H320v160c13.255 0 24 10.745 24 24v104z"></path></svg><!-- <i class="fas fa-binoculars" title="Money In details"></i> --></a></td>
+                                    <tr>
+                                        <th scope="row">@(i + 1)</th>
+                                        <th>@Model.MoneyInsFound[i].Id</th>
+                                        <td>@Model.MoneyInsFound[i].OperationAmount</td>
+                                        <td class="@(Model.MoneyInsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.MoneyInsFound[i].Status</td>
+                                        <td><a href="" data-toggle="modal" data-target="#@Model.MoneyInsFound[i].Id"><i class="fas fa-binoculars" title="Money In details"></i></a></td>
 
-                                </tr>
+                                    </tr>
                                 }
-                                </tbody>
+                            </tbody>
                         </table>
                     }
                 </div>
+            </div>
         </div>
+        <form action="/Contract/Search">
+            <div class="text-center">
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fas fa-chevron-circle-left"></i> Return
+                </button>
+            </div>
+        </form>
     </div>
-    <form action="/Contract/Search">
-        <div class="text-center">
-            <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-chevron-circle-left"></i> Return </button>
-        </div>
-    </form>
-</div>

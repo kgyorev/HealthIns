@@ -15,6 +15,6 @@ namespace HealthIns.Services
         IQueryable<OrganizationServiceModel> GetAllOrganizations();
         Task<bool> Update(OrganizationServiceModel organizationServiceModel);
         IQueryable<OrganizationServiceModel> SearchOrganization(OrganizationSearchViewModel organizationSearchViewModel);
-        bool VerifyVat(string vat);
+        OrganizationServiceModel VerifyVat(string vat);
     }
 }

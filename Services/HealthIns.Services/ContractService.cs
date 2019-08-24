@@ -56,15 +56,8 @@ namespace HealthIns.Services
         {
 
             Contract contractDB = this.context.Contracts.Include(c=>c.Person).Include(c=>c.Product).SingleOrDefault(p => p.Id == contractServiceModel.Id);
-            //Product product = this.context.Products.SingleOrDefault(p => p.Idntfr == contractServiceModel.ProductIdntfr);
-            //Person person = this.context.Persons.SingleOrDefault(p => p.Id == contractServiceModel.PersonId);
             Distributor distributor = this.context.Distributors.SingleOrDefault(d => d.Id == contractServiceModel.DistributorId);
             contractDB.Distributor = distributor;
-            //contract.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
-
-
-            //contractDB.Status = contractDB.Status;
-            // contractDB.CreationDate = contractDB.CreationDate;
             contractDB.Frequency = contractServiceModel.Frequency;
             contractDB.EndDate = contractServiceModel.StartDate.AddYears(contractServiceModel.Duration);
             var premiumAmount = this.ReturnPremiumAmount(contractDB);
@@ -136,10 +129,8 @@ namespace HealthIns.Services
 
         public async Task<bool> TryToApplyFinancial(long contractId)
         {
-         //   var contract = this.context.Contracts.SingleOrDefault(c => c.Id == contractId);
             Premium pendingPremium =  this.context.Premiums.OrderBy(p=>p.StartDate).FirstOrDefault(p => p.Contract.Id == contractId &&p.Status== Data.Models.Financial.Enums.Status.Pending);
             MoneyIn pendingMoneyIn = this.context.MoneyIns.OrderBy(p => p.RecordDate).FirstOrDefault(p => p.Contract.Id == contractId && p.Status == Data.Models.Financial.Enums.Status.Pending);
-
             if(pendingPremium!=null&& pendingMoneyIn != null)
             {
                 pendingPremium.Status = Data.Models.Financial.Enums.Status.Paid;

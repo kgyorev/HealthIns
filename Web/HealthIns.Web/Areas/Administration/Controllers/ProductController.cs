@@ -16,6 +16,8 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
     public class ProductController : AdminController
     {
         private readonly IProductService productService;
+        public const string PRODUCT_CREATED = "Product with #{0} was created";
+        public const string PRODUCT_UPDATED = "Contract with #{0} was updated";
 
         public ProductController(IProductService productService)
         {
@@ -44,7 +46,7 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
             string frequencyRule = string.Join(",",productCreateInputModel.FrequencyRule);
             productServiceModel.FrequencyRule = frequencyRule;
             await this.productService.Create(productServiceModel);
-
+            this.TempData["info"] = String.Format(PRODUCT_CREATED, productServiceModel.Id);
             return this.Redirect("/");
         }
 
@@ -69,16 +71,14 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
             string frequencyRule = string.Join(",", productCreateInputModel.FrequencyRule);
             productServiceModel.FrequencyRule = frequencyRule;
             await this.productService.Update(productServiceModel);
-
-            return this.Redirect("/");
+            this.TempData["info"] = String.Format(PRODUCT_UPDATED, productServiceModel.Id);
+            return this.Redirect("/Product/Search");
         }
 
 
         [HttpGet(Name = "Search")]
         public async Task<IActionResult> Search(ProductSearchViewModel productSearchInputModel)
         {
-
-
             List<ProductServiceModel> productsFoundService = await this.productService.SearchProduct(productSearchInputModel).ToListAsync();
             List<ProductViewModel> productsFound = productsFoundService
              .Select(d => d.To<ProductViewModel>()).ToList();

@@ -27,7 +27,7 @@ namespace HealthIns.Services
             MoneyIn moneyIn = AutoMapper.Mapper.Map<MoneyIn>(moneyInServiceModel);
             Contract contract = this.context.Contracts.SingleOrDefault(p => p.Id == moneyInServiceModel.ContractId);
             moneyIn.Contract = contract;
-            moneyIn.RecordDate = DateTime.UtcNow;
+            moneyIn.RecordDate = DateTime.Now;
             moneyIn.Status = HealthIns.Data.Models.Financial.Enums.Status.Pending;
             context.MoneyIns.Add(moneyIn);
             int result = await context.SaveChangesAsync();
@@ -48,27 +48,6 @@ namespace HealthIns.Services
         {
             throw new NotImplementedException();
         }
-
-        //public PremiumServiceModel SimulatePremiumForContract(long contractId)
-        //{
-        //  ContractServiceModel contractServiceModel =  this.contractService.GetById(contractId);
-        //    Contract contract = AutoMapper.Mapper.Map<Contract>(contractServiceModel);
-
-        //    PremiumServiceModel premium = new PremiumServiceModel()
-        //    {
-        //        OperationAmount = contract.PremiumAmount,
-        //        StartDate = contract.NextBillingDueDate,
-        //        Contract = contract,
-        //        EndDate = this.contractService.CalculateNextBillingDueDate(contract).AddDays(-1),
-        //    };
-
-        //    return premium;
-        //}
-
-        //public Task<bool> Update(PremiumServiceModel premiumServiceModel)
-        //{
-        //    throw new NotImplementedException();
-        //}
         private void TryToPay(Premium premium)
         {
         }

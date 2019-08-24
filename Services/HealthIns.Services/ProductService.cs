@@ -109,5 +109,12 @@ namespace HealthIns.Services
 
             return result > 0;
         }
+
+        public ProductServiceModel GetByIdntfr(string productIdntfr)
+        {
+            return this.context.Products
+                .To<ProductServiceModel>()
+                .SingleOrDefault(product => product.Idntfr == productIdntfr);
+        }
     }
 }

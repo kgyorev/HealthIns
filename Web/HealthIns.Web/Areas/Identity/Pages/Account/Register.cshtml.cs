@@ -95,7 +95,7 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     #endregion
-
+                    this.TempData["info"] = String.Format("Register Successful!");
                     return Redirect(returnUrl);
                 }
 
@@ -103,6 +103,11 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+                if (result.Errors.Any())
+                {
+                    this.TempData["error"] = String.Format(result.Errors.First().Description);
+                }
+               
             }
 
             // If we got this far, something failed, redisplay form

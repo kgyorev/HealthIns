@@ -36,49 +36,32 @@ namespace HealthIns.Web.Controllers
         [HttpGet(Name = "Create")]
         public async Task<IActionResult> Create()
         {
-
             return this.View();
         }
-
-
         [HttpPost]
         public async Task<IActionResult> Create(ContractCreateInputModel contractCreateInputModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
-                //   return this.View(productCreateInputModel ?? new ProductCreateInputModel());
             }
-
-
             ContractServiceModel contractServiceModel = AutoMapper.Mapper.Map<ContractServiceModel>(contractCreateInputModel);
-
             var output = this.productService.CheckProductRules(contractServiceModel);
 
             if (output.Any())
             {
-
                 this.TempData["error"] = output.FirstOrDefault();
                 return this.View();
             }
-
-
             await this.contractService.Create(contractServiceModel);
-
             this.TempData["info"] = String.Format(CONTRACT_CREATED, contractServiceModel.Id);
-
             return this.Redirect("/");
         }
-
-
         [HttpGet(Name = "Edit")]
         public async Task<IActionResult> Edit(long Id)
         {
-
             ContractServiceModel contractFromDB = this.contractService.GetById(Id);
-
             ContractCreateInputModel contract = contractFromDB.To<ContractCreateInputModel>();
-
             return this.View(contract);
         }
         [HttpPost]
@@ -97,21 +80,16 @@ namespace HealthIns.Web.Controllers
             }
             await this.contractService.Update(contractServiceModel);
             this.TempData["info"] = String.Format(CONTRACT_UPDATED, contractServiceModel.Id);
-            return this.Redirect("/");
+            return this.Redirect("/Contract/Search");
         }
         [HttpGet(Name = "Details")]
         public async Task<IActionResult> Details(ContractViewModel contractViewModel)
         {
-
             ContractServiceModel contractFromDB = this.contractService.GetById(contractViewModel.Id);
-
             List<PremiumServiceModel> premiumsForContractServiceModel = await this.premiumService.FindPremiumsByContractId(contractViewModel.Id).ToListAsync();
             List<PremiumViewModel> premiumsForContractViewModel = AutoMapper.Mapper.Map<List<PremiumViewModel>>(premiumsForContractServiceModel);
-
-
             List<MoneyInServiceModel> moneyInsForContractServiceModel = await this.moneyInService.FindMoneyInsByContractId(contractViewModel.Id).ToListAsync();
             List<MoneyInViewModel> moneyInsForContractViewModel = AutoMapper.Mapper.Map<List<MoneyInViewModel>>(moneyInsForContractServiceModel);
-
             ContractViewModel contract = contractFromDB.To<ContractViewModel>();
             contract.PremiumsFound = premiumsForContractViewModel;
             contract.MoneyInsFound = moneyInsForContractViewModel;
@@ -121,22 +99,11 @@ namespace HealthIns.Web.Controllers
         [HttpGet(Name = "Search")]
         public async Task<IActionResult> Search(ContractSearchViewModel contractSearchInputModel)
         {
-
-
             List<ContractServiceModel> contractsFoundService = await this.contractService.SearchContract(contractSearchInputModel).ToListAsync();
             List<ContractViewModel> contractsFound = contractsFoundService
              .Select(d => d.To<ContractViewModel>()).ToList();
             contractSearchInputModel.ContractsFound = contractsFound;
             return this.View(contractSearchInputModel);
-
-
-
-          //  List<ContractServiceModel> contractsFromDb = await this.contractService.GetAllContracts().ToListAsync();
-          //
-          //  List<ContractViewModel> contractsAll = contractsFromDb
-          //      .Select(contract => contract.To<ContractViewModel>()).ToList();
-          //
-          //  return this.View(contractsAll);
         }
     }
 }
