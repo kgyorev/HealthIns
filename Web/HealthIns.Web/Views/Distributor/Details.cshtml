@@ -62,6 +62,7 @@
                                             <div>Frequency:  @Model.ContractsFound[i].Frequency.First().ToString().ToUpper()@String.Join("", @Model.ContractsFound[i].Frequency.ToLower().Skip(1))</div>
                                             <div>Beneficiary Amount(EUR): @Model.ContractsFound[i].Amount</div>
                                             <div>Premium Amount(EUR): @Model.ContractsFound[i].PremiumAmount</div>
+                                            <div>Status: @Model.ContractsFound[i].Status</div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -79,19 +80,28 @@
                                     <th scope="col">#</th>
                                     <th scope="col">ID</th>
                                     <th scope="col">Full Name</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for (int i = 0; i < Model.ContractsFound.Count; i++)
                                 {
-                                    <tr>
-                                        <th scope="row">@(i+1)</th>
-                                        <th>@Model.ContractsFound[i].Id</th>
-                                        <td>@Model.ContractsFound[i].PersonFullName</td>
-                                        <td><a href="" data-toggle="modal" data-target="#@Model.ContractsFound[i].Id"><i class="fas fa-binoculars" title="Contract details"></i></a></td>
+                                <tr>
+                                    <th scope="row">@(i + 1)</th>
+                                    <th>@Model.ContractsFound[i].Id</th>
+                                    <td>@Model.ContractsFound[i].PersonFullName</td>
+                                    @if(Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
+                                    {
+                                        <td class="text-success">In Force</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">Canceled</td>
+                                    }
+                                    <td><a href="" data-toggle="modal" data-target="#@Model.ContractsFound[i].Id"><i class="fas fa-binoculars" title="Contract details"></i></a></td>
 
-                                    </tr>
+                                </tr>
                                 }
                             </tbody>
                         </table>

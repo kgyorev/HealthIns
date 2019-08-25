@@ -24,13 +24,15 @@ namespace HealthIns.Web.Controllers
         private readonly IProductService productService;
         private readonly IPremiumService premiumService;
         private readonly IMoneyInService moneyInService;
+        private readonly IClaimActivityService claimActivityService;
 
-        public ContractController(IContractService contractService, IProductService productService, IPremiumService premiumService, IMoneyInService moneyInService)
+        public ContractController(IContractService contractService, IProductService productService, IPremiumService premiumService, IMoneyInService moneyInService, IClaimActivityService claimActivityService)
         {
             this.contractService = contractService;
             this.productService = productService;
             this.premiumService = premiumService;
             this.moneyInService = moneyInService;
+            this.claimActivityService = claimActivityService;
         }
 
         [HttpGet(Name = "Create")]
@@ -58,9 +60,9 @@ namespace HealthIns.Web.Controllers
             return this.Redirect("/");
         }
         [HttpGet(Name = "Edit")]
-        public async Task<IActionResult> Edit(long Id)
+        public async Task<IActionResult> Edit(long id)
         {
-            ContractServiceModel contractFromDB = this.contractService.GetById(Id);
+            ContractServiceModel contractFromDB = this.contractService.GetById(id);
             ContractCreateInputModel contract = contractFromDB.To<ContractCreateInputModel>();
             return this.View(contract);
         }
@@ -90,9 +92,12 @@ namespace HealthIns.Web.Controllers
             List<PremiumViewModel> premiumsForContractViewModel = AutoMapper.Mapper.Map<List<PremiumViewModel>>(premiumsForContractServiceModel);
             List<MoneyInServiceModel> moneyInsForContractServiceModel = await this.moneyInService.FindMoneyInsByContractId(contractViewModel.Id).ToListAsync();
             List<MoneyInViewModel> moneyInsForContractViewModel = AutoMapper.Mapper.Map<List<MoneyInViewModel>>(moneyInsForContractServiceModel);
+            List<ClaimActivityServiceModel> claimsForContractServiceModel = await this.claimActivityService.FindClaimsActivityByContractId(contractViewModel.Id).ToListAsync();
+            List<ClaimActivityViewModel> claimsForContractViewModel = AutoMapper.Mapper.Map<List<ClaimActivityViewModel>>(claimsForContractServiceModel);
             ContractViewModel contract = contractFromDB.To<ContractViewModel>();
             contract.PremiumsFound = premiumsForContractViewModel;
             contract.MoneyInsFound = moneyInsForContractViewModel;
+            contract.ClaimsFound = claimsForContractViewModel;
             contract.SelectedTab = contractViewModel.SelectedTab;
             return this.View(contract);
         }

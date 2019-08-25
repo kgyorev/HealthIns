@@ -1,4 +1,4 @@
-﻿@model HealthIns.Web.InputModels.Financial.PremiumCreateInputModel
+﻿@model HealthIns.Web.InputModels.Financial.ClaimActivityCreateInputModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -8,21 +8,21 @@
 
 <div class="container mt-4">
     <form class="my-4" method="post" enctype="multipart/form-data">
-        <h2 class="text-center">Create Premium</h2>
+        <h2 class="text-center">Validate Claim</h2>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="StartDate">Premium Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate" readonly>
-            <span asp-validation-for="StartDate" class="text-danger"></span>
+            <label asp-for="ClaimDate">Claim Date</label>
+            <input type="date" class="form-control" id="claimDate" name="claimDate" input asp-for="ClaimDate" readonly>
+            <span asp-validation-for="ClaimDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EndDate">Premium Start Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" input asp-for="EndDate" readonly>
-            <span asp-validation-for="EndDate" class="text-danger"></span>
+            <label asp-for="ClaimEventType">Claim Event Type</label>
+            <input type="text" class="form-control" id="claimEventType" name="claimEventType" input asp-for="ClaimEventType" value="Death" readonly>
+            <span asp-validation-for="ClaimEventType" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="OperationAmount">Premium Amount(in EUR)</label>
-            <input type="number" class="form-control" id="operationAmount" name="operationAmount" input asp-for="OperationAmount" value="@Model.OperationAmount.ToString("F2")" readonly>
+            <label asp-for="OperationAmount">Claim Beneficiary Amount(in EUR)</label>
+            <input type="number" class="form-control" id="operationAmount" name="operationAmount" input asp-for="OperationAmount" readonly>
             <span asp-validation-for="OperationAmount" class="text-danger"></span>
         </div>
         <div class="text-center">
@@ -41,7 +41,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Are you sure to save this premium?
+                        Are you sure to validate this claim?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

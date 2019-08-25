@@ -16,7 +16,7 @@ namespace HealthIns.Web.ViewModels.Contract
 
         public ContractSearchViewModel()
         {
-            this.Status = "InForce";
+            this.Status = "";
             this.CntrctId = "";
             this.ContractsFound = new List<ContractViewModel>();
         }

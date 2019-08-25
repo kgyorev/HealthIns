@@ -8,29 +8,53 @@
 
     <div class="container mt-4">
         <h2 class="text-center">Contract Area for Contract ID: @Model.Id </h2>
-        <ul class="nav nav-tabs" id="myTab">
-            <li class="nav-item">
-                <a class="nav-link @(Model.SelectedTab=="summary"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=summary">Summary</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(Model.SelectedTab=="premium"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=premium">Premium</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(Model.SelectedTab=="moneyIn"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=moneyIn">Money In</a>
-            </li>
+        @if(@Model.Status==HealthIns.Data.Models.Bussines.Enums.Status.Canceled)
+        {
+            <h4 class="text-center text-danger">Contract is Canceled </h4>
+        }
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="nav-item">
+            <a class="nav-link @(Model.SelectedTab=="summary"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=summary">Summary</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.SelectedTab=="premium"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=premium">Premium</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.SelectedTab=="moneyIn"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=moneyIn">Money In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.SelectedTab=="claim"?"active":"")" href="/Contract/Details/@Model.Id?selectedTab=claim">Activity Claim</a>
+        </li>
+        @if(@Model.Status != HealthIns.Data.Models.Bussines.Enums.Status.Canceled||Model.ClaimsFound.Where(c => c.Status == Status.Pending).Any())
+        {
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contextual Activity</a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/Premium/Create/@Model.Id">
-                        Create
-                        Premium
-                    </a>
-                    <a class="dropdown-item" href="/MoneyIn/Create/@Model.Id">
-                        Create
-                        Money In
-                    </a>
+                    @if (!@Model.ClaimsFound.Any())
+                    {
+                        <a class="dropdown-item" href="/Premium/Create/@Model.Id">
+                            Create
+                            Premium
+                        </a>
+                        <a class="dropdown-item" href="/MoneyIn/Create/@Model.Id">
+                            Create
+                            Money In
+                        </a>
+                        <a class="dropdown-item" href="/ClaimActivity/Create/@Model.Id">
+                            Record
+                            a Claim
+                        </a>
+                    }
+                    else if (@Model.ClaimsFound.Where(c => c.Status == Status.Pending).Any())
+                    {
+                        <a class="dropdown-item" href="/ClaimActivity/Validate/@Model.ClaimsFound.Where(c => c.Status == Status.Pending).SingleOrDefault().Id">
+                            Validate
+                            a Claim
+                        </a>
+                    }
                 </div>
             </li>
+        }
         </ul>
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade @(Model.SelectedTab=="summary"?"show active":"")" id="summary">
@@ -66,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Frequency">Frequency</label>
-                        <input asp-for="Frequency" type="text" class="form-control" id="frequencyShow" name="frequencyShow" value="@Model.Frequency" readonly="">
+                        <input asp-for="Frequency" type="text" class="form-control" id="frequencyShow" name="frequencyShow" value="@Model.Frequency.First().ToString().ToUpper()@String.Join("", @Model.Frequency.ToLower().Skip(1))" readonly="">
                     </div>
                     <div class="form-group">
                         <label asp-for="Amount">Beneficiary Amount(in EUR)</label>
@@ -205,6 +229,67 @@
                                         <td class="@(Model.MoneyInsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.MoneyInsFound[i].Status</td>
                                         <td><a href="" data-toggle="modal" data-target="#@Model.MoneyInsFound[i].Id"><i class="fas fa-binoculars" title="Money In details"></i></a></td>
 
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade mt-4 @(Model.SelectedTab == "claim" ? "show active" : "")" id="claim">
+                <div class="table-responsive-sm">
+                    @if (Model.SelectedTab == "claim")
+                    {
+                        @for (int i = 0; i < Model.ClaimsFound.Count; i++)
+                        {
+                            <div class="modal fade" id="@Model.ClaimsFound[i].Id" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteUserLabel">Details for Claim ID: @Model.ClaimsFound[i].Id</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div>Contract ID: @Model.ClaimsFound[i].ContractId</div>
+                                                <div>Record Date: @Model.ClaimsFound[i].RecordDate.ToShortDateString()</div>
+                                                <div>Claim Date: @Model.ClaimsFound[i].ClaimDate.ToShortDateString()</div>
+                                                <div>Claim Amount(EUR): @Model.ClaimsFound[i].OperationAmount</div>
+                                                <div>Status: @Model.ClaimsFound[i].Status</div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Return
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Claim Date</th>
+                                    <th scope="col">Operation Amount</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.ClaimsFound.Count; i++)
+                                {
+                                    <tr>
+                                        <th scope="row">@(i + 1)</th>
+                                        <th>@Model.ClaimsFound[i].Id</th>
+                                        <td>@Model.ClaimsFound[i].ClaimDate.ToShortDateString()</td>
+                                        <td>@Model.ClaimsFound[i].OperationAmount</td>
+                                        <td class="@(Model.ClaimsFound[i].Status==Status.Paid?"text-success":"text-danger")">@Model.ClaimsFound[i].Status</td>
+                                        <td><a href="" data-toggle="modal" data-target="#@Model.ClaimsFound[i].Id"><i class="fas fa-binoculars" title="Claim details"></i></a></td>
                                     </tr>
                                 }
                             </tbody>

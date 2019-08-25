@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HealthIns.Data.Models.Bussines.Enums;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
 using HealthIns.Web.ViewModels.MoneyIn;
@@ -17,6 +18,7 @@ namespace HealthIns.Web.ViewModels.Contract
         public string DistributorId { get; set; }
         public string PersonFullName { get; set; }
         public string Frequency { get; set; }
+        public Status Status { get; set; }
         public int Amount { get; set; }
         public double PremiumAmount { get; set; }
         public int Duration { get; set; }
@@ -26,6 +28,7 @@ namespace HealthIns.Web.ViewModels.Contract
 
         public List<PremiumViewModel> PremiumsFound { get; set; }
         public List<MoneyInViewModel> MoneyInsFound { get; set; }
+        public List<ClaimActivityViewModel> ClaimsFound { get; set; }
         public string SelectedTab { get; set; }
 
 
@@ -34,6 +37,7 @@ namespace HealthIns.Web.ViewModels.Contract
             this.SelectedTab = "summary";
             this.PremiumsFound = new List<PremiumViewModel>();
             this.MoneyInsFound = new List<MoneyInViewModel>();
+            this.ClaimsFound = new List<ClaimActivityViewModel>();
         }
 
 

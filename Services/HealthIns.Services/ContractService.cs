@@ -78,9 +78,7 @@ namespace HealthIns.Services
 
         public ContractServiceModel GetById(long id)
         {
-            return this.context.Contracts
-                .To<ContractServiceModel>()
-                .SingleOrDefault(contract => contract.Id == id);
+            return this.context.Contracts.To<ContractServiceModel>().SingleOrDefault(contract => contract.Id == id);
         }
 
         public double ReturnPremiumAmount(Contract contract)
@@ -145,19 +143,20 @@ namespace HealthIns.Services
         public IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel)
         {
             string id = contractSearchInputModel.CntrctId??"";
-            string status = contractSearchInputModel.Status;
-            Status statusParsed = (Status)Enum.Parse(typeof(Status), status);
+            string status = contractSearchInputModel.Status??"";
             IQueryable<ContractServiceModel> allContractsViewModel;
-            if (!id.Equals("") && !(status == null))
+            if (!id.Equals("") && !(status == ""))
             {
+                Status statusParsed = (Status)Enum.Parse(typeof(Status), status);
                 allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Id == long.Parse(id) && c.Status == statusParsed).To<ContractServiceModel>();
             }
-            else if (!id.Equals("") && status == null)
+            else if (!id.Equals("") && status == "")
             {
                 allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Id == long.Parse(id)).To<ContractServiceModel>();
             }
-            else if (id.Equals("") && !(status == null))
+            else if (id.Equals("") && !(status == ""))
             {
+                Status statusParsed = (Status)Enum.Parse(typeof(Status), status);
                 allContractsViewModel = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Where(c => c.Status == statusParsed).To<ContractServiceModel>();
             }
             else

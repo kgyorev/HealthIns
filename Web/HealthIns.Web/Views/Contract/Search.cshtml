@@ -13,7 +13,8 @@
         <div class="form-group">
             <label asp-for="Status">Status</label>
             <select asp-for="Status" class="form-control" id="status" name="status">
-                <option value="InForce" selected="selected">In Force</option>
+                <option disabled value="" selected>Search By Contract Status</option>
+                <option value="InForce">In Force</option>
                 <option value="Canceled">Canceled</option>
             </select>
         </div>
@@ -32,29 +33,43 @@
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">Owner</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
             @for (int i = 0; i < Model.ContractsFound.Count; i++)
             {
-                <tr>
-                    <th scope="row">@(i + 1)</th>
-                    <th>@Model.ContractsFound[i].Id</th>
-                    <td>@Model.ContractsFound[i].PersonFullName</td>
-                    <td>
-                        <a href="/Contract/Details/@Model.ContractsFound[i].Id">
-                            <i class="fas fa-binoculars"
-                               title="Contract details"></i>
-                        </a>
-                    </td>
-                    <td>
+            <tr>
+                <th scope="row">@(i + 1)</th>
+                <th>@Model.ContractsFound[i].Id</th>
+                <td>@Model.ContractsFound[i].PersonFullName</td>
+                @if (Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
+                {
+                    <td class="text-success">In Force</td>
+                }
+                else
+                {
+                    <td class="text-danger">Canceled</td>
+                }
+                <td>
+                    <a href="/Contract/Details/@Model.ContractsFound[i].Id">
+
+                        <i class="fas fa-binoculars"
+                           title="Contract details"></i>
+                    </a>
+                </td>
+
+                <td>
+                    @if (Model.ContractsFound[i].Status != HealthIns.Data.Models.Bussines.Enums.Status.Canceled)
+                    {
                         <a href="/Contract/Edit/@Model.ContractsFound[i].Id">
                             <i class="fas fa-edit"
                                title="Edit contract"></i>
                         </a>
+                    }
                     </td>
-                </tr>
+            </tr>
             }
         </tbody>
     </table>

@@ -14,7 +14,6 @@ namespace HealthIns.Services
         PremiumServiceModel GetById(long id);
 
         Task<bool> Create(PremiumServiceModel premiumServiceModel);
-        Task<bool> Update(PremiumServiceModel premiumServiceModel);
         PremiumServiceModel SimulatePremiumForContract(long contractId);
         IQueryable<PremiumServiceModel> FindPremiumsByContractId(long id);
     }

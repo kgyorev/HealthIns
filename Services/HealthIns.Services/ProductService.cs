@@ -3,6 +3,7 @@ using HealthIns.Data.Models.Bussines;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
 using HealthIns.Web.ViewModels.Product;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,8 +104,15 @@ namespace HealthIns.Services
         public async Task<bool> Update(ProductServiceModel productServiceModel)
         {
 
-            Product product = AutoMapper.Mapper.Map<Product>(productServiceModel);
-            context.Update(product);
+           // Product product = AutoMapper.Mapper.Map<Product>(productServiceModel);
+            Product productFromDb = await this.context.Products.SingleOrDefaultAsync(product => productServiceModel.Id == product.Id);
+
+            productFromDb.FrequencyRule = productServiceModel.FrequencyRule;
+            productFromDb.Idntfr = productServiceModel.Idntfr;
+            productFromDb.Label = productServiceModel.Label;
+            productFromDb.MaxAge = productServiceModel.MaxAge;
+            productFromDb.MinAge = productServiceModel.MinAge;
+            context.Update(productFromDb);
             int result = await context.SaveChangesAsync();
 
             return result > 0;

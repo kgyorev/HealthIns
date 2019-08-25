@@ -43,7 +43,7 @@ namespace HealthIns.Services
 
         public PremiumServiceModel GetById(long id)
         {
-            throw new NotImplementedException();
+            return context.Premiums.Include(p => p.Contract).Where(p => p.Id == id).To<PremiumServiceModel>().SingleOrDefault();
         }
 
         public PremiumServiceModel SimulatePremiumForContract(long contractId)
@@ -60,14 +60,6 @@ namespace HealthIns.Services
             };
 
             return premium;
-        }
-
-        public Task<bool> Update(PremiumServiceModel premiumServiceModel)
-        {
-            throw new NotImplementedException();
-        }
-        private void TryToPay(Premium premium)
-        {
         }
     }
 }

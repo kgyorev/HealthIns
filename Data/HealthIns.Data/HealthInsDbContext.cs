@@ -20,6 +20,7 @@ namespace HealthIns.Data
         public DbSet<Distributor> Distributors { get; set; }
         public DbSet<Premium> Premiums { get; set; }
         public DbSet<MoneyIn> MoneyIns { get; set; }
+        public DbSet<ClaimActivity> ClaimActivities { get; set; }
         public HealthInsDbContext(DbContextOptions options) : base(options)
         {
         }
