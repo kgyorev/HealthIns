@@ -71,8 +71,15 @@ namespace HealthIns.Services
 
         public async Task<bool> Update(PersonServiceModel personServiceModel)
         {
-            Person person = AutoMapper.Mapper.Map<Person>(personServiceModel);
-            context.Update(person);
+            Person persontDB = this.context.Persons.SingleOrDefault(p => p.Id == personServiceModel.Id);
+            persontDB.StartDate = personServiceModel.StartDate;
+            persontDB.EndDate = personServiceModel.EndDate;
+            persontDB.FullName = personServiceModel.FullName;
+            persontDB.Egn = personServiceModel.Egn;
+            persontDB.Sex = personServiceModel.Sex;
+            persontDB.Smoker = personServiceModel.Smoker;
+
+            context.Update(persontDB);
             int result = await context.SaveChangesAsync();
             return result > 0;
         }

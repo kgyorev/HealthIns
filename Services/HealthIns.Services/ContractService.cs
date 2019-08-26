@@ -59,6 +59,10 @@ namespace HealthIns.Services
             Distributor distributor = this.context.Distributors.SingleOrDefault(d => d.Id == contractServiceModel.DistributorId);
             contractDB.Distributor = distributor;
             contractDB.Frequency = contractServiceModel.Frequency;
+            contractDB.Amount = contractServiceModel.Amount;
+            contractDB.Duration = contractServiceModel.Duration;
+            contractDB.NextBillingDueDate = contractServiceModel.NextBillingDueDate;
+            contractDB.StartDate = contractServiceModel.StartDate;
             contractDB.EndDate = contractServiceModel.StartDate.AddYears(contractServiceModel.Duration);
             var premiumAmount = this.ReturnPremiumAmount(contractDB);
             contractDB.PremiumAmount = premiumAmount;
@@ -78,7 +82,13 @@ namespace HealthIns.Services
 
         public ContractServiceModel GetById(long id)
         {
-            return this.context.Contracts.To<ContractServiceModel>().SingleOrDefault(contract => contract.Id == id);
+             var resultDB = this.context.Contracts.Include(c => c.Product).Include(c => c.Person).Include(c => c.Distributor).SingleOrDefault(contract => contract.Id == id);
+             if (resultDB == null)
+             {
+                 return null;
+             }
+             var allContracts = resultDB.To<ContractServiceModel>();
+             return allContracts;
         }
 
         public double ReturnPremiumAmount(Contract contract)

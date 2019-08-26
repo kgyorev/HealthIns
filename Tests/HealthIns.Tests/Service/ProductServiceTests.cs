@@ -229,7 +229,7 @@ namespace HealthIns.Tests.Service
         [Fact]
         public async Task SearchProduct_ShouldReturnErrorResults()
         {
-            string errorMessagePrefix = "ProductService SearchProduct(ContractServiceModel) method does not work properly.";
+            string errorMessagePrefix = "ProductService SearchProduct(ProductSearchViewModel) method does not work properly.";
 
             var context = HealthInsDbContextInMemoryFactory.InitializeContext();
             this.productService = new ProductService(context);

@@ -72,7 +72,7 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
             productServiceModel.FrequencyRule = frequencyRule;
             await this.productService.Update(productServiceModel);
             this.TempData["info"] = String.Format(PRODUCT_UPDATED, productServiceModel.Id);
-            return this.Redirect("/Product/Search");
+            return this.Redirect("/Administration/Product/Search");
         }
 
 
