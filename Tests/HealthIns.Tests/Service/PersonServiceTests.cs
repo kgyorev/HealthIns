@@ -4,6 +4,7 @@ using HealthIns.Services;
 using HealthIns.Services.Mapping;
 using HealthIns.Services.Models;
 using HealthIns.Tests.Common;
+using HealthIns.Web.ViewModels.Person;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -184,7 +185,81 @@ namespace HealthIns.Tests.Service
 
         }
         // IQueryable<PersonServiceModel> SearchPerson(PersonSearchViewModel personSearchViewModel);
+        [Fact]
+        public async Task SearchPerson_ByEgnOnly_ShouldReturnResults()
+        {
+            string errorMessagePrefix = "PersonService SearchPerson(PersonSearchViewModel) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.personService = new PersonService(context);
+
+            await SeedData(context);
+
+            PersonSearchViewModel personSearchViewModel = new PersonSearchViewModel()
+            {
+              Egn= "222222"
+            };
+            var actualResults = this.personService.SearchPerson(personSearchViewModel);
+            Assert.True(actualResults.FirstOrDefault().Id == 2, errorMessagePrefix);
+        }
+        [Fact]
+        public async Task SearchPerson_ByEgnAndFullName_ShouldReturnResults()
+        {
+            string errorMessagePrefix = "PersonService SearchPerson(PersonSearchViewModel) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.personService = new PersonService(context);
+
+            await SeedData(context);
+
+            PersonSearchViewModel personSearchViewModel = new PersonSearchViewModel()
+            {
+                Egn = "222222",
+                FullName = "Ivan"
+            };
+            var actualResults = this.personService.SearchPerson(personSearchViewModel);
+            Assert.True(actualResults.FirstOrDefault().Id == 2, errorMessagePrefix);
+        }
+        [Fact]
+        public async Task SearchPerson_ByFullNameOnly_ShouldReturnResults()
+        {
+            string errorMessagePrefix = "PersonService SearchPerson(PersonSearchViewModel) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.personService = new PersonService(context);
+
+            await SeedData(context);
+
+            PersonSearchViewModel personSearchViewModel = new PersonSearchViewModel()
+            {
+                 FullName = "Ivan"
+            };
+            var actualResults = this.personService.SearchPerson(personSearchViewModel);
+            Assert.True(actualResults.FirstOrDefault().Id == 2, errorMessagePrefix);
+        }
         // PersonServiceModel VerifyEgn(string egn);
+        [Fact]
+        public async Task VerifyEgn_ShouldReturnResults()
+        {
+            string errorMessagePrefix = "PersonService VerifyEgn(string egn) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.personService = new PersonService(context);
+
+            await SeedData(context);
+            var actualResults = this.personService.VerifyEgn("123456");
+            Assert.True(actualResults.Id == 1, errorMessagePrefix);
+        }
+        [Fact]
+        public async Task VerifyEgn_ShouldNotReturnResults()
+        {
+            string errorMessagePrefix = "PersonService VerifyEgn(string egn) method does not work properly.";
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.personService = new PersonService(context);
+            await SeedData(context);
+            var actualResults = this.personService.VerifyEgn("1234536");
+            Assert.True(actualResults==null, errorMessagePrefix);
+        }
     }
 }
 

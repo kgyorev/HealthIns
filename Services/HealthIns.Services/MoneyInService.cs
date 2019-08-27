@@ -38,18 +38,5 @@ namespace HealthIns.Services
         {
             return context.MoneyIns.Include(p => p.Contract).Include(m => m.Premium).Where(p => p.Contract.Id == id).To<MoneyInServiceModel>();
         }
-
-        public IQueryable<MoneyInServiceModel> GetAllMoneyInsForContract(Contract contract)
-        {
-            throw new NotImplementedException();
-        }
-
-       public MoneyInServiceModel GetById(long id)
-        {
-            throw new NotImplementedException();
-        }
-        private void TryToPay(Premium premium)
-        {
-        }
     }
 }

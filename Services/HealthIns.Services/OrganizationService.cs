@@ -72,8 +72,12 @@ namespace HealthIns.Services
 
         public async Task<bool> Update(OrganizationServiceModel organizationServiceModel)
         {
-            Organization org = AutoMapper.Mapper.Map<Organization>(organizationServiceModel);
-            context.Update(org);
+            Organization orgDB = this.context.Organizations.SingleOrDefault(p => p.Id == organizationServiceModel.Id);
+            orgDB.StartDate = organizationServiceModel.StartDate;
+            orgDB.EndDate = organizationServiceModel.EndDate;
+            orgDB.FullName = organizationServiceModel.FullName;
+            orgDB.Vat = organizationServiceModel.Vat;
+            context.Update(orgDB);
             int result = await context.SaveChangesAsync();
             return result > 0;
         }

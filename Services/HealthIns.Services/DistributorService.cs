@@ -43,7 +43,7 @@ namespace HealthIns.Services
 
         public DistributorServiceModel GetById(long id)
         {
-            return this.context.Distributors.Include(d => d.User)
+            return this.context.Distributors.Include(d => d.User).Include(d=>d.Organization)
                 .To<DistributorServiceModel>()
                 .SingleOrDefault(distributor => distributor.Id == id);
         }
@@ -58,7 +58,7 @@ namespace HealthIns.Services
             }
             switch (searchBy)
             {
-                case "userId": return this.context.Distributors.Include(d => d.User).Where(d => d.User.UserName == referenceIdStr).To<DistributorServiceModel>(); 
+                case "userName": return this.context.Distributors.Include(d => d.User).Where(d => d.User.UserName == referenceIdStr).To<DistributorServiceModel>(); 
                 case "organizationId": long.TryParse(distributorSearchModel.ReferenceId, out long referenceId); return this.context.Distributors.Include(d=>d.Organization).Where(d => d.Organization.Id == referenceId).To<DistributorServiceModel>();
                 default: long.TryParse(distributorSearchModel.ReferenceId, out referenceId); return this.context.Distributors.Where(d => d.Id == referenceId).To<DistributorServiceModel>();
             }
@@ -66,12 +66,14 @@ namespace HealthIns.Services
 
         public async Task<bool> Update(DistributorServiceModel distributorServiceModel)
         {
-            Distributor distributor = AutoMapper.Mapper.Map<Distributor>(distributorServiceModel);
+            Distributor distDB = this.context.Distributors.SingleOrDefault(p => p.Id == distributorServiceModel.Id);
+
             HealthInsUser user = this.context.Users.SingleOrDefault(p => p.UserName == distributorServiceModel.UserUserName);
             Organization org = this.context.Organizations.SingleOrDefault(p => p.Id == distributorServiceModel.OrganizationId);
-            distributor.User = user;
-            distributor.Organization = org;
-            context.Update(distributor);
+            distDB.User = user;
+            distDB.Organization = org;
+            distDB.FullName = distributorServiceModel.FullName;
+            context.Update(distDB);
             int result = await context.SaveChangesAsync();
             return result > 0;
         }

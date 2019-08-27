@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,7 +18,6 @@ namespace HealthIns.Tests.Service
 {
   public class ContractServiceTests
     {
-        private IProductService productService;
         private IContractService contractService;
 
         private List<Product> GetDummyDataProduct()
@@ -53,7 +51,7 @@ namespace HealthIns.Tests.Service
             {
                 new Person()
                 {
-                  Id=3,
+                  Id=39,
                   StartDate=DateTime.Parse("01/01/1996")
 
                 }
@@ -65,7 +63,7 @@ namespace HealthIns.Tests.Service
             {
                 new Distributor()
                 {
-                  Id=3,
+                  Id=39,
                   FullName="Dist4"
 
                 }
@@ -95,10 +93,12 @@ namespace HealthIns.Tests.Service
                 },
                   Person=new Person()
                   {
+                   Id=390,
                    StartDate=DateTime.Parse("01/01/1996")
                   },
                   Distributor = new Distributor
                   {
+                      Id=391,
                       FullName="Dist1"
                   }
                 
@@ -120,10 +120,12 @@ namespace HealthIns.Tests.Service
                 },
                   Person=new Person()
                   {
+                   Id=390,
                    StartDate=DateTime.Parse("01/01/1996")
                   },
                   Distributor = new Distributor
                   {
+                      Id=49,
                       FullName="Dist2"
                   }
                 },
@@ -144,10 +146,12 @@ namespace HealthIns.Tests.Service
                 },
                   Person=new Person()
                   {
+                        Id=49,
                    StartDate=DateTime.Parse("01/01/1996")
                   },
                   Distributor = new Distributor
                   {
+                        Id=50,
                       FullName="Dist3"
                   }
                 }
@@ -263,11 +267,11 @@ namespace HealthIns.Tests.Service
                 StartDate = DateTime.Parse("01/01/2019"),
                 Duration = 10,
                 ProductIdntfr = "LIFE1",
-                PersonId = 3,
-                DistributorId = 3
+                PersonId = 39,
+                DistributorId = 39
             };
             var actualResults = await this.contractService.Create(newContract);
-            var actualEntry = this.contractService.GetById(3);
+            var actualEntry = this.contractService.GetById(4);
             Assert.True(newContract.Frequency == actualEntry.Frequency, errorMessagePrefix + " " + "Frequency is not returned properly.");
             Assert.True(newContract.StartDate == actualEntry.StartDate, errorMessagePrefix + " " + "StartDate is not returned properly.");
         }
@@ -451,11 +455,13 @@ namespace HealthIns.Tests.Service
 
             var premium = new Premium()
             {
+                Id=22,
                 Contract = contract,
                 Status = Data.Models.Financial.Enums.Status.Pending
             };
             var moneyIn = new MoneyIn()
             {
+                Id=55,
                 Contract = contract,
                 Status = Data.Models.Financial.Enums.Status.Pending
             };

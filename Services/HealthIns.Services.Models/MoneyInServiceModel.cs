@@ -20,7 +20,7 @@ namespace HealthIns.Services.Models
         public Contract Contract { get; set; }
         public long ContractId { get; set; }
         public Premium Premium { get; set; }
-        public long PremiumId { get; set; }
+        public long? PremiumId { get; set; }
 
     }
 }

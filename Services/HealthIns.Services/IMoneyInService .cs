@@ -10,13 +10,7 @@ namespace HealthIns.Services
 {
     public interface IMoneyInService
     {
-        IQueryable<MoneyInServiceModel> GetAllMoneyInsForContract(Contract contract);
-
-        MoneyInServiceModel GetById(long id);
-
         Task<bool> Create(MoneyInServiceModel moneyInServiceModel);
         IQueryable<MoneyInServiceModel> FindMoneyInsByContractId(long id);
-        //   Task<bool> Update(MoneyInServiceModel premiumServiceModel);
-
     }
 }

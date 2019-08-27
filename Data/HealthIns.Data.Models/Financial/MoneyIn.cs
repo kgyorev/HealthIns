@@ -7,6 +7,7 @@ namespace HealthIns.Data.Models.Financial
 {
    public class MoneyIn:FinancialBase
     {
-        public Premium Premium { get; set; }
+        
+       public Premium Premium { get; set; }
     }
 }
