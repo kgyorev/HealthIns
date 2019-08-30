@@ -82,7 +82,9 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
             List<ProductServiceModel> productsFoundService = await this.productService.SearchProduct(productSearchInputModel).ToListAsync();
             List<ProductViewModel> productsFound = productsFoundService
              .Select(d => d.To<ProductViewModel>()).ToList();
-            productSearchInputModel.ProductsFound = productsFound;
+            List<ProductViewModel> productsFoundPage = productsFound.Skip((productSearchInputModel.CurrentPage - 1) * productSearchInputModel.PageSize).Take(productSearchInputModel.PageSize).ToList();
+            productSearchInputModel.Count = productsFound.Count;
+            productSearchInputModel.ProductsFound = productsFoundPage;
             return this.View(productSearchInputModel);
         }
         [HttpGet]

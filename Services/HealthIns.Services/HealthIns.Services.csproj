@@ -10,4 +10,8 @@
     <ProjectReference Include="..\HealthIns.Services.Models\HealthIns.Services.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Util\" />
+  </ItemGroup>
+
 </Project>

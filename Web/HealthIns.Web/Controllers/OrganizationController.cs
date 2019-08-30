@@ -71,7 +71,9 @@ namespace HealthIns.Web.Controllers
             List<OrganizationServiceModel> organizationsFoundService = await this.organizationService.SearchOrganization(organizationSearchViewModel).ToListAsync();
             List<OrganizationViewModel> organizationsFound = organizationsFoundService
              .Select(d => d.To<OrganizationViewModel>()).ToList();
-            organizationSearchViewModel.OrganizationsFound = organizationsFound;
+            List<OrganizationViewModel> organizationsFoundPage = organizationsFound.Skip((organizationSearchViewModel.CurrentPage - 1) * organizationSearchViewModel.PageSize).Take(organizationSearchViewModel.PageSize).ToList();
+            organizationSearchViewModel.Count = organizationsFound.Count;
+            organizationSearchViewModel.OrganizationsFound = organizationsFoundPage;
             return this.View(organizationSearchViewModel);
         }
     }

@@ -181,6 +181,7 @@ namespace HealthIns.Services
             var allContracts = this.context.Contracts.Include(prod => prod.Product).Include(pers => pers.Person).Include(dist => dist.Distributor).Where(c => c.Distributor.Id==id).To<ContractServiceModel>();
             return allContracts;
         }
+
     }
 }
 

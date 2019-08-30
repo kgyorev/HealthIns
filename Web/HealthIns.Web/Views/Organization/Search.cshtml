@@ -23,41 +23,63 @@
             </div>
         </form>
     </div>
-<div class="table-responsive-sm">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Organization Full Name</th>
-                <th scope="col">Creation Date</th>
-                <th scope="col">VAT</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.OrganizationsFound.Count; i++)
-            {
-            <tr>
-                <th scope="row">@(i + 1)</th>
-                <th>@Model.OrganizationsFound[i].Id</th>
-                <td>@Model.OrganizationsFound[i].FullName</td>
-                <td>@Model.OrganizationsFound[i].StartDate.ToShortDateString()</td>
-                <td>@Model.OrganizationsFound[i].Vat</td>
-                <td>
-                    <a href="/Organization/Details/@Model.OrganizationsFound[i].Id">
-                        <i class="fas fa-binoculars"
-                           title="Organization details"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="/Organization/Edit/@Model.OrganizationsFound[i].Id">
-                        <i class="fas fa-edit"
-                           title="Edit organization"></i>
-                    </a>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-</div>
+    <div class="table-responsive-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Organization Full Name</th>
+                    <th scope="col">Creation Date</th>
+                    <th scope="col">VAT</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrganizationsFound.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <th>@Model.OrganizationsFound[i].Id</th>
+                        <td>@Model.OrganizationsFound[i].FullName</td>
+                        <td>@Model.OrganizationsFound[i].StartDate.ToShortDateString()</td>
+                        <td>@Model.OrganizationsFound[i].Vat</td>
+                        <td>
+                            <a href="/Organization/Details/@Model.OrganizationsFound[i].Id">
+                                <i class="fas fa-binoculars"
+                                   title="Organization details"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Organization/Edit/@Model.OrganizationsFound[i].Id">
+                                <i class="fas fa-edit"
+                                   title="Edit organization"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Model.TotalPages != 1 && Model.OrganizationsFound.Any())
+        {
+            <div class="text-center">
+                <span class="text-muted">Page <span id="grid-page-num">@(Model.CurrentPage)</span> / <span id="grid-pages">@Model.TotalPages</span></span>
+            </div>
+        }
+        <div>
+            <ul class="pagination">
+                @if (Model.ShowPrevious)
+                {
+                    <li class="page-item">
+                        <a href="/Organization/Search?CurrentPage=@(Model.CurrentPage -1)&Vat=@(Model.Vat)&FullName=@(Model.FullName)" class="page-link"><i class="fas fa-angle-left"></i> Previous</a>
+                    </li>
+                }
+                @if (Model.ShowNext)
+                {
+                    <li class="page-item">
+                        <a href="/Organization/Search?CurrentPage=@(Model.CurrentPage + 1)&Vat=@(Model.Vat)&FullName=@(Model.FullName)" class="page-link">Next <i class="fas fa-angle-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>

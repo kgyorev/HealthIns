@@ -69,7 +69,9 @@ namespace HealthIns.Web.Controllers
             List<PersonServiceModel> personsFoundService = await this.personService.SearchPerson(personSearchViewModel).ToListAsync();
             List<PersonViewModel> personsFound = personsFoundService
              .Select(d => d.To<PersonViewModel>()).ToList();
-            personSearchViewModel.PersonsFound = personsFound;
+            List<PersonViewModel> personsFoundPage = personsFound.Skip((personSearchViewModel.CurrentPage - 1) * personSearchViewModel.PageSize).Take(personSearchViewModel.PageSize).ToList();
+            personSearchViewModel.Count = personsFound.Count;
+            personSearchViewModel.PersonsFound = personsFoundPage;
             return this.View(personSearchViewModel);
         }
 

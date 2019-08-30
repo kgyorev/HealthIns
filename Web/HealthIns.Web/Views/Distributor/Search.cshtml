@@ -27,38 +27,60 @@
             </div>
         </form>
     </div>
-<div class="table-responsive-sm">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.DistributorsFound.Count; i++)
-            {
+    <div class="table-responsive-sm">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th scope="row">@(i + 1)</th>
-                    <th>@Model.DistributorsFound[i].Id</th>
-                    <td>@Model.DistributorsFound[i].FullName</td>
-                    <td>
-                        <a href="/Distributor/Details/@Model.DistributorsFound[i].Id">
-                            <i class="fas fa-binoculars"
-                               title="Distributor details"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/Distributor/Edit/@Model.DistributorsFound[i].Id">
-                            <i class="fas fa-edit"
-                               title="Edit distributor"></i>
-                        </a>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.DistributorsFound.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <th>@Model.DistributorsFound[i].Id</th>
+                        <td>@Model.DistributorsFound[i].FullName</td>
+                        <td>
+                            <a href="/Distributor/Details/@Model.DistributorsFound[i].Id">
+                                <i class="fas fa-binoculars"
+                                   title="Distributor details"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Distributor/Edit/@Model.DistributorsFound[i].Id">
+                                <i class="fas fa-edit"
+                                   title="Edit distributor"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Model.TotalPages != 1 && Model.DistributorsFound.Any())
+        {
+            <div class="text-center">
+                <span class="text-muted">Page <span id="grid-page-num">@(Model.CurrentPage)</span> / <span id="grid-pages">@Model.TotalPages</span></span>
+            </div>
+        }
+        <div>
+            <ul class="pagination">
+                @if (Model.ShowPrevious)
+                {
+                    <li class="page-item">
+                        <a href="/Distributor/Search?CurrentPage=@(Model.CurrentPage -1)&SearchBy=@(Model.SearchBy)&ReferenceId=@(Model.ReferenceId)" class="page-link"><i class="fas fa-angle-left"></i> Previous</a>
+                    </li>
+                }
+                @if (Model.ShowNext)
+                {
+                    <li class="page-item">
+                        <a href="/Distributor/Search?CurrentPage=@(Model.CurrentPage + 1)&SearchBy=@(Model.SearchBy)&ReferenceId=@(Model.ReferenceId)" class="page-link">Next <i class="fas fa-angle-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 

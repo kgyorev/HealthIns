@@ -107,7 +107,9 @@ namespace HealthIns.Web.Controllers
             List<ContractServiceModel> contractsFoundService = await this.contractService.SearchContract(contractSearchInputModel).ToListAsync();
             List<ContractViewModel> contractsFound = contractsFoundService
              .Select(d => d.To<ContractViewModel>()).ToList();
-            contractSearchInputModel.ContractsFound = contractsFound;
+            List<ContractViewModel> contractsFoundPage = contractsFound.Skip((contractSearchInputModel.CurrentPage - 1) * contractSearchInputModel.PageSize).Take(contractSearchInputModel.PageSize).ToList();
+            contractSearchInputModel.Count = contractsFound.Count;
+            contractSearchInputModel.ContractsFound = contractsFoundPage;
             return this.View(contractSearchInputModel);
         }
     }

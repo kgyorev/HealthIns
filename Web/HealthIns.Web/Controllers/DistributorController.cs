@@ -82,7 +82,9 @@ namespace HealthIns.Web.Controllers
             List<DistributorServiceModel> distributorsFoundService=  await this.distributorService.SearchDistributor(distributorSearchModel).ToListAsync();
             List<DistributorViewModel> distributorsFound = distributorsFoundService
              .Select(d => d.To<DistributorViewModel>()).ToList();
-           distributorSearchModel.DistributorsFound = distributorsFound;
+            List<DistributorViewModel> distributorsFoundPage = distributorsFound.Skip((distributorSearchModel.CurrentPage - 1) * distributorSearchModel.PageSize).Take(distributorSearchModel.PageSize).ToList();
+            distributorSearchModel.Count = distributorsFound.Count;
+            distributorSearchModel.DistributorsFound = distributorsFoundPage;
            return this.View(distributorSearchModel);
        }
     }

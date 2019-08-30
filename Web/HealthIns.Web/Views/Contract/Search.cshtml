@@ -40,38 +40,60 @@
         <tbody>
             @for (int i = 0; i < Model.ContractsFound.Count; i++)
             {
-            <tr>
-                <th scope="row">@(i + 1)</th>
-                <th>@Model.ContractsFound[i].Id</th>
-                <td>@Model.ContractsFound[i].PersonFullName</td>
-                @if (Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
-                {
-                    <td class="text-success">In Force</td>
-                }
-                else
-                {
-                    <td class="text-danger">Canceled</td>
-                }
-                <td>
-                    <a href="/Contract/Details/@Model.ContractsFound[i].Id">
-
-                        <i class="fas fa-binoculars"
-                           title="Contract details"></i>
-                    </a>
-                </td>
-
-                <td>
-                    @if (Model.ContractsFound[i].Status != HealthIns.Data.Models.Bussines.Enums.Status.Canceled)
+                <tr>
+                    <th scope="row">@(i + ((Model.CurrentPage - 1) * Model.PageSize) + 1)</th>
+                    <th>@Model.ContractsFound[i].Id</th>
+                    <td>@Model.ContractsFound[i].PersonFullName</td>
+                    @if (Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
                     {
-                        <a href="/Contract/Edit/@Model.ContractsFound[i].Id">
-                            <i class="fas fa-edit"
-                               title="Edit contract"></i>
-                        </a>
+                        <td class="text-success">In Force</td>
                     }
+                    else
+                    {
+                        <td class="text-danger">Canceled</td>
+                    }
+                    <td>
+                        <a href="/Contract/Details/@Model.ContractsFound[i].Id">
+
+                            <i class="fas fa-binoculars"
+                               title="Contract details"></i>
+                        </a>
                     </td>
-            </tr>
+
+                    <td>
+                        @if (Model.ContractsFound[i].Status != HealthIns.Data.Models.Bussines.Enums.Status.Canceled)
+                        {
+                            <a href="/Contract/Edit/@Model.ContractsFound[i].Id">
+                                <i class="fas fa-edit"
+                                   title="Edit contract"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
+    @if (Model.TotalPages != 1 && Model.ContractsFound.Any())
+    {
+        <div class="text-center">
+            <span class="text-muted">Page <span id="grid-page-num">@(Model.CurrentPage)</span> / <span id="grid-pages">@Model.TotalPages</span></span>
+        </div>
+    }
+    <div>
+        <ul class="pagination">
+            @if (Model.ShowPrevious)
+            {
+                <li class="page-item">
+                    <a href="/Contract/Search?CurrentPage=@(Model.CurrentPage -1)&CntrctId=@(Model.CntrctId)&Status=@(Model.Status)" class="page-link"><i class="fas fa-angle-left"></i> Previous</a>
+                </li>
+            }
+            @if (Model.ShowNext)
+            {
+                <li class="page-item">
+                    <a href="/Contract/Search?CurrentPage=@(Model.CurrentPage + 1)&CntrctId=@(Model.CntrctId)&Status=@(Model.Status)" class="page-link">Next <i class="fas fa-angle-right"></i></a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 

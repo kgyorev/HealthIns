@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HealthIns.Web.ViewModels.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HealthIns.Web.ViewModels.Organization
 {
-   public class OrganizationSearchViewModel
+   public class OrganizationSearchViewModel : SearchPagenationRoot
     {
         public String Vat { get; set; }
         public String FullName { get; set; }
