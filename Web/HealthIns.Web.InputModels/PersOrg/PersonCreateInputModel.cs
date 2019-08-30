@@ -17,6 +17,8 @@ namespace HealthIns.Web.InputModels.PersOrg
         [Required(ErrorMessage = "Full Name is required!")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "EGN is required!")]
+        [MaxLength(10,ErrorMessage ="EGN Length should be 10")]
+        [MinLength(10, ErrorMessage = "EGN Length should be 10")]
         [PersonEgnUniqeValidator]
         public string Egn { get; set; }
 
@@ -25,7 +27,7 @@ namespace HealthIns.Web.InputModels.PersOrg
         public string Sex { get; set; }
 
         [Required(ErrorMessage = "Birth Date is required!")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
     }
 }

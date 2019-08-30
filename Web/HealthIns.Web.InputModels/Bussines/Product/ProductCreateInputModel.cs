@@ -21,11 +21,11 @@ namespace HealthIns.Web.InputModels.Bussines
 
         [Required(ErrorMessage = "Minimum Age is required!")]
         [Range(1, 100, ErrorMessage = "Value can be between 1 and 100!")]
-        public int MinAge { get; set; }
+        public int? MinAge { get; set; }
 
         [Required(ErrorMessage = "Maximum Age is required!")]
         [Range(1, 100, ErrorMessage = "Value can be between 1 and 100!")]
-        public int MaxAge { get; set; }
+        public int? MaxAge { get; set; }
 
         [Required(ErrorMessage = "Frequency is required!")]
         public List<string> FrequencyRule { get; set; }

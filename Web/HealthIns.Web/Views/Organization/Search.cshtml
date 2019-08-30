@@ -39,7 +39,7 @@
                 @for (int i = 0; i < Model.OrganizationsFound.Count; i++)
                 {
                     <tr>
-                        <th scope="row">@(i + 1)</th>
+                        <th scope="row">@(i + ((Model.CurrentPage - 1) * Model.PageSize) + 1)</th>
                         <th>@Model.OrganizationsFound[i].Id</th>
                         <td>@Model.OrganizationsFound[i].FullName</td>
                         <td>@Model.OrganizationsFound[i].StartDate.ToShortDateString()</td>

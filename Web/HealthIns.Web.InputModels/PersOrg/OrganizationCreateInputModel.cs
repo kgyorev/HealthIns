@@ -17,9 +17,11 @@ namespace HealthIns.Web.InputModels.PersOrg
         public string FullName { get; set; }
         [Required(ErrorMessage = "Vat is required!")]
         [OrganizationVatUniqeValidator]
+        [MaxLength(10, ErrorMessage = "VAT Length should be 10")]
+        [MinLength(10, ErrorMessage = "VAT Length should be 10")]
         public string Vat { get; set; }
         [Required(ErrorMessage = "Start Date is required!")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
     }
 }

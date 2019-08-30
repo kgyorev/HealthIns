@@ -17,7 +17,7 @@ namespace HealthIns.Web.InputModels.Bussines.Distributor
         public string UserUserName { get; set; }
         [Required(ErrorMessage = "Organization Id is required!")]
         [OrganizationExistingValidator]
-        public long OrganizationId { get; set; }
+        public long? OrganizationId { get; set; }
         [Required(ErrorMessage = "Full Name is required!")]
         public string FullName { get; set; }
     }

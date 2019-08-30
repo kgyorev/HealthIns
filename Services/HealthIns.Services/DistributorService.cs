@@ -41,7 +41,7 @@ namespace HealthIns.Services
         }
 
 
-        public DistributorServiceModel GetById(long id)
+        public DistributorServiceModel GetById(long? id)
         {
             return this.context.Distributors.Include(d => d.User).Include(d=>d.Organization)
                 .To<DistributorServiceModel>()

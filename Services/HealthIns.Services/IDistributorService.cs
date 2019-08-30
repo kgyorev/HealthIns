@@ -12,7 +12,7 @@ namespace HealthIns.Services
     {
         IQueryable<DistributorServiceModel> GetAllDistributors();
 
-        DistributorServiceModel GetById(long id);
+        DistributorServiceModel GetById(long? id);
 
         Task<bool> Create(DistributorServiceModel distributorServiceModel);
         Task<bool> Update(DistributorServiceModel distributorServiceModel);

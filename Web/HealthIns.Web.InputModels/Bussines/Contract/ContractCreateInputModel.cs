@@ -15,26 +15,26 @@ namespace HealthIns.Web.InputModels.Bussines.Contract
         [Required(ErrorMessage = "Product Identifyer is required!")]
         [ProductExistingValidator]
         public string ProductIdntfr { get; set; }
-        [Required(ErrorMessage = "Owner Id is required!")]
+        [Required(ErrorMessage = "Person(Owner) Id is required!")]
         [PersonExistingValidator]
-        public long PersonId { get; set; }
+        public long? PersonId { get; set; }
         [Required(ErrorMessage = "Distributor Id is required!")]
         [DistributorExistingValidator]
-        public long DistributorId { get; set; }
+        public long? DistributorId { get; set; }
 
         [Required(ErrorMessage = "Frequency is required!")]
         public string Frequency { get; set; }
 
-        [Required(ErrorMessage = "Amount Identifyer is required!")]
-        public int Amount { get; set; }
+        [Required(ErrorMessage = "Amount is required!")]
+        public int? Amount { get; set; }
 
         [Required(ErrorMessage = "Contract Duration is required!")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         [Required(ErrorMessage = "Next Billing Due Date is required!")]
-        public DateTime NextBillingDueDate { get; set; }
+        public DateTime? NextBillingDueDate { get; set; }
 
         [Required(ErrorMessage = "Contract Start Date is required!")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace HealthIns.Services
         }
 
 
-        public OrganizationServiceModel GetById(long id)
+        public OrganizationServiceModel GetById(long? id)
         {
             return this.context.Organizations
                 .To<OrganizationServiceModel>()

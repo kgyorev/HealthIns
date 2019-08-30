@@ -36,7 +36,7 @@ namespace HealthIns.Services
         }
 
 
-        public PersonServiceModel GetById(long id)
+        public PersonServiceModel GetById(long? id)
         {
             return this.context.Persons
                 .To<PersonServiceModel>()

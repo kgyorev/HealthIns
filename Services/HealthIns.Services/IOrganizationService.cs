@@ -10,7 +10,7 @@ namespace HealthIns.Services
 {
     public interface IOrganizationService
     {
-        OrganizationServiceModel GetById(long id);
+        OrganizationServiceModel GetById(long? id);
         Task<bool> Create(OrganizationServiceModel organizationServiceModel);
         IQueryable<OrganizationServiceModel> GetAllOrganizations();
         Task<bool> Update(OrganizationServiceModel organizationServiceModel);
