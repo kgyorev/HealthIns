@@ -5,11 +5,11 @@
 }
 
     <div class="container col-sm-4  mt-3">
+        <h2 class="text-center">Search Distributor</h2>
         <form method="GET" action="/Distributor/Search">
-
             <div class="form-group">
                 <label asp-for="SearchBy">Search By:</label>
-                <select  asp-for="SearchBy" class="form-control" id="searchBy" name="searchBy">
+                <select asp-for="SearchBy" class="form-control" id="searchBy" name="searchBy">
                     <option value="distributorId">Distributor ID</option>
                     <option value="organizationId">Organization ID</option>
                     <option value="userName">User Name</option>

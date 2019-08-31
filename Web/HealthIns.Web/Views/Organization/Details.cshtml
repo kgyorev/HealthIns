@@ -7,22 +7,22 @@
 }
 
 <div class="container mt-4">
-    <form class="my-4" method="post" enctype="multipart/form-data">
+    <form class="my-4" enctype="multipart/form-data" action="/Organization/Search">
         <h2 class="text-center">New Organization</h2>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="FullName">Name</label>
-            <input type="text" class="form-control" id="fullName" name="fullName" input asp-for="FullName">
+            <input type="text" class="form-control" id="fullName" name="fullName" input asp-for="FullName" readonly>
             <span asp-validation-for="FullName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Vat">Vat</label>
-            <input type="text" class="form-control" id="vat" name="vat" input asp-for="Vat">
+            <input type="text" class="form-control" id="vat" name="vat" input asp-for="Vat" readonly>
             <span asp-validation-for="Vat" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="StartDate">Creation Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate">
+            <input type="date" class="form-control" id="startDate" name="startDate" input asp-for="StartDate" readonly>
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="text-center">

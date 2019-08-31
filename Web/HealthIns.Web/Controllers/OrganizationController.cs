@@ -57,12 +57,12 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(organizationCreateInputModel);
             }
             OrganizationServiceModel organizationServiceModel = AutoMapper.Mapper.Map<OrganizationServiceModel>(organizationCreateInputModel);
             await this.organizationService.Update(organizationServiceModel);
             this.TempData["info"] = String.Format(UPDATED_ORG, organizationServiceModel.Id);
-            return this.Redirect("Organization/Search");
+            return this.Redirect("/Organization/Search");
         }
 
         [HttpGet(Name = "Search")]
@@ -75,6 +75,13 @@ namespace HealthIns.Web.Controllers
             organizationSearchViewModel.Count = organizationsFound.Count;
             organizationSearchViewModel.OrganizationsFound = organizationsFoundPage;
             return this.View(organizationSearchViewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(long Id)
+        {
+            OrganizationServiceModel orgFromDB = this.organizationService.GetById(Id);
+            OrganizationCreateInputModel org = orgFromDB.To<OrganizationCreateInputModel>();
+            return this.View(org);
         }
     }
 }

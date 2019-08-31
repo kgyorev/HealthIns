@@ -7,6 +7,7 @@
 }
 
     <div class="container mt-4">
+        <h2 class="text-center">Details for Distributor ID: @Model.Id</h2>
         <ul class="nav nav-tabs" id="myTab">
             <li class="nav-item">
                 <a class="nav-link  @(Model.SelectedTab=="summary"?"active":"")" href="/Distributor/Details/@Model.Id?SelectedTab=summary">Summary</a>
@@ -24,7 +25,6 @@
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade @(Model.SelectedTab=="summary"?"show active":"")" id="summary">
                 <div class="my-4">
-                    <h2 class="text-center">Summary for Distributor ID: @Model.Id</h2>
                     <div class="form-group">
                         <label for="user">Reference User Name</label>
                         <input asp-for="UserUserName" type="text" class="form-control" id="user" name="user" readonly="" value="@Model.UserUserName">
@@ -74,24 +74,24 @@
                             </div>
                         </div>
                     }
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.ContractsFound.Count; i++)
-                                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.ContractsFound.Count; i++)
+                            {
                                 <tr>
                                     <th scope="row">@(i + 1)</th>
                                     <th>@Model.ContractsFound[i].Id</th>
                                     <td>@Model.ContractsFound[i].PersonFullName</td>
-                                    @if(Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
+                                    @if (Model.ContractsFound[i].Status == HealthIns.Data.Models.Bussines.Enums.Status.InForce)
                                     {
                                         <td class="text-success">In Force</td>
                                     }
@@ -102,10 +102,10 @@
                                     <td><a href="" data-toggle="modal" data-target="#@Model.ContractsFound[i].Id"><i class="fas fa-binoculars" title="Contract details"></i></a></td>
 
                                 </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -38,7 +38,7 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(distributorCreateInputModel);
             }
             DistributorServiceModel distributorServiceModel = AutoMapper.Mapper.Map<DistributorServiceModel>(distributorCreateInputModel);
             await this.distributorService.Create(distributorServiceModel);

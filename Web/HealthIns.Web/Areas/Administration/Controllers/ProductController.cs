@@ -17,7 +17,7 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
     {
         private readonly IProductService productService;
         public const string PRODUCT_CREATED = "Product with #{0} was created";
-        public const string PRODUCT_UPDATED = "Contract with #{0} was updated";
+        public const string PRODUCT_UPDATED = "Product with #{0} was updated";
 
         public ProductController(IProductService productService)
         {
@@ -65,7 +65,7 @@ namespace HealthIns.Web.Areas.Bussines.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(productCreateInputModel);
             }
             ProductServiceModel productServiceModel = AutoMapper.Mapper.Map<ProductServiceModel>(productCreateInputModel);
             string frequencyRule = string.Join(",", productCreateInputModel.FrequencyRule);

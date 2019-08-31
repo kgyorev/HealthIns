@@ -56,7 +56,7 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(personCreateInputModel);
             }
            PersonServiceModel personServiceModel = AutoMapper.Mapper.Map<PersonServiceModel>(personCreateInputModel);
             await this.personService.Update(personServiceModel);
