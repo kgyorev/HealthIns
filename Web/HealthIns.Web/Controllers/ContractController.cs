@@ -34,7 +34,7 @@ namespace HealthIns.Web.Controllers
             this.moneyInService = moneyInService;
             this.claimActivityService = claimActivityService;
         }
-
+        [Authorize(Roles = "Admin,User")]
         [HttpGet(Name = "Create")]
         public async Task<IActionResult> Create()
         {

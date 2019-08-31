@@ -9,6 +9,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class OrganizationExistingValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "Organization with this Id not exist!";
+
         protected override ValidationResult IsValid(
              object value, ValidationContext validationContext)
         {
@@ -18,7 +20,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             var org = _organizationService.GetById(distributorEntry.OrganizationId);
             if (org == null)
             {
-                return new ValidationResult("Organization with this Id not exist!");
+                return new ValidationResult(ERROR);
             }
             else
             {

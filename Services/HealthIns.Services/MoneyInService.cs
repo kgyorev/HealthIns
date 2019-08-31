@@ -15,12 +15,10 @@ namespace HealthIns.Services
     public class MoneyInService : IMoneyInService
     {
         private readonly HealthInsDbContext context;
-        private readonly IContractService contractService;
 
-        public MoneyInService(HealthInsDbContext context, IContractService contractService)
+        public MoneyInService(HealthInsDbContext context)
         {
             this.context = context;
-            this.contractService = contractService;
         }
         public async Task<bool> Create(MoneyInServiceModel moneyInServiceModel)
         {

@@ -255,7 +255,7 @@ namespace HealthIns.Tests.Service
             string errorMessagePrefix = "PremiumService Create(PremiumServiceModel) method does not work properly.";
 
             var context = HealthInsDbContextInMemoryFactory.InitializeContext();
-            this.moneyInService = new MoneyInService(context, new ContractService(context));
+            this.moneyInService = new MoneyInService(context);
             await SeedData(context);
             MoneyInServiceModel moneyIn = new MoneyInServiceModel()
             {
@@ -281,7 +281,7 @@ namespace HealthIns.Tests.Service
                  string errorMessagePrefix = "PremiumService FindMoneyInsByContractId(long id) method does not work properly.";
         
                  var context = HealthInsDbContextInMemoryFactory.InitializeContext();
-                 this.moneyInService = new MoneyInService(context, new ContractService(context));
+                 this.moneyInService = new MoneyInService(context);
                  await SeedData(context);
         
                  var actualResults = this.moneyInService.FindMoneyInsByContractId(4);
@@ -295,7 +295,7 @@ namespace HealthIns.Tests.Service
             string errorMessagePrefix = "PremiumService FindMoneyInsByContractId(long id) method does not work properly.";
 
             var context = HealthInsDbContextInMemoryFactory.InitializeContext();
-            this.moneyInService = new MoneyInService(context, new ContractService(context));
+            this.moneyInService = new MoneyInService(context);
             await SeedData(context);
 
             var actualResults = this.moneyInService.FindMoneyInsByContractId(45);

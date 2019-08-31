@@ -16,6 +16,8 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private const string LOGIN_OK = "Login Successful!";
+        private const string INVALID_LOGIN = "Invalid login attempt!";
         private readonly SignInManager<HealthInsUser> _signInManager;
 
         public LoginModel(SignInManager<HealthInsUser> signInManager)
@@ -43,8 +45,6 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-           // [Display(Name = "Remember me?")]
-           // public bool RememberMe { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -73,13 +73,12 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    this.TempData["info"] = String.Format("Login Successful!");
+                    this.TempData["info"] = String.Format(LOGIN_OK);
                     return Redirect(returnUrl);
                 }
                 else
                 {
-                   // ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    this.TempData["info"] = String.Format("Invalid login attempt!");
+                    this.TempData["error"] = String.Format(INVALID_LOGIN);
                     return Page();
                 }
             }

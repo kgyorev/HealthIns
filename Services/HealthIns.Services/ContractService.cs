@@ -18,6 +18,9 @@ namespace HealthIns.Services
 {
     public class ContractService : IContractService
     {
+        private const string ANNUAL = "ANUAL";
+        private const string SEMI_ANNUAL = "SEMI_ANNUAL";
+        private const string TRIMESTER = "TRIMESTER";
         private readonly HealthInsDbContext context;
         private readonly IPremiumService premiumService;
         private readonly IMoneyInService moneyInService;
@@ -110,11 +113,11 @@ namespace HealthIns.Services
         {
             switch (frequency)
             {
-                case "ANUAL":
+                case ANNUAL:
                     return 12;
-                case "SEMI_ANNUAL":
+                case SEMI_ANNUAL:
                     return 6;
-                case "TRIMESTER":
+                case TRIMESTER:
                     return 3;
                 default:
                     return 1;
@@ -124,11 +127,11 @@ namespace HealthIns.Services
         {
             switch (frequency)
             {
-                case "ANUAL":
+                case ANNUAL:
                     return 1;
-                case "SEMI_ANNUAL":
+                case SEMI_ANNUAL:
                     return 2;
-                case "TRIMESTER":
+                case TRIMESTER:
                     return 4;
                 default:
                     return 12;

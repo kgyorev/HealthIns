@@ -9,6 +9,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class ProductIdntfrUniqeValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "There is Product with this Identifier, Identifier should be uniqe!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -23,7 +25,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             }
             else if ((product != null&& product.Id != productOther.Id && productOther.Idntfr == productEntry.Idntfr)||(product == null && productOther.Idntfr == productEntry.Idntfr))
             {
-                return new ValidationResult("There is Product with this Identifier, Identifier should be uniqe!");
+                return new ValidationResult(ERROR);
             }
             else
             {

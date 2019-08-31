@@ -24,15 +24,31 @@ namespace HealthIns.Data
         public HealthInsDbContext(DbContextOptions options) : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<MoneyIn>()
+
+            modelBuilder.Entity<Product>()
+                .HasKey(product => product.Id);
+            modelBuilder.Entity<Contract>()
+                .HasKey(contract => contract.Id);
+            modelBuilder.Entity<Distributor>()
+                 .HasKey(distributor => distributor.Id);
+            modelBuilder.Entity<Organization>()
+                 .HasKey(org => org.Id);
+            modelBuilder.Entity<Person>()
+                 .HasKey(pers => pers.Id);
+            modelBuilder.Entity<Premium>()
+                .HasKey(prem => prem.Id);
+            modelBuilder.Entity<MoneyIn>()
+               .HasKey(moneyIn => moneyIn.Id);
+            modelBuilder.Entity<ClaimActivity>()
+               .HasKey(claim => claim.Id);
+            modelBuilder.Entity<MoneyIn>()
             .HasOne(a => a.Premium)
             .WithOne(b => b.MoneyIn)
             .HasForeignKey<Premium>(b => b.MoneyInId);
 
-
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

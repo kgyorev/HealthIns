@@ -22,6 +22,8 @@ using HealthIns.Services.Models;
 using System.Reflection;
 using HealthIns.Web.ViewModels.Contract;
 using HealthIns.Web.InputModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Logging;
 
 namespace HealthIns.Web
 {
@@ -57,9 +59,29 @@ namespace HealthIns.Web
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 3;
                 options.Password.RequiredUniqueChars = 0;
-
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.Cookie.Name = "YourAppCookieName";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/Identity/Account/Login";
+                // ReturnUrlParameter requires 
+                //using Microsoft.AspNetCore.Authentication.Cookies;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
+
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IContractService, ContractService>();
@@ -76,13 +98,9 @@ namespace HealthIns.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             AutoMapperConfig.RegisterMappings(
             typeof(ProductCreateInputModel).GetTypeInfo().Assembly,
             typeof(ContractViewModel).GetTypeInfo().Assembly,
-          //  typeof(ContractServiceModel).GetTypeInfo().Assembly,
-          //  typeof(ContractCreateInputModel).GetTypeInfo().Assembly,
-            //  typeof(ProductHomeViewModel).GetTypeInfo().Assembly,
             typeof(ProductServiceModel).GetTypeInfo().Assembly);
 
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -113,17 +131,21 @@ namespace HealthIns.Web
                     }
                 }
             }
-
-
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
             //Custom
-            app.UseDeveloperExceptionPage();
-            app.UseDatabaseErrorPage();
-            app.UseHsts();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseAuthentication();
-
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -133,6 +155,7 @@ namespace HealthIns.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

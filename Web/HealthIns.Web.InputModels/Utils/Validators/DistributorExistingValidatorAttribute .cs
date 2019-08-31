@@ -9,6 +9,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class DistributorExistingValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "Distributor with this Id not exist!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -21,7 +23,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             var distributor =  _distributorService.GetById(contractEntry.DistributorId);
             if (distributor == null)
             {
-                return new ValidationResult("Distributor with this Id not exist!");
+                return new ValidationResult(ERROR);
             }
             else
             {

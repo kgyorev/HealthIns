@@ -10,6 +10,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class UserExistingValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "User with this Username not exist!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -19,7 +21,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
                var user = _context.Users.FirstOrDefault(c => c.UserName == distributorEntry.UserUserName);
             if (user == null)
             {
-                return new ValidationResult("User with this Username not exist!");
+                return new ValidationResult(ERROR);
             }
             else
             {

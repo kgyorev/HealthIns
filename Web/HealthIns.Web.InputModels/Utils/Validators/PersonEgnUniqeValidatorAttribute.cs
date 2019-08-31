@@ -8,6 +8,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class PersonEgnUniqeValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "There is Person with this Egn, Egn should be uniqe!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -22,7 +24,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             }
             else if ((person != null&&person.Id != personOther.Id && personOther.Egn == personEntry.Egn)||(person == null && personOther.Egn == personEntry.Egn))
             {
-                return new ValidationResult("There is Person with this Egn, Egn should be uniqe!");
+                return new ValidationResult(ERROR);
             }
             else
             {

@@ -17,6 +17,9 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private const string REGISTER_OK = "Register Successful!";
+        private const string PASSWORD_LENGTH = "The {0} must be at least {2} and at max {1} characters long.";
+        private const string PASSWORD_COFIRMATION = "The password and confirmation password do not match.";
         private readonly SignInManager<HealthInsUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<HealthInsUser> _userManager;
@@ -39,17 +42,19 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+
+
             [Required]
             [Display(Name = "UserName")]
             public string UserName { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = PASSWORD_LENGTH, MinimumLength = 6)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = PASSWORD_COFIRMATION)]
             public string ConfirmPassword { get; set; }
 
             [Required]
@@ -95,7 +100,7 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     #endregion
-                    this.TempData["info"] = String.Format("Register Successful!");
+                    this.TempData["info"] = String.Format(REGISTER_OK);
                     return Redirect(returnUrl);
                 }
 

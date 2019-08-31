@@ -1,7 +1,5 @@
 ﻿using HealthIns.Data.Models.PrsnOrg;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace HealthIns.Data.Models.Bussines
 {

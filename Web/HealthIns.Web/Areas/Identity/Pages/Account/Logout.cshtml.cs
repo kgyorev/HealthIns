@@ -14,6 +14,7 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
+        private const string LOGOUT_OK = "Logut Successful!";
         private readonly SignInManager<HealthInsUser> _signInManager;
 
         public LogoutModel(SignInManager<HealthInsUser> signInManager)
@@ -24,7 +25,7 @@ namespace HealthIns.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGet()
         {
             await _signInManager.SignOutAsync();
-            this.TempData["info"] = String.Format("Logut Successful!");
+            this.TempData["info"] = String.Format(LOGOUT_OK);
             return Redirect("/Identity/Account/Login");
         }
     }

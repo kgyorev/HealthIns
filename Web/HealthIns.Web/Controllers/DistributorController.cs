@@ -57,12 +57,12 @@ namespace HealthIns.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(distributorCreateInputModel);
             }
             DistributorServiceModel distributorServiceModel = AutoMapper.Mapper.Map<DistributorServiceModel>(distributorCreateInputModel);
             await this.distributorService.Update(distributorServiceModel);
             this.TempData["info"] = String.Format(DISTRIBUTOR_UPDATED, distributorServiceModel.Id);
-            return this.Redirect("Distributor/Search");
+            return this.Redirect("/Distributor/Search");
         }
         [HttpGet]
         public async Task<IActionResult> Details(DistributorViewModel distributorViewModel)

@@ -8,6 +8,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class OrganizationVatUniqeValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "There is Organization with this Vat, Vat should be uniqe!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -22,7 +24,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             }
             else if ((org != null&& org.Id != orgOther.Id && orgOther.Vat == orgEntry.Vat)||(org == null && orgOther.Vat == orgEntry.Vat))
             {
-                return new ValidationResult("There is Organization with this Vat, Vat should be uniqe!");
+                return new ValidationResult(ERROR);
             }
             else
             {

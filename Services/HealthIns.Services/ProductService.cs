@@ -14,6 +14,9 @@ namespace HealthIns.Services
 {
   public  class ProductService : IProductService
     {
+        private const string ERROR_FREQUENCY_ALLOWED = "Please fill the form correctly, allowed frequencies for this product are ";
+        private const string ERROR_MAXIMUM_AGE = "Please fill the form correctly, at contract start date Owner is {0} years old, maximum allowed age for this product is {1}!";
+        private const string ERROR_MINIMUM_AGE = "Please fill the form correctly, at contract start date Owner is {0} years old, minimum allowed age for this product is {1}!";
         private readonly HealthInsDbContext context;
 
         public ProductService(HealthInsDbContext context)
@@ -25,11 +28,9 @@ namespace HealthIns.Services
         {
 
             Product product = AutoMapper.Mapper.Map<Product>(productServiceModel);
-
-
             product.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
-
             context.Products.Add(product);
+            productServiceModel.Id = product.Id;
             int result = await context.SaveChangesAsync();
 
             return result > 0;
@@ -69,7 +70,7 @@ namespace HealthIns.Services
                     else
                         concat += s.First().ToString().ToUpper() + String.Join("", s.ToLower().Skip(1)) + ", ";
                 }
-                output.Add("Please fill the form correctly, allowed frequencies for this product are " + concat);
+                output.Add(ERROR_FREQUENCY_ALLOWED + concat);
             }
             var person = this.context.Persons.SingleOrDefault(p => p.Id == contract.PersonId);
             int age = person.GetAge(startDt);
@@ -77,11 +78,11 @@ namespace HealthIns.Services
             int minAge = product.MinAge;
             if (age > maxAge)
             {
-                output.Add(String.Format("Please fill the form correctly, at contract start date Owner is {0} years old, maximum allowed age for this product is {1}!", age, maxAge));
+                output.Add(String.Format(ERROR_MAXIMUM_AGE, age, maxAge));
             }
             if (age < minAge)
             {
-                output.Add(String.Format("Please fill the form correctly, at contract start date Owner is {0} years old, minimum allowed age for this product is {1}!", age, minAge));
+                output.Add(String.Format(ERROR_MINIMUM_AGE, age, minAge));
             }
             return output;
         }

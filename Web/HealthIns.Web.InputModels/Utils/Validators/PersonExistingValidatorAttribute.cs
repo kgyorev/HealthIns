@@ -9,6 +9,8 @@ namespace HealthIns.Web.InputModels.Utils.Validators
 {
     public class PersonExistingValidatorAttribute : ValidationAttribute
     {
+        private const string ERROR = "Person with this Id not exist!";
+
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
@@ -18,7 +20,7 @@ namespace HealthIns.Web.InputModels.Utils.Validators
             var person = _personService.GetById(contractEntry.PersonId);
             if (person == null)
             {
-                return new ValidationResult("Person with this Id not exist!");
+                return new ValidationResult(ERROR);
             }
             else
             {
