@@ -30,9 +30,8 @@ namespace HealthIns.Services
             Product product = AutoMapper.Mapper.Map<Product>(productServiceModel);
             product.FrequencyRule = String.Join(" ", productServiceModel.FrequencyRule);
             context.Products.Add(product);
-            productServiceModel.Id = product.Id;
             int result = await context.SaveChangesAsync();
-
+            productServiceModel.Id = product.Id;
             return result > 0;
         }
 

@@ -31,6 +31,7 @@ namespace HealthIns.Services
             distributor.Organization = org;
             context.Distributors.Add(distributor);
             int result = await context.SaveChangesAsync();
+            distributorServiceModel.Id = distributor.Id;
             return result > 0;
         }
 

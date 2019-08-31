@@ -34,57 +34,7 @@
     <div class="container-fluid">
         @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
         {
-            @*<nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand font-weight-bold" href="/">HealthIns</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Administration/Product/Type/Create">Create Product Type</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Contract/Create">Create Contract</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Contract/Search">Search Contract</a>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkCustomers"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Perosn/Organization
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/Person/Create">Create Person</a>
-                                    <a class="dropdown-item" href="/Person/Search">Person Area</a>
-                                    <a class="dropdown-item" href="/Organization/Create">Create Organization</a>
-                                </div>
-                            </li>
-                            @*<li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Person/Create">Create Person</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Person/Search">Search Person</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link font-weight-bold" href="/Organization/Create">Create Organization</a>
-                            </li>---
-                    <li class="nav-item active">
-                        <a class="nav-link font-weight-bold" href="/Distributor/Create">Create Distributor</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link font-weight-bold" href="/Administration/Product/Create">Create Product</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link font-weight-bold" href="/Identity/Account/Logout">Logout</a>
-                    </li>
-                    </ul>
-                </div>
-                    </nav>*@
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+           <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">HealthIns</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -111,7 +61,6 @@
                                 <a class="dropdown-item" href="/Distributor/Search">Distributor Area</a>
                             </div>
                         </li>
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkProducts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Product Workbench
@@ -134,7 +83,6 @@
                                     New
                                     Person
                                 </a>
-                                <!--<a sec:authorize="hasRole('USER')"  class="dropdown-item" href="/persons?page=0" >Person Area</a>-->
                                 <a class="dropdown-item" href="/Person/Search">Person Area</a>
                                 <a class="dropdown-item" href="/Organization/Create">
                                     New
@@ -170,6 +118,18 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Contract/Search">Contract Area</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkDistributors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Distributors
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/Distributor/Create">
+                                    New
+                                    Distributor
+                                </a>
+                                <a class="dropdown-item" href="/Distributor/Search">Distributor Area</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkCustomers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -220,31 +180,7 @@
                     </ul>
                 </div>
             </nav>
-            @*<nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarColor02">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Features</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Pricing</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>*@
-
-        }
+       }
         <main class="container-fluid mt-3 mb-3">
             <div id="messages">
                 <partial name="~/Views/Shared/_ErrorMessagePartial.cshtml" />
