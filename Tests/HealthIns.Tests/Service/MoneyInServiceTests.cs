@@ -245,12 +245,12 @@ namespace HealthIns.Tests.Service
         }
 
 
-
-
-
         // Task<bool> Create(MoneyInServiceModel moneyInServiceModel);
-        [Fact]
-        public async Task Create_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData(2000)]
+        [InlineData(30000)]
+        [InlineData(0)]
+        public async Task Create_ShouldReturnCorrectResults(double operationAmount)
         {
             string errorMessagePrefix = "PremiumService Create(PremiumServiceModel) method does not work properly.";
 
@@ -261,7 +261,7 @@ namespace HealthIns.Tests.Service
             {
                 Id = 14,
                 ContractId = 2,
-                OperationAmount = 100
+                OperationAmount = operationAmount
 
             };
 
@@ -301,8 +301,6 @@ namespace HealthIns.Tests.Service
             var actualResults = this.moneyInService.FindMoneyInsByContractId(45);
 
             Assert.True(!actualResults.Any(), errorMessagePrefix + " " + "Money in Is Found");
-
         }
-
     }
 }

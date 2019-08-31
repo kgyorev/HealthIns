@@ -19,7 +19,7 @@ namespace HealthIns.Web.ViewModels.Contract
         public string PersonFullName { get; set; }
         public string Frequency { get; set; }
         public Status Status { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public double PremiumAmount { get; set; }
         public int Duration { get; set; }
         public DateTime NextBillingDueDate { get; set; }

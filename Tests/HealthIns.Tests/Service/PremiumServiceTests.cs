@@ -292,12 +292,15 @@ namespace HealthIns.Tests.Service
             Assert.True(prem.ContractId == actualEntry.ContractId, errorMessagePrefix + " " + "Contract is not returned properly.");
             Assert.True(prem.OperationAmount == actualEntry.OperationAmount, errorMessagePrefix + " " + "Contract is not returned properly.");
             Assert.True(HealthIns.Data.Models.Financial.Enums.Status.Pending == actualEntry.Status, errorMessagePrefix + " " + "Contract is not returned properly.");
-            Assert.True(DateTime.Parse("01/02/2019").ToShortDateString() == contract.NextBillingDueDate.ToShortDateString(), errorMessagePrefix + " " + "Contract NextBillingDueDate is not calculated properly.");
+            Assert.True(DateTime.Parse("01/01/2020").ToShortDateString() == contract.NextBillingDueDate.ToShortDateString(), errorMessagePrefix + " " + "Contract NextBillingDueDate is not calculated properly.");
 
         }
         //PremiumServiceModel SimulatePremiumForContract(long contractId);
-        [Fact]
-        public async Task SimulatePremiumForContract_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData(200)]
+        [InlineData(300)]
+        [InlineData(400)]
+        public async Task SimulatePremiumForContract_ShouldReturnCorrectResults(double amount)
         {
             string errorMessagePrefix = "PremiumService SimulatePremiumForContract(long id) method does not work properly.";
 
@@ -305,11 +308,14 @@ namespace HealthIns.Tests.Service
             this.premiumService = new PremiumService(context, new ContractService(context));
             await SeedData(context);
 
+            var contract = context.Contracts.SingleOrDefault(c => c.Id == 2);
+            contract.PremiumAmount = amount;
+            await context.SaveChangesAsync();
             var actualResults = this.premiumService.SimulatePremiumForContract(2);
 
-            Assert.True(200 == actualResults.OperationAmount, errorMessagePrefix + " " + "OperationAmount is not returned properly.");
+            Assert.True(amount == actualResults.OperationAmount, errorMessagePrefix + " " + "OperationAmount is not returned properly.");
             Assert.True(actualResults.StartDate.ToShortDateString() == DateTime.Parse("01/01/2019").ToShortDateString(), errorMessagePrefix + " " + "StartDate is not returned properly.");
-            Assert.True(actualResults.EndDate.ToShortDateString() == DateTime.Parse("31/01/2019").ToShortDateString(), errorMessagePrefix + " " + "EndDate is not returned properly.");
+            Assert.True(actualResults.EndDate.ToShortDateString() == DateTime.Parse("31/12/2019").ToShortDateString(), errorMessagePrefix + " " + "EndDate is not returned properly.");
 
         }
         //IQueryable<PremiumServiceModel> FindPremiumsByContractId(long id);

@@ -26,7 +26,8 @@ namespace HealthIns.Web.InputModels.Bussines.Contract
         public string Frequency { get; set; }
 
         [Required(ErrorMessage = "Amount is required!")]
-        public int? Amount { get; set; }
+        [Range(0,1000000, ErrorMessage = "Amount should be between 0 and 1000000!")]
+        public double? Amount { get; set; }
 
         [Required(ErrorMessage = "Contract Duration is required!")]
         public int? Duration { get; set; }

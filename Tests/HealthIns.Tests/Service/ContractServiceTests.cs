@@ -303,28 +303,43 @@ namespace HealthIns.Tests.Service
 
         }
         // double ReturnPremiumAmount(Contract contract);
-        [Fact]
-        public async Task ReturnPremiumAmount_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(10000,1.67)]
+        [InlineData(20000, 3.33)]
+        [InlineData(40000, 6.67)]
+        [InlineData(50000,8.33)]
+        [InlineData(100000, 16.67)]
+        [InlineData(300000,50)]
+        public async Task ReturnPremiumAmount_ShouldReturnCorrectResults(double benefitAmount,double expectedAmount)
         {
             var context = HealthInsDbContextInMemoryFactory.InitializeContext();
             this.contractService = new ContractService(context);
             await SeedData(context);
             var actualEntry = this.contractService.GetById(1);
             Contract contract = context.Contracts.SingleOrDefault(c=>c.Id==1);
+            contract.Amount = benefitAmount;
+            await context.SaveChangesAsync();
             var amount = this.contractService.ReturnPremiumAmount(contract);
-            Assert.Equal(1.67, amount);
+            Assert.Equal(expectedAmount, amount);
         }
         // DateTime CalculateNextBillingDueDate(Contract contract);
-        [Fact]
-        public async Task CalculateNextBillingDueDate_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData("01/01/2019","MONTHLY", "01/02/2019")]
+        [InlineData("01/02/2019","ANNUAL", "01/02/2020")]
+        [InlineData("01/04/2019","TRIMESTER", "01/07/2019")]
+        [InlineData("01/06/2019","SEMI_ANNUAL", "01/12/2019")]
+        public async Task CalculateNextBillingDueDate_ShouldReturnCorrectResults(string nextDate,string frequency,string expectedDate)
         {
             var context = HealthInsDbContextInMemoryFactory.InitializeContext();
             this.contractService = new ContractService(context);
             await SeedData(context);
             var actualEntry = this.contractService.GetById(1);
             Contract contract = context.Contracts.SingleOrDefault(c => c.Id == 1);
+            contract.NextBillingDueDate = DateTime.Parse(nextDate);
+            contract.Frequency = frequency;
             var nextBillingDueDate = this.contractService.CalculateNextBillingDueDate(contract);
-            Assert.Equal(DateTime.Parse("01/02/2019").ToShortDateString(), nextBillingDueDate.ToShortDateString());
+            Assert.Equal(DateTime.Parse(expectedDate).ToShortDateString(), nextBillingDueDate.ToShortDateString());
         }
 
         // IQueryable<ContractServiceModel> SearchContract(ContractSearchViewModel contractSearchInputModel);

@@ -53,14 +53,14 @@ namespace HealthIns.Tests.Service
                 new Contract
                 {
                   Id=1,
-                  Frequency="MONTHLY",
+                  Frequency="ANNUAL",
                   StartDate = DateTime.Parse("01/01/2019"),
                   Product = new Product()
                 {
                   Id=3,
                   Idntfr ="LIFE3",
                   Label = "Life 3",
-                  FrequencyRule= "MONTHLY",
+                  FrequencyRule= "ANNUAL,SEMI_ANNUAL,TRIMESTER",
                   MaxAge=40,
                   MinAge=18
                 },
@@ -198,8 +198,11 @@ namespace HealthIns.Tests.Service
         }
 
         // List<string> CheckProductRules(ContractServiceModel contract)
-        [Fact]
-        public async Task CheckProductRules_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData("ANNUAL")]
+        [InlineData("SEMI_ANNUAL")]
+        [InlineData("TRIMESTER")]
+        public async Task CheckProductRules_ShouldReturnCorrectResults(string frequency)
         {
             string errorMessagePrefix = "ProductService CheckProductRules(ContractServiceModel) method does not work properly.";
 
@@ -208,11 +211,15 @@ namespace HealthIns.Tests.Service
             this.contractService = new ContractService(context);
             await SeedData(context);
             var contract= this.contractService.GetById(1);
+            contract.Frequency = frequency;
             var actualResults =  this.productService.CheckProductRules(contract);
             Assert.True(actualResults.Count==0, errorMessagePrefix);
         }
-        [Fact]
-        public async Task CheckProductRules_ShouldReturnErrorResults()
+        [Theory]
+        [InlineData("ANNUAL")]
+        [InlineData("SEMI_ANNUAL")]
+        [InlineData("TRIMESTER")]
+        public async Task CheckProductRules_ShouldReturnErrorResults(string frequency)
         {
             string errorMessagePrefix = "ProductService CheckProductRules(ContractServiceModel) method does not work properly.";
 
@@ -221,8 +228,46 @@ namespace HealthIns.Tests.Service
             this.contractService = new ContractService(context);
             await SeedData(context);
             var contract = this.contractService.GetById(2);
+            contract.Frequency = frequency;
             var actualResults = this.productService.CheckProductRules(contract);
             Assert.True(actualResults.Count != 0, errorMessagePrefix);
+        }
+
+        [Theory]
+        [InlineData("01/01/1950")]
+        [InlineData("01/01/2017")]
+        [InlineData("01/01/2080")]
+        public async Task CheckProductRules_ShouldReturnErrorResults_ForPersonAge(string startDate)
+        {
+            string errorMessagePrefix = "ProductService CheckProductRules(ContractServiceModel) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.productService = new ProductService(context);
+            this.contractService = new ContractService(context);
+            await SeedData(context);
+            var contract = this.contractService.GetById(1);
+            contract.Person.StartDate = DateTime.Parse(startDate);
+            var actualResults = this.productService.CheckProductRules(contract);
+            Assert.True(actualResults.Count != 0, errorMessagePrefix);
+
+        }
+        [Theory]
+        [InlineData("01/01/1980")]
+        [InlineData("01/01/1990")]
+        [InlineData("01/01/2000")]
+        public async Task CheckProductRules_ShouldReturnGoodResults_ForPersonAge(string startDate)
+        {
+            string errorMessagePrefix = "ProductService CheckProductRules(ContractServiceModel) method does not work properly.";
+
+            var context = HealthInsDbContextInMemoryFactory.InitializeContext();
+            this.productService = new ProductService(context);
+            this.contractService = new ContractService(context);
+            await SeedData(context);
+            var contract = this.contractService.GetById(1);
+            contract.Person.StartDate = DateTime.Parse(startDate);
+            var actualResults = this.productService.CheckProductRules(contract);
+            Assert.True(actualResults.Count == 0, errorMessagePrefix);
+
         }
 
         // IQueryable<ProductServiceModel> SearchProduct(ProductSearchViewModel productSearchInputModel);

@@ -18,7 +18,7 @@ namespace HealthIns.Services
 {
     public class ContractService : IContractService
     {
-        private const string ANNUAL = "ANUAL";
+        private const string ANNUAL = "ANNUAL";
         private const string SEMI_ANNUAL = "SEMI_ANNUAL";
         private const string TRIMESTER = "TRIMESTER";
         private readonly HealthInsDbContext context;

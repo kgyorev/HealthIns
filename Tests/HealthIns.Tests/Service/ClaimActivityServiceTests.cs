@@ -321,8 +321,11 @@ namespace HealthIns.Tests.Service
         }
 
         // Task<bool> Validate(ClaimActivityServiceModel claimActivityServiceModel);
-        [Fact]
-        public async Task Validate_ShouldReturnCorrectResults()
+        [Theory]
+        [InlineData(2000)]
+        [InlineData(30000)]
+        [InlineData(0)]
+        public async Task Validate_ShouldReturnCorrectResults(double operationAmount)
         {
             string errorMessagePrefix = "ClaimActivityService Validate(ClaimActivityServiceModel) method does not work properly.";
 
@@ -334,8 +337,7 @@ namespace HealthIns.Tests.Service
                 Id = 14,
                 ContractId = 2,
                 ClaimDate = DateTime.Parse("01/01/2019"),
-                OperationAmount = 100
-
+                OperationAmount = operationAmount
             };
 
             var actualResults = await this.claimActivityService.Create(claim);
